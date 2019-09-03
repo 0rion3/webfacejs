@@ -1,0 +1,21 @@
+<body data-component-class="RootComponent">
+
+  <div data-component-class="DummyComponent">
+    <div id="caption" data-component-attr="caption">value</div>
+    <div data-component-part="part1"></div>
+    <div data-component-part="part2"></div>
+  </div>
+
+  <div data-component-template="DummyComponent">
+    <div data-component-attr="caption"></div>
+    <div data-component-attr="attr1"></div>
+    <div data-component-attr="attr2">hello</div>
+    <div data-component-part="part1">part1</div>
+  </div>
+
+  <div data-component-template="DummyComponent" data-template-name="custom_dummy">
+    <div data-component-attr="caption"></div>
+    <div data-component-part="custom_dummy_part">custom dummy part</div>
+  </div>
+
+</body>

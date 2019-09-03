@@ -1,0 +1,39 @@
+<head>
+  <script src="/lib/webface_init.js"></script>
+  <script src="/examples/components/confirmable_button/container_component.js" type="module"></script>
+  <script src="/examples/webface_app.js" type="module"></script>
+  <style>
+    button { font-size: 2em; padding: 0.4em 2em; height: 2em; }
+    .locked::before { content: ''; position: absolute; width: 0.7rem; height: 0.7rem; background: url("/examples/components/button/ajax_indicator.svg"); background-size: contain; background-repeat: no-repeat; left: 1em; top: 1.1em; }
+
+    #dialog_window_template, #dialog_window_content { display: none; }
+    .dialogWindow { position: fixed; z-index: 1000; }
+    .dialogWindow .dialog:before { content: ""; display: block; background: rgba(0,0,0,.2); position: fixed; top: 0; left: 0; right: 0; bottom: 0; z-index: -1; }
+    .dialogWindow .dialogDialog { 
+      background-color: #fff; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 11; max-width: 30em; width: 100%; max-height: 85%; min-height: 5em; border-radius: 0.5em; padding: 2em; overflow: hidden; overflow-y: auto;
+     }
+    .dialogWindow .close { cursor: pointer; float: right; margin-bottom: 2em; color: blue; }
+
+  </style>
+</head>
+<body>
+
+  <div data-component-class="ContainerComponent">
+    <button data-component-class="ConfirmableButtonComponent" data-component-roles="confirmable_button" data-confirmation="Are you sure?" data-lockable="false" data-component-attr-map="confirmation:data-confirmation,lockable:data-lockable">Button</button>
+  </div>
+
+  <div data-component-template="DialogWindowComponent" id="dialog_window_template" class="dialogWindow">
+    <div class="dialog" data-component-roles="background">
+      <div class="dialogDialog">
+        <div data-component-part="close" class="close">[ close ]</div>
+        <div data-component-part="content"></div>
+        <div data-component-part="button_container"></div>
+      </div>
+    </div>
+  </div>
+
+  <div style="display: none">
+    <button data-component-template="ButtonComponent" data-component-attr="caption"></button>
+  </div>
+
+</body>

@@ -1,0 +1,46 @@
+<body>
+  <div attr="root_value" data-component-class="RootComponent" data-component-roles="role1,role2">
+
+    <div data-component-attr="attr1">value for attr 1 - a</div>
+    <div data-component-attr="writeable_attr1"></div>
+    <div data-component-attr-map="writeable_attr2:data-writeable-attr2" data-writeable-attr2="null"></div>
+    <div data-component-attr="writeable_attr3">writeable_attr3 value</div>
+    
+    <!-- a number of DOM elements which all correspond to the same attr and, thus, get updated -->
+    <div id="writable_attr4_el1" data-component-attr="writeable_attr4"></div>
+    <div id="writable_attr4_el2" data-component-attr="writeable_attr4"></div>
+    <div id="writable_attr4_el3" data-component-attr-map="writeable_attr4:data-attr4" data-attr4=""></div>
+    <div id="writable_attr4_el4" data-component-attr-map="writeable_attr4:data-attr4" data-attr4=""></div>
+
+    <div attr="value1">
+      <div attr="value2">
+      </div>
+      <div attr="value2">
+        <div attr="value3">
+          <div data-component-attr="attr1">value for attr 1 - b</div>
+          <div data-component-attr-map="attr1:data-attr1" data-attr1="value for attr 1 - c"></div>
+          <div data-component-attr-map="attr2:data-attr2" data-attr2="1"></div>
+          <div data-component-attr-map="attr2:data-attr2" data-attr2="value for attr 2 - b"></div>
+          <div data-component-attr-map="attr3:data-attr3" data-attr3="1.23"></div>
+        </div>
+      </div>
+    </div>
+
+    <div data-component-part="part1">
+      <div data-component-part="part2"></div>
+    </div>
+    <div data-component-part="part2"></div>
+    
+    <div data-component-part="part3"></div>
+    <div data-component-class="MyComponent">
+      <div data-component-part="part3"></div> <!-- ignored by findAllParts() because it's inside another component -->
+    </div>
+    <div data-component-class="MyComponent2"></div>
+
+    <div class="RemovableComponent"></div>
+
+  </div> <!-- Root Component close -->
+  <div data-component-template="ComponentDomClass">ComponentDomClass template</div>
+
+
+</body>

@@ -1,0 +1,33 @@
+<div id="root" style="width: 1000px; height: 1000px; position: absolute; top: 0; left: 0;">
+
+  <div data-component-class="Component" data-component-roles="simple_notifications_container"></div>
+
+  <!-- Automatically loaded simple notification 1 -->
+  <div data-component-class="SimpleNotificationComponent" data-component-attr-map="autohide_delay:data-autohide-delay,permanent:data-permanent,container_role:data-container-role" data-component-roles="simple_notification" style="display: none;" data-autohide-delay="1" data-permanent="false" data-container-role="simple_notifications_container">
+    <div class="container">
+      <span class="closeNotification" data-component-part="close">close</span>
+      <div class="message" data-component-attr="message" data-component-part="message">
+        Notification 1
+      </div>
+    </div>
+  </div>
+
+  <!-- Automatically loaded simple notification 2 -->
+  <div data-component-class="SimpleNotificationComponent" data-component-attr-map="autohide_delay:data-autohide-delay,permanent:data-permanent,container_role:data-container-role" data-component-roles="simple_notification" style="display: none;" data-permanent="false" data-container-role="simple_notifications_container" data-autohide-delay="1">
+    <div class="container">
+      <span class="closeNotification" data-component-part="close">close</span>
+      <div class="message" data-component-attr="message" data-component-part="message">
+        Notification 2
+      </div>
+    </div>
+  </div>
+
+  <div data-component-template="SimpleNotificationComponent" data-component-attr-map="autohide_delay:data-autohide-delay,permanent:data-permanent,container_role:data-container-role" data-component-roles="simple_notification" style="display: none;">
+    <div class="container">
+      <span data-component-part="close">close</span>
+      <div class="message" data-component-attr="message" data-component-part="message">
+      </div>
+    </div>
+  </div>
+
+</div>

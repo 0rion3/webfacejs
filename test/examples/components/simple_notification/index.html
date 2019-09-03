@@ -1,0 +1,39 @@
+<head>
+  <script src="/lib/webface_init.js"></script>
+  <script src="/examples/components/simple_notification/container_component.js" type="module"></script>
+  <script src="/examples/webface_app.js" type="module"></script>
+  <style>
+    .simpleNotification { display: none; max-width: 30em; margin: 1em; background-color: #935c04; color: #fff; padding: 1em; border-radius: 0.3em; font-family: Arial; }
+    .simpleNotification img { width: 1em; cursor: pointer; float: right; }
+    .simpleNotification.message-type-warning { background-color: red; }
+    #simple_notifications_container { position: absolute; right: 0; width: 30em; height: 20em; }
+  </style>
+</head>
+<body>
+  <div data-component-class="Component" id="simple_notifications_container" data-component-roles="simple_notifications_container"></div>
+  <div data-component-class="ContainerComponent" class="container">
+
+    <button data-component-class="ButtonComponent" data-component-roles="regular_notification" data-component-attr-map="lockable:lockable" lockable="false">Show regular notification</button>
+    <button data-component-class="ButtonComponent" data-component-roles="warning_notification" data-component-attr-map="lockable:lockable" lockable="false">Show warning notification</button>
+    <button data-component-class="ButtonComponent" data-component-roles="permanent_notification" data-component-attr-map="lockable:lockable" lockable="false">Show permanent notification</button>
+    <button data-component-class="ButtonComponent" data-component-roles="duplicatable_permanent_notification" data-component-attr-map="lockable:lockable" lockable="false">Show duplicatable permanent notification</button>
+
+  <div class="simpleNotification" data-component-template="SimpleNotificationComponent" data-component-attr-map="autohide_delay:data-autohide-delay,permanent:data-permanent,container_role:data-container-role" data-component-roles="simple_notification">
+    <div class="container">
+      <img src="/examples/components/simple_notification/close.svg" data-component-part="close"/>
+      <div class="message" data-component-attr="message" data-component-part="message">
+      </div>
+    </div>
+  </div>
+
+  <div class="simpleNotification" data-component-class="SimpleNotificationComponent" data-component-attr-map="autohide_delay:data-autohide-delay,permanent:data-permanent,container_role:data-container-role" data-component-roles="simple_notification" data-autohide-delay="10000">
+    <div class="container">
+      <img src="/examples/components/simple_notification/close.svg" data-component-part="close"/>
+      <div class="message" data-component-attr="message" data-component-part="message">
+        An automatically loaded notification
+      </div>
+    </div>
+  </div>
+
+  </div>
+</body>

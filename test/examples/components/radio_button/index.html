@@ -1,0 +1,22 @@
+<head>
+  <script src="/lib/webface_init.js"></script>
+  <script src="/examples/components/radio_button/container_component.js" type="module"></script>
+  <script src="/examples/webface_app.js" type="module"></script>
+</head>
+<body >
+  <div data-component-class="ContainerComponent">
+
+    <div data-component-class="RadioButtonComponent" data-component-roles="radio_button" id="radio">
+      <label><input type="radio" name="radio1" checked="checked" value="value1" data-component-part="option"/>Option 1</label>
+      <label><input type="radio" name="radio1" value="value2" data-component-part="option"/>Option 2</label>
+      <label><input type="radio" name="radio1" value="value3" data-component-part="option"/>Option 3</label>
+    </div>
+
+    <br/>
+
+    <button data-component-class="ButtonComponent" data-component-roles="check" data-component-attr-map="lockable:lockable" lockable="false">Check random option</button>
+    <button data-component-class="ButtonComponent" data-component-roles="uncheck" data-component-attr-map="lockable:lockable" lockable="false">Uncheck all</button>
+    <button data-component-class="ButtonComponent" data-component-roles="print_value" data-component-attr-map="lockable:lockable" lockable="false">Print current value to console</button>
+
+  </div>
+</body>

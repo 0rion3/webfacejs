@@ -1,0 +1,14 @@
+<head>
+  <script src="/lib/webface_init.js"></script>
+  <script src="/examples/components/button/container_component.js" type="module"></script>
+  <script src="/examples/webface_app.js" type="module"></script>
+  <style>
+    button { font-size: 2em; padding: 0.4em 2em; height: 2em; }
+    .locked::before { content: ''; position: absolute; width: 0.7rem; height: 0.7rem; background: url("/examples/components/button/ajax_indicator.svg"); background-size: contain; background-repeat: no-repeat; left: 1em; top: 1.1em; }
+  </style>
+</head>
+<body>
+  <div data-component-class="ContainerComponent">
+    <button data-component-class="ButtonComponent" data-component-roles="lock_button">Button</button>
+  </div>
+</body>

@@ -1,0 +1,34 @@
+<head>
+  <script src="/lib/webface_init.js"></script>
+  <script src="/examples/components/context_menu/container_component.js" type="module"></script>
+  <script src="/examples/webface_app.js" type="module"></script>
+  <style>
+    body { padding: 3em; }
+    #anchor1, #anchor2 { cursor: pointer; margin: 3em 0; font-size: 1.5em; width: 10em; border: solid 1px #aaa; }
+    #context_menu { border: solid 1px #eee; border-radius: 5px; background-color: #fff6d3; width: 7em; }
+    #context_menu ul { list-style-type: none; padding: 0 0 0 0; }
+    #context_menu ul li { padding: 0.5em; border-bottom: solid 1px #e2d26a; cursor: pointer; margin: 0 0 0 0; }
+  </style>
+</head>
+<body>
+
+  <div data-component-class="ContainerComponent">
+    <div id="anchor1" data-context-menu-anchor="anchor1">Hover to see the menu</div>
+    <div id="anchor2" data-context-menu-anchor="anchor2">Hover to see the menu</div>
+
+    <div id="context_menu" data-component-class="ContextMenuComponent" data-component-roles="context_menu" data-component-attr-map="anchors:data-anchors, anchor_events:data-anchor-events, hide_timeout:data-hide-timeout" data-anchors="anchor1,anchor2" data-anchor-events="click,mouseover" style="display: none;">
+      <ul>
+        <li>option 1</li>
+        <li>option 2</li>
+        <li>option 3</li>
+        <li>option 4</li>
+        <li>option 5</li>
+        <li>option 6</li>
+        <li>option 7</li>
+      </ul>
+    </div>
+
+  </div>
+
+
+</body>

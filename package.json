@@ -1,0 +1,33 @@
+{
+  "name": "webface",
+  "version": "0.1.0",
+  "description": "A frontend framework for creating interfaces (uses components & streams)",
+  "main": "lib/webface.js",
+  "scripts": {
+    "test": "mocha-headless-chrome"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/snitko/webface.js.git"
+  },
+  "author": "Roman Snitko",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/snitko/webface.js/issues"
+  },
+  "homepage": "https://github.com/snitko/webface.js#readme",
+  "dependencies": {},
+  "devDependencies": {
+    "babel-preset-env": "^1.7.0",
+    "babel-register": "^6.26.0",
+    "chai": "^4.1.2",
+    "chai-spies": "",
+    "express": "",
+    "mocha": "^5.2.0",
+    "mocha-headless-chrome": "^2.0.3",
+    "pug": ""
+  },
+  "runtimeArgs": [
+    "--experimental-modules"
+  ]
+}

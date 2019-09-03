@@ -1,0 +1,10 @@
+unit_test:
+  script:
+    - ./run_test
+
+cache:
+  paths:
+  - node_modules
+
+before_script:
+  - npm i

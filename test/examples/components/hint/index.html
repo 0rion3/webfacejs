@@ -1,0 +1,181 @@
+<head>
+  <script src="/lib/webface_init.js"></script>
+  <script src="/examples/components/hint/custom_components.js" type="module"></script>
+  <script src="/examples/webface_app.js" type="module"></script>
+  <style>
+    .anchor { width: 15em; height: 5em; clear: both; margin-bottom: 1em; background-color: #aaa; padding: 1em; }
+    .helpHint { width: 20em; background-color: #e0d074; color: #000; padding: 0.5em; display: none; border-radius: 0.5em; }
+    .helpHint img.arrow { width: 1em; }
+    .helpHint.arrowTopLeft img.arrow { position: absolute; transform:rotate(180deg); top: -0.7em; left: 0; margin-left: 0.7em; }
+    .helpHint.arrowTopRight img.arrow { position: absolute; transform:rotate(180deg); top: -0.7em; right: 0; margin-right: 0.9em; }
+    .helpHint.arrowBottomLeft img.arrow { position: absolute; margin-left: 0.5em; bottom: -0.7em; }
+    .helpHint.arrowBottomRight img.arrow { position: absolute; right: 0; margin-right: 1em; bottom: -0.7em; }
+    .helpHint .content { padding: 1em; font-size: 90%; }
+    .helpHint .content .close { cursor: pointer; background-color: #722004; padding: 0.5em; color: #fff; border-radius: 0.2em; font-size: 90%; }
+
+    #hint_1_anchor {}
+    #hint_2_anchor { float: right; }
+    #hint_3_anchor { margin-left: 40%; }
+    #hint_4_anchor { position: absolute; bottom: 0; left: 0; }
+    #hint_5_anchor { position: absolute; bottom: 0; right: 0; }
+  </style>
+</head>
+<body>
+  <div data-component-class="ContainerComponent" class="container">
+
+    <div data-component-part="hint_1_anchor" id="hint_1_anchor" class="anchor">Anchor 1</div>
+    <div data-component-attr="hint_2_anchor" id="hint_2_anchor" class="anchor">Anchor 2</div>
+    <div id="hint_3_anchor" class="anchor">Anchor 3</div>
+
+    <div data-component-class="ChildComponent" data-component-roles="hint_4_anchor" id="hint_4_anchor" class="anchor">
+      Anchor 4
+    </div>
+
+    <div data-component-class="ChildComponent" data-component-roles="hint_5_anchor">
+      <div data-component-part="hint_5_anchor" id="hint_5_anchor" class="anchor">Anchor 5</div>
+    </div>
+
+
+    <!-- Hint 1, with anchor as a part of parent component -->
+    <div
+      data-component-class="HintComponent"
+      data-component-roles="hint"
+      data-component-attr-map="
+        anchor:data-anchor,
+        show_events:data-show-events,
+        force_show_events:data-force-show-events,
+        autoshow_delay:data-autoshow-delay,
+        autohide_delay:data-autohide-delay,
+        display_limit:data-display-limit,
+        hint_id:data-hint-id"
+      data-anchor="part:hint_1_anchor"
+      data-show-events="mouseover"
+      data-force-show-events="click"
+      data-hint-id="hint1"
+      class="helpHint"
+      id="hint_1"
+    >
+      <img src="/examples/components/hint/arrow.svg" class="arrow"/>
+      <div class="content">
+        <span class="close" data-component-part="close">Close</span>
+        <span class="close" data-component-part="close_and_never_show">Close and never show</span>
+        <p>This is a hint</p>
+      </div>
+    </div>
+    <!-- Hint 1 end -->
+
+    <!-- Hint 2, with anchor as a attr of parent component -->
+    <div
+      data-component-class="HintComponent"
+      data-component-roles="hint"
+      data-component-attr-map="
+        anchor:data-anchor,
+        show_events:data-show-events,
+        force_show_events:data-force-show-events,
+        autoshow_delay:data-autoshow-delay,
+        autohide_delay:data-autohide-delay,
+        display_limit:data-display-limit,
+        hint_id:data-hint-id"
+      data-anchor="attr:hint_2_anchor"
+      data-show-events="mouseover"
+      data-force-show-events="click"
+      data-hint-id="hint2"
+      class="helpHint"
+      id="hint_2"
+    >
+      <img src="/examples/components/hint/arrow.svg" class="arrow"/>
+      <div class="content">
+        <span class="close" data-component-part="close">Close</span>
+        <span class="close" data-component-part="close_and_never_show">Close and never show</span>
+        <p>This is a hint</p>
+      </div>
+    </div>
+    <!-- Hint 2 end -->
+
+    <!-- Hint 3, with anchor identified by id attribute -->
+    <div
+      data-component-class="HintComponent"
+      data-component-roles="hint"
+      data-component-attr-map="
+        anchor:data-anchor,
+        show_events:data-show-events,
+        force_show_events:data-force-show-events,
+        autoshow_delay:data-autoshow-delay,
+        autohide_delay:data-autohide-delay,
+        display_limit:data-display-limit,
+        hint_id:data-hint-id"
+      data-anchor="hint_3_anchor"
+      data-show-events="mouseover"
+      data-force-show-events="click"
+      data-hint-id="hint3"
+      class="helpHint"
+      id="hint_3"
+    >
+      <img src="/examples/components/hint/arrow.svg" class="arrow"/>
+      <div class="content">
+        <span class="close" data-component-part="close">Close</span>
+        <span class="close" data-component-part="close_and_never_show">Close and never show</span>
+        <p>This is a hint</p>
+      </div>
+    </div>
+    <!-- Hint 3 end -->
+
+    <!-- Hint 4, with anchor as a component -->
+    <div
+      data-component-class="HintComponent"
+      data-component-roles="hint"
+      data-component-attr-map="
+        anchor:data-anchor,
+        show_events:data-show-events,
+        force_show_events:data-force-show-events,
+        autoshow_delay:data-autoshow-delay,
+        autohide_delay:data-autohide-delay,
+        display_limit:data-display-limit,
+        hint_id:data-hint-id"
+      data-anchor="role:hint_4_anchor"
+      data-show-events="mouseover"
+      data-force-show-events="click"
+      data-hint-id="hint4"
+      class="helpHint"
+      id="hint_4"
+    >
+      <img src="/examples/components/hint/arrow.svg" class="arrow"/>
+      <div class="content">
+        <span class="close" data-component-part="close">Close</span>
+        <span class="close" data-component-part="close_and_never_show">Close and never show</span>
+        <p>This is a hint</p>
+      </div>
+    </div>
+    <!-- Hint 4 end -->
+
+    <!-- Hint 5, with anchor as a part of another component -->
+    <div
+      data-component-class="HintComponent"
+      data-component-roles="hint"
+      data-component-attr-map="
+        anchor:data-anchor,
+        show_events:data-show-events,
+        force_show_events:data-force-show-events,
+        autoshow_delay:data-autoshow-delay,
+        autohide_delay:data-autohide-delay,
+        display_limit:data-display-limit,
+        hint_id:data-hint-id"
+      data-anchor="role:hint_5_anchor:hint_5_anchor"
+      data-show-events="mouseover"
+      data-force-show-events="click"
+      data-hint-id="hint5"
+      class="helpHint"
+      id="hint_5"
+    >
+      <img src="/examples/components/hint/arrow.svg" class="arrow"/>
+      <div class="content">
+        <span class="close" data-component-part="close">Close</span>
+        <span class="close" data-component-part="close_and_never_show">Close and never show</span>
+        <p>This is a hint</p>
+      </div>
+    </div>
+    <!-- Hint 5 end -->
+
+
+  </div>
+</body>

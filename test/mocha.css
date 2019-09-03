@@ -1,0 +1,10 @@
+body {
+  font-family: "Ubuntu Mono", Arial; font-size: 70%;
+}
+
+li h2 { font-weight: normal; cursor: pointer; }
+li span.duration { padding-left: 2em; font-weight: normal; }
+li pre { font-size: 150%; margin-left: 2em; background-color: #ddd; border-left: solid 4px #aaa; padding: 1em; }
+
+li.fail h2 { color: #D11111; padding: 0.2em; font-weight: bold; }
+li.fail pre { background-color: #FFCFCF; color: #AD0000; border-left: solid 4px #FF6161; }

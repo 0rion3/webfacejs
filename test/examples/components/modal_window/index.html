@@ -1,0 +1,43 @@
+<head>
+  <script src="/lib/webface_init.js"></script>
+  <script src="/examples/components/modal_window/container_component.js" type="module"></script>
+  <script src="/examples/webface_app.js" type="module"></script>
+  <style>
+    #modal_window_template, #modal_window_content { display: none; }
+    .errors input { background-color: #ffc9c9; border: solid 1px red; }
+    .errorsSummary { color: red; display: none; }
+
+
+    .modalWindow { position: fixed; z-index: 1000; }
+    .modalWindow .modal:before { content: ""; display: block; background: rgba(0,0,0,.2); position: fixed; top: 0; left: 0; right: 0; bottom: 0; z-index: -1; }
+    .modalWindow .modalDialog { 
+      background-color: #fff; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 11; max-width: 30em; width: 100%; max-height: 85%; min-height: 5em; border-radius: 0.5em; padding: 2em; overflow: hidden; overflow-y: auto;
+     }
+    .modalWindow .close { cursor: pointer; float: right; margin-bottom: 2em; color: blue; }
+
+  </style>
+</head>
+<body>
+  <div data-component-class="ContainerComponent">
+
+    <div data-component-template="ModalWindowComponent" id="modal_window_template" class="modalWindow">
+      <div class="modal" data-component-roles="background">
+        <div class="modalDialog">
+          <div data-component-part="close" class="close">[ close ]</div>
+          <div data-component-part="content">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <button data-component-class="ButtonComponent" data-component-roles="modal_window_content" id="modal_window_content">
+      Component to display within the modal window
+    </button>
+
+    <button data-component-class="ButtonComponent" data-component-roles="show_modal_with_text" data-component-attr-map="lockable:lockable" lockable="false">Show modal with text</button>
+    <button data-component-class="ButtonComponent" data-component-roles="show_modal_with_html" data-component-attr-map="lockable:lockable" lockable="false">Show modal with html</button>
+    <button data-component-class="ButtonComponent" data-component-roles="show_modal_with_component" data-component-attr-map="lockable:lockable" lockable="false">Show modal with component</button>
+
+  </div>
+
+</body>

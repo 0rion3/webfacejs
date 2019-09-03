@@ -1,0 +1,385 @@
+<head>
+  <script src="/lib/webface_init.js"></script>
+  <script src="/examples/position_manager/position_manager_example.js" type="module"></script>
+  <script src="/examples/webface_app.js" type="module"></script>
+
+  <style>
+    body { margin-left: 3em; }
+    .methodName { margin: 3em 0 1em 0; }
+    .container { width: 100px; height: 100px;  background-color: green; z-index: 1 }
+    .el { width: 20px; height: 10px; background-color: yellow; position: absolute; z-index: 2; }
+
+    .flexContainer { display: flex; }
+    #relative_position .container { position: relative; }
+    #relative_parent_position, #relative_parent_position .container { position: relative; }
+    #fixed_position { position: fixed; top: 10; left: 1100; }
+    #absolute_position { position: absolute; top: 10; left: 1400; }
+     
+  </style>
+</head>
+
+<body>
+
+  <div class="flexContainer">
+
+    <div id="normal_position">
+      Normal positioning for the container
+
+      <div class="methodName">PositionManager#placeByCenter()</div>
+      <div id="placeByCenter_el" class="el"></div>
+      <div id="placeByCenter_container" class="container">
+      </div>
+
+      <div class="methodName">PositionManager#placeByTopLeft()</div>
+      <div id="placeByTopLeft_container" class="container">
+        <div id="placeByTopLeft_el" class="el"></div>
+      </div>
+
+      <div class="methodName">PositionManager#placeByTopRight()</div>
+      <div id="placeByTopRight_container" class="container">
+        <div id="placeByTopRight_el" class="el"></div>
+      </div>
+
+      <div class="methodName">PositionManager#placeByBottomLeft()</div>
+      <div id="placeByBottomLeft_container" class="container">
+        <div id="placeByBottomLeft_el" class="el"></div>
+      </div>
+
+      <div class="methodName">PositionManager#placeByBottomRight()</div>
+      <div id="placeByBottomRight_container" class="container">
+        <div id="placeByBottomRight_el" class="el"></div>
+      </div>
+
+      <div class="methodName">PositionManager#placeAboveTopLeft()</div>
+      <div id="placeAboveTopLeft_container" class="container">
+        <div id="placeAboveTopLeft_el" class="el"></div>
+      </div>
+
+      <div class="methodName">PositionManager#placeBelowBottomLeft()</div>
+      <div id="placeBelowBottomLeft_container" class="container">
+        <div id="placeBelowBottomLeft_el" class="el"></div>
+      </div>
+
+      <div class="methodName">PositionManager#placeAboveTopRight()</div>
+      <div id="placeAboveTopRight_container" class="container">
+        <div id="placeAboveTopRight_el" class="el"></div>
+      </div>
+
+      <div class="methodName">PositionManager#placeBelowBottomRight()</div>
+      <div id="placeBelowBottomRight_container" class="container">
+        <div id="placeBelowBottomRight_el" class="el"></div>
+      </div>
+
+      <div class="methodName">PositionManager#placeAboveTopRightCorner()</div>
+      <div id="placeAboveTopRightCorner_container" class="container">
+        <div id="placeAboveTopRightCorner_el" class="el"></div>
+      </div>
+
+      <div class="methodName">PositionManager#placeAboveTopLeftCorner()</div>
+      <div id="placeAboveTopLeftCorner_container" class="container">
+        <div id="placeAboveTopLeftCorner_el" class="el"></div>
+      </div>
+
+      <div class="methodName">PositionManager#placeBelowBottomLeftCorner()</div>
+      <div id="placeBelowBottomLeftCorner_container" class="container">
+        <div id="placeBelowBottomLeftCorner_el" class="el"></div>
+      </div>
+
+      <div class="methodName">PositionManager#placeBelowBottomRightCorner()</div>
+      <div id="placeBelowBottomRightCorner_container" class="container">
+        <div id="placeBelowBottomRightCorner_el" class="el"></div>
+      </div>
+
+    </div>
+
+    <div id="relative_position">
+
+      Relative positioning for the container
+
+      <div class="methodName">PositionManager#placeByCenter()</div>
+      <div id="placeByCenter_el" class="el"></div>
+      <div id="placeByCenter_container" class="container">
+      </div>
+
+      <div class="methodName">PositionManager#placeByTopLeft()</div>
+      <div id="placeByTopLeft_container" class="container">
+        <div id="placeByTopLeft_el" class="el"></div>
+      </div>
+
+      <div class="methodName">PositionManager#placeByTopRight()</div>
+      <div id="placeByTopRight_container" class="container">
+        <div id="placeByTopRight_el" class="el"></div>
+      </div>
+
+      <div class="methodName">PositionManager#placeByBottomLeft()</div>
+      <div id="placeByBottomLeft_container" class="container">
+        <div id="placeByBottomLeft_el" class="el"></div>
+      </div>
+
+      <div class="methodName">PositionManager#placeByBottomRight()</div>
+      <div id="placeByBottomRight_container" class="container">
+        <div id="placeByBottomRight_el" class="el"></div>
+      </div>
+
+      <div class="methodName">PositionManager#placeAboveTopLeft()</div>
+      <div id="placeAboveTopLeft_container" class="container">
+        <div id="placeAboveTopLeft_el" class="el"></div>
+      </div>
+
+      <div class="methodName">PositionManager#placeBelowBottomLeft()</div>
+      <div id="placeBelowBottomLeft_container" class="container">
+        <div id="placeBelowBottomLeft_el" class="el"></div>
+      </div>
+
+      <div class="methodName">PositionManager#placeAboveTopRight()</div>
+      <div id="placeAboveTopRight_container" class="container">
+        <div id="placeAboveTopRight_el" class="el"></div>
+      </div>
+
+      <div class="methodName">PositionManager#placeBelowBottomRight()</div>
+      <div id="placeBelowBottomRight_container" class="container">
+        <div id="placeBelowBottomRight_el" class="el"></div>
+      </div>
+
+      <div class="methodName">PositionManager#placeAboveTopRightCorner()</div>
+      <div id="placeAboveTopRightCorner_container" class="container">
+        <div id="placeAboveTopRightCorner_el" class="el"></div>
+      </div>
+
+      <div class="methodName">PositionManager#placeAboveTopLeftCorner()</div>
+      <div id="placeAboveTopLeftCorner_container" class="container">
+        <div id="placeAboveTopLeftCorner_el" class="el"></div>
+      </div>
+
+      <div class="methodName">PositionManager#placeBelowBottomLeftCorner()</div>
+      <div id="placeBelowBottomLeftCorner_container" class="container">
+        <div id="placeBelowBottomLeftCorner_el" class="el"></div>
+      </div>
+
+      <div class="methodName">PositionManager#placeBelowBottomRightCorner()</div>
+      <div id="placeBelowBottomRightCorner_container" class="container">
+        <div id="placeBelowBottomRightCorner_el" class="el"></div>
+      </div>
+
+    </div>
+
+    <div id="relative_parent_position">
+
+      <div style="position: relative;">
+
+        Relative-parent positioning for the container
+
+        <div class="methodName">PositionManager#placeByCenter()</div>
+        <div id="placeByCenter_el" class="el"></div>
+        <div id="placeByCenter_container" class="container">
+        </div>
+
+        <div class="methodName">PositionManager#placeByTopLeft()</div>
+        <div id="placeByTopLeft_el" class="el"></div>
+        <div id="placeByTopLeft_container" class="container">
+        </div>
+
+        <div class="methodName">PositionManager#placeByTopRight()</div>
+        <div id="placeByTopRight_container" class="container">
+          <div id="placeByTopRight_el" class="el"></div>
+        </div>
+
+        <div class="methodName">PositionManager#placeByBottomLeft()</div>
+        <div id="placeByBottomLeft_container" class="container">
+          <div id="placeByBottomLeft_el" class="el"></div>
+        </div>
+
+        <div class="methodName">PositionManager#placeByBottomRight()</div>
+        <div id="placeByBottomRight_container" class="container">
+          <div id="placeByBottomRight_el" class="el"></div>
+        </div>
+
+        <div class="methodName">PositionManager#placeAboveTopLeft()</div>
+        <div id="placeAboveTopLeft_container" class="container">
+          <div id="placeAboveTopLeft_el" class="el"></div>
+        </div>
+
+        <div class="methodName">PositionManager#placeBelowBottomLeft()</div>
+        <div id="placeBelowBottomLeft_container" class="container">
+          <div id="placeBelowBottomLeft_el" class="el"></div>
+        </div>
+
+        <div class="methodName">PositionManager#placeAboveTopRight()</div>
+        <div id="placeAboveTopRight_container" class="container">
+          <div id="placeAboveTopRight_el" class="el"></div>
+        </div>
+
+        <div class="methodName">PositionManager#placeBelowBottomRight()</div>
+        <div id="placeBelowBottomRight_container" class="container">
+          <div id="placeBelowBottomRight_el" class="el"></div>
+        </div>
+
+        <div class="methodName">PositionManager#placeAboveTopRightCorner()</div>
+        <div id="placeAboveTopRightCorner_container" class="container">
+          <div id="placeAboveTopRightCorner_el" class="el"></div>
+        </div>
+
+        <div class="methodName">PositionManager#placeAboveTopLeftCorner()</div>
+        <div id="placeAboveTopLeftCorner_container" class="container">
+          <div id="placeAboveTopLeftCorner_el" class="el"></div>
+        </div>
+
+        <div class="methodName">PositionManager#placeBelowBottomLeftCorner()</div>
+        <div id="placeBelowBottomLeftCorner_container" class="container">
+          <div id="placeBelowBottomLeftCorner_el" class="el"></div>
+        </div>
+
+        <div class="methodName">PositionManager#placeBelowBottomRightCorner()</div>
+        <div id="placeBelowBottomRightCorner_container" class="container">
+          <div id="placeBelowBottomRightCorner_el" class="el"></div>
+        </div>
+
+      </div>
+
+    </div>
+
+    <div id="fixed_position">
+
+      Fixed positioning for the container
+
+      <div class="methodName">PositionManager#placeByCenter()</div>
+      <div id="placeByCenter_container" class="container">
+        <div id="placeByCenter_el" class="el"></div>
+      </div>
+
+      <div class="methodName">PositionManager#placeByTopLeft()</div>
+      <div id="placeByTopLeft_container" class="container">
+        <div id="placeByTopLeft_el" class="el"></div>
+      </div>
+
+      <div class="methodName">PositionManager#placeByTopRight()</div>
+      <div id="placeByTopRight_container" class="container">
+        <div id="placeByTopRight_el" class="el"></div>
+      </div>
+
+      <div class="methodName">PositionManager#placeByBottomLeft()</div>
+      <div id="placeByBottomLeft_container" class="container">
+        <div id="placeByBottomLeft_el" class="el"></div>
+      </div>
+
+      <div class="methodName">PositionManager#placeByBottomRight()</div>
+      <div id="placeByBottomRight_container" class="container">
+        <div id="placeByBottomRight_el" class="el"></div>
+      </div>
+
+      <div class="methodName">PositionManager#placeAboveTopLeft()</div>
+      <div id="placeAboveTopLeft_container" class="container">
+        <div id="placeAboveTopLeft_el" class="el"></div>
+      </div>
+
+      <div class="methodName">PositionManager#placeBelowBottomLeft()</div>
+      <div id="placeBelowBottomLeft_container" class="container">
+        <div id="placeBelowBottomLeft_el" class="el"></div>
+      </div>
+
+      <div class="methodName">PositionManager#placeAboveTopRight()</div>
+      <div id="placeAboveTopRight_container" class="container">
+        <div id="placeAboveTopRight_el" class="el"></div>
+      </div>
+
+      <div class="methodName">PositionManager#placeBelowBottomRight()</div>
+      <div id="placeBelowBottomRight_container" class="container">
+        <div id="placeBelowBottomRight_el" class="el"></div>
+      </div>
+
+      <div class="methodName">PositionManager#placeAboveTopRightCorner()</div>
+      <div id="placeAboveTopRightCorner_container" class="container">
+        <div id="placeAboveTopRightCorner_el" class="el"></div>
+      </div>
+
+      <div class="methodName">PositionManager#placeAboveTopLeftCorner()</div>
+      <div id="placeAboveTopLeftCorner_container" class="container">
+        <div id="placeAboveTopLeftCorner_el" class="el"></div>
+      </div>
+
+      <div class="methodName">PositionManager#placeBelowBottomLeftCorner()</div>
+      <div id="placeBelowBottomLeftCorner_container" class="container">
+        <div id="placeBelowBottomLeftCorner_el" class="el"></div>
+      </div>
+
+      <div class="methodName">PositionManager#placeBelowBottomRightCorner()</div>
+      <div id="placeBelowBottomRightCorner_container" class="container">
+        <div id="placeBelowBottomRightCorner_el" class="el"></div>
+      </div>
+
+    </div>
+
+    <div id="absolute_position">
+
+      Absolute positioning for the container
+
+      <div class="methodName">PositionManager#placeByCenter()</div>
+      <div id="placeByCenter_container" class="container">
+        <div id="placeByCenter_el" class="el"></div>
+      </div>
+
+      <div class="methodName">PositionManager#placeByTopLeft()</div>
+      <div id="placeByTopLeft_container" class="container">
+        <div id="placeByTopLeft_el" class="el"></div>
+      </div>
+
+      <div class="methodName">PositionManager#placeByTopRight()</div>
+      <div id="placeByTopRight_container" class="container">
+        <div id="placeByTopRight_el" class="el"></div>
+      </div>
+
+      <div class="methodName">PositionManager#placeByBottomLeft()</div>
+      <div id="placeByBottomLeft_container" class="container">
+        <div id="placeByBottomLeft_el" class="el"></div>
+      </div>
+
+      <div class="methodName">PositionManager#placeByBottomRight()</div>
+      <div id="placeByBottomRight_container" class="container">
+        <div id="placeByBottomRight_el" class="el"></div>
+      </div>
+
+      <div class="methodName">PositionManager#placeAboveTopLeft()</div>
+      <div id="placeAboveTopLeft_container" class="container">
+        <div id="placeAboveTopLeft_el" class="el"></div>
+      </div>
+
+      <div class="methodName">PositionManager#placeBelowBottomLeft()</div>
+      <div id="placeBelowBottomLeft_container" class="container">
+        <div id="placeBelowBottomLeft_el" class="el"></div>
+      </div>
+
+      <div class="methodName">PositionManager#placeAboveTopRight()</div>
+      <div id="placeAboveTopRight_container" class="container">
+        <div id="placeAboveTopRight_el" class="el"></div>
+      </div>
+
+      <div class="methodName">PositionManager#placeBelowBottomRight()</div>
+      <div id="placeBelowBottomRight_container" class="container">
+        <div id="placeBelowBottomRight_el" class="el"></div>
+      </div>
+
+      <div class="methodName">PositionManager#placeAboveTopRightCorner()</div>
+      <div id="placeAboveTopRightCorner_container" class="container">
+        <div id="placeAboveTopRightCorner_el" class="el"></div>
+      </div>
+
+      <div class="methodName">PositionManager#placeAboveTopLeftCorner()</div>
+      <div id="placeAboveTopLeftCorner_container" class="container">
+        <div id="placeAboveTopLeftCorner_el" class="el"></div>
+      </div>
+
+      <div class="methodName">PositionManager#placeBelowBottomLeftCorner()</div>
+      <div id="placeBelowBottomLeftCorner_container" class="container">
+        <div id="placeBelowBottomLeftCorner_el" class="el"></div>
+      </div>
+
+      <div class="methodName">PositionManager#placeBelowBottomRightCorner()</div>
+      <div id="placeBelowBottomRightCorner_container" class="container">
+        <div id="placeBelowBottomRightCorner_el" class="el"></div>
+      </div>
+
+    </div>
+
+  </div>
+
+</body>

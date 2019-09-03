@@ -1,0 +1,14 @@
+<head>
+  <script src="/lib/webface_init.js"></script>
+  <script src="/examples/components/checkbox/container_component.js" type="module"></script>
+  <script src="/examples/webface_app.js" type="module"></script>
+</head>
+<body>
+  <div data-component-class="ContainerComponent">
+    <label><input data-component-class="CheckboxComponent" type="checkbox" data-component-roles="checkbox">Click on the buttons to check/uncheck the checkbox</label>
+    <br/>
+    <button data-component-class="ButtonComponent" data-component-roles="check" data-component-attr-map="lockable:lockable" lockable="false">Check</button>
+    <button data-component-class="ButtonComponent" data-component-roles="uncheck" data-component-attr-map="lockable:lockable" lockable="false">Uncheck</button>
+    <button data-component-class="ButtonComponent" data-component-roles="print_status" data-component-attr-map="lockable:lockable" lockable="false">print status to console</button>
+  </div>
+</body>

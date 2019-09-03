@@ -1,0 +1,26 @@
+<head>
+  <script src="/lib/webface_init.js"></script>
+  <script src="/examples/components/form_field/container_component.js" type="module"></script>
+  <script src="/examples/webface_app.js" type="module"></script>
+  <style>
+    .errors input { background-color: #ffc9c9; border: solid 1px red; }
+    .errorsSummary { color: red; display: none; }
+  </style>
+</head>
+<body>
+  <div data-component-class="ContainerComponent">
+    <div data-component-class="FormFieldComponent" data-component-roles="form_field">
+      <input data-component-part="value_holder"
+           type="text"
+           name="input1"
+           value="initial value"
+           checked="false"/>
+      <div data-component-attr="validation_errors_summary" class="errorsSummary"></div>
+    </div>
+    <br/>
+
+    <button data-component-class="ButtonComponent" data-component-roles="validate" data-component-attr-map="lockable:lockable" lockable="false">Validate</button>
+    <button data-component-class="ButtonComponent" data-component-roles="reset" data-component-attr-map="lockable:lockable" lockable="false">Reset</button>
+    <button data-component-class="ButtonComponent" data-component-roles="print_current_value" data-component-attr-map="lockable:lockable" lockable="false">print current value to console</button>
+  </div>
+</body>

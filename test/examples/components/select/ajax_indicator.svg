@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+  <svg width='16px' height='16px' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid" class="uil-ring">
+  
+    <style type="text/css">
+      @keyframes spinnerAnimation {
+        from {
+          transform-origin: 50% 50%;
+          transform: rotate(0deg);
+        }
+        to {
+          transform-origin: 50% 50%;
+          transform: rotate(360deg);
+        }
+      }
+
+      #spinner {
+        animation: spinnerAnimation 1s linear infinite;
+        fill: none;
+      }
+    </style>
+
+    <rect x="0" y="0" width="100" height="100" fill="none" class="bk"></rect>
+    <circle id="spinner" cx="50" cy="50" r="40" stroke-dasharray="163.36281798666926 87.9645943005142" stroke="#366B7D" fill="none" stroke-width="20"/>
+</svg>
+
+<!--
+-->

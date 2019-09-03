@@ -1,0 +1,64 @@
+<head>
+  <script src="/lib/webface_init.js"></script>
+  <script src="/examples/components/select/container_component.js" type="module"></script>
+  <script src="/examples/webface_app.js" type="module"></script>
+  <style>
+
+    .container { width: 100%; }
+
+    .selectBox { border: solid 1px #aaa; min-height: 2em; width: 20em; border-radius: 5px; padding: 0 0.5em; cursor: pointer; display: flex; justify-content: space-between; align-items: center; }
+    .optionsContainer { border: solid 1px #aaa; width: 20em; border-radius: 5px; background-color: #fff; }
+    .option { height: 1em; padding: 0.5em; cursor: pointer; }
+    .option:hover, .option.focused { background-color: #eee; }
+    .displayValue { width: 18em; }
+    .arrow { width: 0.7em; margin-right: 0.5em; }
+    #spinner { display: none; margin-right: 0.5em; }
+    #selectbox[disabled="disabled"] .selectBox { opacity: 0.5; }
+
+  </style>
+</head>
+<body>
+
+  <div data-component-class="ContainerComponent" class="container">
+
+    <div data-component-class="SelectComponent" data-component-attr-map="disabled:disabled, name:data-name, fetch_url:data-fetch-url, separators_below:data-separators-below, top_values:data-top-values, sort_on_fetch:data-sort-on-fetch,spinner_el:data-spinner-el" data-name="payment_type" style="width: 200px;" data-fetch-url="/select_component_options" data-component-roles="selectbox" data-sort-on-fetch="true" data-spinner-el="#spinner" tabindex="1" id="selectbox" data-disabled="false">
+
+      <label>Choose payment method</label>
+      <input data-component-attr="input_value" data-component-attr-map="input_value:value" type="hidden" name="payment_type">
+
+      <div class="selectBoxAndOptions">
+
+        <div data-component-part="selectbox" class="selectBox">
+          <div data-component-attr="display_value" class="displayValue">-- no option --</div>
+          <img src="/examples/components/select/ajax_indicator.svg" id="spinner"/>
+          <img class="arrow" src="/examples/components/select/arrow.svg"/>
+        </div>
+
+        <div data-component-part="option_template" class="option" style="display: none;"></div>
+        <div data-component-part="options_container" class="optionsContainer" style="display: none; overflow-y: auto; position: absolute;" data-separators-below="Bank wire">
+          <div data-component-part="option" class="option" data-option-value="null">-- no option --</div>
+          <div data-component-part="option" class="option" data-option-value="Bank wire">Bank wire</div>
+          <div data-component-part="option" class="option" data-option-value="Cash">Cash</div>
+          <div data-component-part="option" class="option" data-option-value="Cryptocurrency">Cryptocurrency</div>
+          <div data-component-part="option" class="option" data-option-value="Phone refill">Phone refill</div>
+          <div data-component-part="option" class="option" data-option-value="Credit card">Credit card</div>
+          <div data-component-part="option" class="option" data-option-value="Shitcoins">Shitcoins</div>
+          <div data-component-part="option" class="option" data-option-value="Gold">Gold</div>
+          <div data-component-part="option" class="option" data-option-value="Cryptocurrency2">Cryptocurrency2</div>
+          <div data-component-part="option" class="option" data-option-value="Phone refill2">Phone refill2</div>
+          <div data-component-part="option" class="option" data-option-value="Credit card2">Credit card2</div>
+          <div data-component-part="option" class="option" data-option-value="Shitcoins2">Shitcoins2</div>
+          <div data-component-part="option" class="option" data-option-value="Gold2">Gold2</div>
+        </div>
+
+      </div>
+
+  </div>
+
+  <p>
+    Click this button to fetch a completely different set of options from the server. Notice that while fetching data, the spinner appears briefly.
+  </p>
+  <button data-component-class="ButtonComponent" data-component-roles="fetch_options">Fetch options</button>
+  </div>
+
+</body>

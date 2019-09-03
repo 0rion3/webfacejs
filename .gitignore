@@ -1,0 +1,4 @@
+node_modules
+test/examples/components/playground
+!test/node_modules
+!lib/node_modules

@@ -1,0 +1,15 @@
+<body>
+  <div data-component-class="DummyComponent2" data-component-roles="role1">
+    <div data-component-class="DummyComponent3" data-component-roles="role1,role2,role3"></div>
+    <div data-component-class="DummyComponent3" data-component-roles="role3"></div>
+    <div data-component-class="DummyComponent4" data-component-roles="role2">
+      <b>This component doesn't have a corresponding JS class</b>
+    </div>
+  </div>
+  <div data-component-class="DummyComponent2" data-component-roles="role1"></div>
+  <div data-component-class="DummyComponent2" data-component-roles="role2">
+    <div data-component-class="DummyComponent2" data-component-roles="role1">
+      <div data-component-class="DummyComponent2" data-component-roles="role4"></div>
+    </div>
+  </div>
+</body>

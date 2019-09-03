@@ -1,0 +1,42 @@
+<head>
+  <script src="/lib/webface_init.js"></script>
+  <script src="/examples/components/dialog_window/container_component.js" type="module"></script>
+  <script src="/examples/webface_app.js" type="module"></script>
+  <style>
+    #dialog_window_template, #dialog_window_content { display: none; }
+    .errors input { background-color: #ffc9c9; border: solid 1px red; }
+    .errorsSummary { color: red; display: none; }
+
+
+    .dialogWindow { position: fixed; z-index: 1000; }
+    .dialogWindow .dialog:before { content: ""; display: block; background: rgba(0,0,0,.2); position: fixed; top: 0; left: 0; right: 0; bottom: 0; z-index: -1; }
+    .dialogWindow .dialogDialog { 
+      background-color: #fff; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 11; max-width: 30em; width: 100%; max-height: 85%; min-height: 5em; border-radius: 0.5em; padding: 2em; overflow: hidden; overflow-y: auto;
+     }
+    .dialogWindow .close { cursor: pointer; float: right; margin-bottom: 2em; color: blue; }
+
+  </style>
+</head>
+<body>
+  <div data-component-class="ContainerComponent">
+
+    <div data-component-template="DialogWindowComponent" id="dialog_window_template" class="dialogWindow">
+      <div class="dialog" data-component-roles="background">
+        <div class="dialogDialog">
+          <div data-component-part="close" class="close">[ close ]</div>
+          <div data-component-part="content"></div>
+          <div data-component-part="button_container"></div>
+        </div>
+      </div>
+    </div>
+
+    <button data-component-class="ButtonComponent" data-component-roles="show_dialog_with_text" data-component-attr-map="lockable:lockable" lockable="false">Show dialog with text</button>
+    <button data-component-class="ButtonComponent" data-component-roles="show_dialog_with_html" data-component-attr-map="lockable:lockable" lockable="false">Show dialog with html</button>
+
+    <div style="display: none">
+      <button data-component-template="ButtonComponent" data-component-attr="caption"></button>
+    </div>
+
+  </div>
+
+</body>

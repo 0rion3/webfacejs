@@ -9,6 +9,10 @@ export class ContainerComponent extends extend_as("ContainerComponent").mix(Comp
       self.findChildrenByRole("selectbox")[0].fetchOptions();
       self.findChildrenByRole("selectbox")[0].behave("disable")
     }});
+
+    this.event_handlers.add({ event: "change", role: "selectbox", handler: (self, child) => {
+      console.log("select value changed");
+    }});
   }
 
 }

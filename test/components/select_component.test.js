@@ -178,6 +178,13 @@ describe("SelectComponent", function() {
       chai.expect(spy).to.have.been.called.once.with("change");
     });
 
+    it("doesn't publish a change event if input_value hasn't changed", function() {
+      select.attributes["input_value"] = "Cash";
+      var spy = chai.spy.on(select, "publishEvent");
+      select.setValueByInputValue("Cash");
+      chai.expect(spy).to.not.have.been.called.with("change");
+    });
+
     it("sets value to the previous or next one based on which value is current", function() {
       select.setValueByInputValue("Cash");
       select.setPrevValue();

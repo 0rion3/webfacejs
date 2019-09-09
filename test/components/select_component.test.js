@@ -73,7 +73,7 @@ describe("SelectComponent", function() {
   it("gets an id of the focused option", function() {
     select.setValueByInputValue("Cash");
     chai.expect(select.focused_option_id).to.equal(2);
-    select.setValueByInputValue(null);
+    select.setValueByInputValue("null");
     chai.expect(select.focused_option_id).to.be.null;
   });
 
@@ -146,25 +146,13 @@ describe("SelectComponent", function() {
     it("accepts a null value and assigns null to input_value and an empty string to display_value", function() {
       select.setValueByInputValue("null");
       chai.expect(select.get("input_value")).to.be.null;
-      chai.expect(select.get("display_value")).to.eq("");
+      chai.expect(select.get("display_value")).to.eq("-- Choose payment method --");
     });
 
     it("accepts a non-null value and assigns it to both input_value and display_value", function() {
       select.setValueByInputValue("Cash");
       chai.expect(select.get("input_value")).to.eq("Cash");
       chai.expect(select.get("display_value")).to.eq("Cash");
-    });
-
-    it("calls hideNoValueOption behavior when value is null", function() {
-      var spy = chai.spy.on(select, "behave");
-      select.setValueByInputValue("null");
-      chai.expect(spy).to.have.been.called.once.with("hideNoValueOption");
-    });
-
-    it("calls showNoValueOption behavior when value is not null", function() {
-      var spy = chai.spy.on(select, "behave");
-      select.setValueByInputValue("Cash");
-      chai.expect(spy).to.have.been.called.once.with("showNoValueOption");
     });
 
     it("sets the focus option", function() {

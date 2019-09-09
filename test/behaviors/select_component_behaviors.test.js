@@ -9,15 +9,18 @@ describe("SelectComponentBehaviors", function() {
 
   beforeEach(async function() {
     dom = (await fetch_dom("fixtures/select_component.html")).querySelector('#selectbox');
+    var attrs = {  hide_null_option_after_option_selected: false, input_value: "1" }
     var component = {
       lines_to_show: 3,
       dom_element: dom,
       focused_option: null,
-      input_value: "1",
       findPart:     (name) => dom.querySelector(`[data-component-part="${name}"]`),
       findAllParts: (name) => dom.querySelectorAll(`[data-component-part="${name}"]`),
       event_locks: { add: function() {}, remove: function() {} },
-      get: (k,v) => "do_nothing",
+      get: (k) => {
+        if(attrs[k] != null) return attrs[k];
+        else return "do nothing";
+      },
       set: (k,v) => "do_nothing",
       addEventLock: () => "do_nothing"
     }
@@ -96,7 +99,7 @@ describe("SelectComponentBehaviors", function() {
     chai.expect(dom.querySelector('[data-option-value="null"]')).to.be.null;
   });
 
-  it("shows no-value option", function() {
+  it("shows no-value option after it was hidden", function() {
     behaviors.hideNoValueOption();
     behaviors.showNoValueOption();
     chai.expect(dom.querySelector('[data-option-value="null"]')).to.not.be.null;

@@ -9,7 +9,7 @@ describe("SelectComponentBehaviors", function() {
 
   beforeEach(async function() {
     dom = (await fetch_dom("fixtures/select_component.html")).querySelector('#selectbox');
-    var attrs = {  hide_null_option_after_option_selected: false, input_value: "1" }
+    var attrs = {  hide_null_option_after_option_selected: false, input_value: "1", separators_below: "Bank wire" }
     var component = {
       lines_to_show: 3,
       dom_element: dom,
@@ -107,7 +107,6 @@ describe("SelectComponentBehaviors", function() {
   });
 
   it("adds a separation line", function() {
-    behaviors.component.separators_below = ["Bank wire"];
     behaviors.addSeparationLine();
     chai.expect(Array.from(behaviors.options_container.querySelector('[data-option-value="Bank wire"]').classList)).to.include("optionSeparator");
   });

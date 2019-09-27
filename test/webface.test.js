@@ -45,3 +45,4 @@ import "./behaviors/hint_component_behaviors.test.js";
 import "./behaviors/simple_notification_component_behaviors.test.js";
 import "./behaviors/select_component_behaviors.test.js";
 import "./behaviors/context_menu_component_behaviors.test.js";
+import "./behaviors/editable_select_component_behaviors.test.js";

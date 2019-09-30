@@ -6,7 +6,9 @@ import { ComponentDom } from '../lib/modules/component_dom.js'
 class ComponentDomClass extends extend_as("ComponentDomClass").mixins(ComponentDom,Attributable) {
   constructor() {
     super();
-    this.attribute_names = ["attr1", "attr2", "attr3", "writeable_attr1", "writeable_attr2", "writeable_attr3", "writeable_attr4", "attr_without_html_attribute", "reversable_attr"];
+    this.attribute_names = ["attr1", "attr2", "attr3", "writeable_attr1", "writeable_attr2", 
+                            "writeable_attr3", "writeable_attr4", "attr_without_html_attribute",
+                            "reversable_attr", "defined_attr", "undefined_attr"];
     this.attribute_casting = this.constructor.attribute_casting;
   }
 }
@@ -159,6 +161,15 @@ describe('ComponentDom', function() {
     component_dom.set("attr_without_html_attribute", "hello world");
     component_dom._writeAttrToNode("attr_without_html_attribute");
     chai.expect(component_dom.dom_element.getAttribute("data-attr-without-html-attribute")).to.equal("hello world");
+  });
+
+  it("doesn't read or write attributes if source value is undefined", function() {
+    component_dom.set("defined_attr", undefined);
+    chai.expect(component_dom.findFirstAttrElement("defined_attr").getAttribute("data-defined-attr")).to.equal("defined value");
+
+    component_dom.attributes["undefined_attr"] = 1;
+    component_dom._readAttrFromNode("undefined_attr");
+    chai.expect(component_dom.get("undefined_attr")).to.eq(1);
   });
 
   it("writes attribute value to ALL attr elements in the DOM if there are many", function() {

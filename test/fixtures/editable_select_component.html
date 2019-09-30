@@ -3,24 +3,23 @@
   <div data-component-class="EditableSelectComponent" data-component-attr-map="disabled:data-disabled, name:data-name, fetch_url:data-fetch-url, allow_custom_value:data-allow-custom-value, query_param_name:data-query-param-name" id="editable_selectbox" style="width: 200px;" data-fetch-url="/select_component_options" data-component-roles="selectbox">
     
     <label>Editable Selectbox</label>
-    <input data-component-attr="input_value" data-component-attr-map="input_value:value" type="hidden" name="payment_type">
-    <div data-component-attr="display_value"></div>
 
     <div class="selectBoxAndOptions">
 
       <div data-component-part="selectbox" class="selectBox">
-        <input data-component-property="input_value" data-component-part="input" data-component-attribute-properties="input_value:value" type="hidden" name="payment_method_instruction" value="">
-        <input data-component-property="display_value" data-component-part="display_input" data-component-attr-map="display_value:value" type="text" class="editableSelect" placeholder="Start typing..." autocomplete="off" data-placeholder="Start typing..." value="">
-        <img class="arrow" src=""/>
+        <input data-component-attr="input_value" data-component-part="input" data-component-attr-map="input_value:value" type="hidden" name="payment_method_instruction" value="">
+        <input data-component-attr="display_value" data-component-part="display_input" type="text" class="editableSelect" placeholder="Start typing..." autocomplete="off" data-placeholder="Start typing..." value="">
+        <img class="arrow" data-component-part="arrow" src=""/>
         <img class="spinner" src="" style="display: none;">
       </div>
       
       <div data-component-part="option_template" class="option" style="height: 10px; display: none;"></div>
       <div data-component-part="options_container" class="optionsContainer" style="display: none; overflow-y: auto; position: absolute; font-size: 1px;" data-separators-below="Bank wire">
-        <div data-component-part="option" class="option" data-option-value="null" style="height: 10px;">-- Choose payment method --</div>
-        <div data-component-part="option" class="option" data-option-value="Bank wire" style="height: 10px;">Bank wire</div>
-        <div data-component-part="option" class="option" data-option-value="Cash" style="height: 10px;">Cash</div>
-        <div data-component-part="option" class="option" data-option-value="Cryptocurrency" style="height: 10px;">Cryptocurrency</div>
+        <div data-component-part="option" class="option" data-option-value="a" style="height: 10px;">A option</div>
+        <div data-component-part="option" class="option" data-option-value="ab" style="height: 10px;">AB option</div>
+        <div data-component-part="option" class="option" data-option-value="abc" style="height: 10px;">ABC option</div>
+        <div data-component-part="option" class="option" data-option-value="abcd" style="height: 10px;">ABCD option</div>
+        <div data-component-part="option" class="option" data-option-value="abcde" style="height: 10px;">ABCDE option</div>
       </div>
 
   </div>

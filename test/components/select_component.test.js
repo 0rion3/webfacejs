@@ -108,6 +108,17 @@ describe("SelectComponent", function() {
       select.set("fetch_url", "localhost:3000")
       select.updateFetchUrlParams({ country: "Chile", region: "Santiago" });
       chai.expect(select.get("fetch_url")).to.equal("localhost:3000?country=Chile&region=Santiago");
+      select.set("fetch_url", "/locations");
+      select.updateFetchUrlParams({ hello: "world" });
+      chai.expect(select.get("fetch_url")).to.eq("/locations?hello=world");
+      select.updateFetchUrlParams({ hello: "hi" });
+      chai.expect(select.get("fetch_url")).to.eq("/locations?hello=hi");
+      select.updateFetchUrlParams({ param2: "value2" });
+      chai.expect(select.get("fetch_url")).to.eq("/locations?hello=hi&param2=value2");
+      select.updateFetchUrlParams({ hello: "world" });
+      chai.expect(select.get("fetch_url")).to.eq("/locations?hello=world&param2=value2");
+      select.updateFetchUrlParams({ hello: null });
+      chai.expect(select.get("fetch_url")).eq("/locations?param2=value2");
     });
 
     it("sets options from fetched json", function() {

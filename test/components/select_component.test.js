@@ -155,6 +155,7 @@ describe("SelectComponent", function() {
   describe("setting value using the input value", function() {
 
     it("accepts a null value and assigns null to input_value and an empty string to display_value", function() {
+      select.set("input_value", "Cash")
       select.setValueByInputValue("null");
       chai.expect(select.get("input_value")).to.be.null;
       chai.expect(select.get("display_value")).to.eq("-- Choose payment method --");
@@ -199,6 +200,11 @@ describe("SelectComponent", function() {
     it("sets display_value from current input_value", function() {
       select.attributes.input_value = "Cash";
       select.setDisplayValueFromCurrentInputValue();
+      chai.expect(select.get("display_value")).to.equal("Cash");
+    });
+
+    it("automatically updates display_value when input_value changes", function() {
+      select.set("input_value", "Cash");
       chai.expect(select.get("display_value")).to.equal("Cash");
     });
 

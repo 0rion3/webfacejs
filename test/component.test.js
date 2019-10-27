@@ -280,6 +280,20 @@ describe("Component", function() {
       chai.expect(component.native_event_handlers).not.to.be.empty;
     });
 
+    it("cancels event listeners for all component parts that have the same name", function() {
+      let mouseup_handler_spy = chai.spy();
+      component.event_handlers.add({ event: "mouseup", role: "self.part2", handler: mouseup_handler_spy });
+      component.findAllParts("part2").forEach((el) => {
+        el.dispatchEvent(new MouseEvent("mouseup"));
+      });
+      component._cancelNativeEventListeners();
+      component.findAllParts("part2").forEach((el) => {
+        el.dispatchEvent(new MouseEvent("mouseup"));
+      });
+      chai.expect(Object.keys(component.native_event_handlers)).not.to.include("mouseup");
+      chai.expect(mouseup_handler_spy).to.have.been.called.twice;
+    });
+
   });
 
   describe("creating component from a template", function() {

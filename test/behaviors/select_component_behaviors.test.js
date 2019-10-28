@@ -9,7 +9,7 @@ describe("SelectComponentBehaviors", function() {
 
   beforeEach(async function() {
     dom = (await fetch_dom("fixtures/select_component.html")).querySelector('#selectbox');
-    var attrs = {  hide_null_option_after_option_selected: false, input_value: "1", separators_below: "Bank wire" }
+    var attrs = { hide_null_option_after_option_selected: false, input_value: "1", separators_below: "Bank wire", top_values: "Cryptocurrency,Cash" }
     var component = {
       lines_to_show: 3,
       dom_element: dom,
@@ -112,7 +112,6 @@ describe("SelectComponentBehaviors", function() {
   });
 
   it("sets top values", function() {
-    behaviors.component.top_values = "Cryptocurrency,Cash";
     var spies = [chai.spy.on(behaviors, "updateOptionsInDom"), chai.spy.on(behaviors.component, "_listenToOptionClickEvents")];
     behaviors.setTopValues();
     spies.forEach((s) => chai.expect(s).to.have.been.called.once);

@@ -112,7 +112,7 @@ describe("EditableSelectComponent", function() {
       display_input.value = "";
 
       root.dom_element.click();
-      //chai.expect(select.get("display_value")).to.be.undefined;
+      chai.expect(select.get("display_value")).to.be.null;
       chai.expect(select.get("input_value")).to.eq(null);
       chai.expect(select.findPart("input").value).to.eq("");
       chai.expect(select.findPart("display_input").value).to.eq("");

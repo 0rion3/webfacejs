@@ -54,7 +54,6 @@ describe("SelectComponentBehaviors", function() {
     chai.expect(Array.from(behaviors.selectbox.classList)).to.include("open");
     chai.expect(behaviors.options_container.style.minWidth).to.eq("198px"); // 200 - 2;
     chai.expect(behaviors.options_container.style.display).to.eq("block");
-    chai.expect(behaviors.component.focused_option).to.eq("1");
     spies.forEach((s) => chai.expect(s).to.have.been.called.once);
   });
 
@@ -65,14 +64,6 @@ describe("SelectComponentBehaviors", function() {
     chai.expect(Array.from(behaviors.selectbox.classList)).not.to.include("open");
     chai.expect(behaviors.options_container.style.display).to.eq("none");
     chai.expect(spy).to.have.been.called.twice; // twice because it's called on opening and on closing too
-  });
-
-  it("toggles open/close for a select box", function() {
-    var spies = [chai.spy.on(behaviors, "open"), chai.spy.on(behaviors, "close")];
-    behaviors.toggle();
-    behaviors.component.opened = true; // Because SelectComponent is responsible for setting this flag.
-    behaviors.toggle();
-    spies.forEach((s) => chai.expect(s).to.have.been.called.once);
   });
 
   it("focuses on the currently selected option when the option list is visible", function() {

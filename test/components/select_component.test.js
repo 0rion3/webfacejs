@@ -59,14 +59,12 @@ describe("SelectComponent", function() {
   });
 
   it("sets focus on a selected element and toggles open/close behavior", function() {
-    var spy = chai.spy.on(select, "behave");
     select.opened = true;
     select.focused_option = "Cash";
     select.setFocusedAndToggle();
     chai.expect(select.get("input_value")).to.equal("Cash");
     chai.expect(select.opened).to.be.false;
     select.setFocusedAndToggle();
-    chai.expect(spy).to.have.been.called.with("toggle");
     chai.expect(select.opened).to.be.true;
   });
 
@@ -81,6 +79,16 @@ describe("SelectComponent", function() {
     chai.expect(select.optionKeyForValue("Cash")).to.equal("Cash");
     chai.expect(select.optionKeyForValue(null)).to.be.undefined
     chai.expect(select.optionKeyForValue("non existent")).to.be.undefined;
+  });
+
+  it("toggles open/close states", function() {
+    var spy = chai.spy.on(select, "behave");
+    select.toggle();
+    chai.expect(select.opened).to.be.true;
+    select.toggle();
+    chai.expect(select.opened).to.be.false;
+    chai.expect(spy).to.have.been.called.with("open");
+    chai.expect(spy).to.have.been.called.with("close");
   });
 
   describe("disabling", function() {
@@ -213,12 +221,11 @@ describe("SelectComponent", function() {
   describe("processing keydown events", function() {
 
     it("closes selectbox when ESC is pressed", function() {
-      var spies = [ chai.spy.on(select, "behave"), chai.spy.on(select, "_toggleOpenedStatus") ];
+      select.opened = true;
       var e = new KeyboardEvent('keydown', { keyCode: 27 });
       select.dom_element.dispatchEvent(e);
       select._processKeyDownEvent(e);
-      chai.expect(spies[0]).to.have.been.called.once.with("close");
-      chai.expect(spies[1]).to.have.been.called.once;
+      chai.expect(select.opened).to.be.false;
     });
 
     it("focuses on previous option or sets previous value when Arrow UP is pressed", function() {

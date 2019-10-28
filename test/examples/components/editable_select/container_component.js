@@ -10,7 +10,7 @@ export class ContainerComponent extends extend_as("ContainerComponent").mix(Comp
     }});
 
     this.event_handlers.add({ event: "change", role: "selectbox", handler: (self, child) => {
-      console.log("select value changed");
+      console.log(child.get("input_value"));
     }});
   }
 

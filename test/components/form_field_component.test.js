@@ -48,12 +48,20 @@ describe("FormFieldComponent", function() {
     chai.expect(form_field.get("value")).to.equal("initial value");
   });
 
-  it("resets an element value", function() {
+  it("resets the value to the initial value", function() {
     form_field.value_holder_element.value = "some text";
     form_field.value_holder_element.dispatchEvent(new Event("change"));
     form_field.reset();
     chai.expect(form_field.get("value")).to.equal("initial value");
     chai.expect(form_field.value_holder_element.value).to.equal("initial value");
+  });
+
+  it("clears the value by setting it to null", function() {
+    form_field.value_holder_element.value = "some text";
+    form_field.value_holder_element.dispatchEvent(new Event("change"));
+    form_field.clear();
+    chai.expect(form_field.get("value")).to.equal(null);
+    chai.expect(form_field.value_holder_element.value).to.equal("");
   });
 
   it("show and hide validation_errors_summary block accordingly", function() {

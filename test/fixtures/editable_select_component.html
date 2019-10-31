@@ -1,7 +1,7 @@
 <div id="root" style="width: 200px;">
 
-  <div data-component-class="EditableSelectComponent" data-component-attr-map="disabled:data-disabled, name:data-name, fetch_url:data-fetch-url, allow_custom_value:data-allow-custom-value, query_param_name:data-query-param-name" id="editable_selectbox" style="width: 200px;" data-fetch-url="/select_component_options" data-component-roles="selectbox">
-    
+  <div data-component-class="EditableSelectComponent" data-component-attr-map="disabled:data-disabled, name:data-name, fetch_url:data-fetch-url, allow_custom_value:data-allow-custom-value, query_param_name:data-query-param-name" id="editable_selectbox" style="width: 200px;" data-fetch-url="/select_component_options" data-component-roles="selectbox" data-ignore-external-click-id="payment_method_select">
+
     <label>Editable Selectbox</label>
 
     <div class="selectBoxAndOptions">
@@ -23,4 +23,7 @@
       </div>
 
   </div>
+
+  <button id="reset_payment_method_select" data-ignore-external-click-for="payment_method_select">Reset</button>
+
 </div>

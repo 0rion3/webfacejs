@@ -5,9 +5,11 @@ export class ContainerComponent extends extend_as("ContainerComponent").mix(Comp
 
   constructor() {
     super();
-    this.event_handlers.add({ event: "click", role: "fetch_options", handler: (self, child) => {
-      self.findChildrenByRole("selectbox")[0].fetchOptions();
-    }});
+    this.event_handlers.addForEvent("click", {
+      fetch_options: (self, child) => self.findChildrenByRole("selectbox")[0].fetchOptions(),
+      reset:         (self, child) => self.findChildrenByRole("selectbox")[0].reset(),
+      clear:         (self, child) => self.findChildrenByRole("selectbox")[0].clear()
+    });
 
     this.event_handlers.add({ event: "change", role: "selectbox", handler: (self, child) => {
       console.log("select value changed");

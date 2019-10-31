@@ -21,15 +21,15 @@
 
   <div data-component-class="ContainerComponent" class="container">
 
-    <div data-component-class="EditableSelectComponent" data-component-attr-map="disabled:data-disabled, name:data-name, fetch_url:data-fetch-url, allow_custom_value:data-allow-custom-value, query_param_name:data-query-param-name, sort_on_fetch:data-sort-on-fetch, spinner_el:data-spinner-el" data-name="payment_type" style="width: 200px;" data-fetch-url="/select_component_options" data-component-roles="selectbox" data-sort-on-fetch="true" data-spinner-el="#spinner" tabindex="1" id="selectbox" data-disabled="false" data-allow-custom-value="true">
+    <div data-component-class="EditableSelectComponent" data-component-attr-map="disabled:data-disabled, name:data-name, fetch_url:data-fetch-url, allow_custom_value:data-allow-custom-value, query_param_name:data-query-param-name, sort_on_fetch:data-sort-on-fetch, spinner_el:data-spinner-el" data-name="payment_type" style="width: 200px;" data-fetch-url="/select_component_options" data-component-roles="selectbox" data-sort-on-fetch="true" data-spinner-el="#spinner" tabindex="1" id="selectbox" data-disabled="false" data-allow-custom-value="true" data-ignore-external-click-id="payment_method_select1">
 
       <label>Choose payment method</label>
 
       <div class="selectBoxAndOptions">
 
         <div data-component-part="selectbox" class="selectBox">
-          <input data-component-attr="input_value" data-component-part="input" data-component-attr-map="input_value:value" type="hidden" name="payment_method_instruction" value="">
-          <input class="displayValue" data-component-attr="display_value" data-component-part="display_input" type="text" placeholder="Start typing..." autocomplete="off" data-placeholder="Start typing..." value="">
+          <input data-component-attr="input_value" data-component-part="input" data-component-attr-map="input_value:value" type="hidden" name="payment_method_instruction" value="Bank wire">
+          <input class="displayValue" data-component-attr="display_value" data-component-part="display_input" type="text" placeholder="Start typing..." autocomplete="off" data-placeholder="Start typing...">
           <img src="/examples/components/select/ajax_indicator.svg" id="spinner"/>
           <img class="arrow" data-component-part="arrow" src="/examples/components/select/arrow.svg"/>
         </div>
@@ -58,6 +58,8 @@
     Click this button to fetch a completely different set of options from the server. Notice that while fetching data, the spinner appears briefly.
   </p>
   <button data-component-class="ButtonComponent" data-component-roles="fetch_options">Fetch options</button>
+  <button data-component-class="ButtonComponent" data-component-roles="reset" data-lockable="false" data-ignore-external-click-for="payment_method_select1">Reset</button>
+  <button data-component-class="ButtonComponent" data-component-roles="clear" data-lockable="false" data-ignore-external-click-for="payment_method_select1">Clear</button>
   </div>
 
 </body>

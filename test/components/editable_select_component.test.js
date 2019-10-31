@@ -118,6 +118,12 @@ describe("EditableSelectComponent", function() {
       chai.expect(select.findPart("display_input").value).to.eq("");
     });
 
+    it("doesn't change value on external click when event trigger has data-ignore-external-click-for value that matches ignore_external_click_id attr", function() {
+      select.set("input_value", "ab");
+      root.dom_element.querySelector("button#reset_payment_method_select").click();
+      chai.expect(select.get("input_value")).to.eq("ab");
+    });
+
   });
 
 });

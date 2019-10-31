@@ -91,6 +91,17 @@ describe("SelectComponent", function() {
     chai.expect(spy).to.have.been.called.with("close");
   });
 
+  it("resets to the initial value", function() {
+    select.set("input_value", "Cash");
+    select.reset();
+    chai.expect(select.get("input_value")).to.equal("Bank wire");
+  });
+
+  it("clears the value by setting it to null", function() {
+    select.clear();
+    chai.expect(select.get("input_value")).to.equal(null);
+  });
+
   describe("disabling", function() {
 
     it("adds disabled='disabled' attribute to the dom element", function() {

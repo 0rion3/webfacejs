@@ -18,13 +18,13 @@ describe("SelectComponent", function() {
 
   it("reads options from dom", function() {
     // No need to call readOptionsFromDom(), it's done automatically in afterInitialize()
-    chai.expect(select.options.keys).to.eql(["null", "Bank wire", "Cash", "Cryptocurrency"]);
-    chai.expect(select.options.values).to.eql(["-- Choose payment method --", "Bank wire", "Cash", "Cryptocurrency"]);
+    chai.expect(select.options.keys).to.eql([null, "Bank wire", "Cash", "Cryptocurrency", 0]);
+    chai.expect(select.options.values).to.eql(["-- Choose payment method --", "Bank wire", "Cash", "Cryptocurrency", "Zero"]);
   });
 
   it("gets next value for an option based on the current one", function() {
     chai.expect(select.getNextValue("Cash")).to.eq("Cryptocurrency");
-    chai.expect(select.getNextValue("Cryptocurrency")).to.be.undefined;
+    chai.expect(select.getNextValue("Zero")).to.be.undefined;
   });
 
   it("gets previous value for an option based on the current one", function() {
@@ -95,6 +95,13 @@ describe("SelectComponent", function() {
     select.set("input_value", "Cash");
     select.reset();
     chai.expect(select.get("input_value")).to.equal("Bank wire");
+  });
+
+  it("resets to the initial value and sets it to 0, not null, if it was 0", function() {
+    select.initial_value = 0;
+    select.reset();
+    chai.expect(select.get("input_value")).to.equal(0);
+    chai.expect(select.get("display_value")).to.equal("Zero");
   });
 
   it("clears the value by setting it to null", function() {
@@ -212,14 +219,19 @@ describe("SelectComponent", function() {
       chai.expect(select.get("input_value")).to.equal("Cash");
       select.setNextValue();
       chai.expect(select.get("input_value")).to.equal("Cryptocurrency");
+      select.setNextValue();
+      chai.expect(select.get("input_value")).to.equal(0);
       select.setNextValue(); // Current value is the last one. An attempt to select the next one is simply ignored and current value is retained.
-      chai.expect(select.get("input_value")).to.equal("Cryptocurrency");
+      chai.expect(select.get("input_value")).to.equal(0);
     });
 
     it("sets display_value from current input_value", function() {
       select.attributes.input_value = "Cash";
       select.setDisplayValueFromCurrentInputValue();
       chai.expect(select.get("display_value")).to.equal("Cash");
+      select.attributes.input_value = 0;
+      select.setDisplayValueFromCurrentInputValue();
+      chai.expect(select.get("display_value")).to.equal("Zero");
     });
 
     it("automatically updates display_value when input_value changes", function() {

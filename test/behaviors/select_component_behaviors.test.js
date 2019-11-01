@@ -44,7 +44,7 @@ describe("SelectComponentBehaviors", function() {
     behaviors.component.lines_to_show = 7
     behaviors._applyLinesToShow();
     // 5 lines to show, but 4 option elements * 10px
-    chai.expect(behaviors.options_container.style.height).to.eq("40px");
+    chai.expect(behaviors.options_container.style.height).to.eq("50px");
   });
 
   it("opens the select box", function() {
@@ -114,7 +114,8 @@ describe("SelectComponentBehaviors", function() {
       ["Cryptocurrency", "Cryptocurrency"],
       ["Cash", "Cash"],
       ["null", "-- Choose payment method --"],
-      ["Bank wire", "Bank wire"]
+      ["Bank wire", "Bank wire"],
+      ["0", "Zero"]
     ]);
   });
 
@@ -141,10 +142,7 @@ describe("SelectComponentBehaviors", function() {
 
     behaviors.component.focused_option_id = 4;
     behaviors._scroll();
-    // 11px here Because scroll top != the bottom of the block.
-    // We have 4 items in our options list, each 10px. 3 are visible,
-    // therefore scrolling back just 10px down would reveal the bottom item.
-    chai.expect(behaviors.options_container.scrollTop).to.equal(10);
+    chai.expect(behaviors.options_container.scrollTop).to.equal(20);
 
     behaviors.component.focused_option_id = 1;
     behaviors._scroll();

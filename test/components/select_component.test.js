@@ -180,13 +180,6 @@ describe("SelectComponent", function() {
 
   describe("setting value using the input value", function() {
 
-    it("accepts a null value and assigns null to input_value and an empty string to display_value", function() {
-      select.set("input_value", "Cash")
-      select.setValueByInputValue("null");
-      chai.expect(select.get("input_value")).to.be.null;
-      chai.expect(select.get("display_value")).to.eq("-- Choose payment method --");
-    });
-
     it("accepts a non-null value and assigns it to both input_value and display_value", function() {
       select.setValueByInputValue("Cash");
       chai.expect(select.get("input_value")).to.eq("Cash");
@@ -239,6 +232,30 @@ describe("SelectComponent", function() {
       chai.expect(select.get("display_value")).to.equal("Cash");
     });
 
+    context("when 'hide_null_option_display_value' is set to false", function() {
+      beforeEach(function() {
+        select.set("hide_null_option_display_value", false);
+      });
+
+      it("accepts a null value and assigns null to input_value and null value text to display_value", function() {
+        select.setValueByInputValue("null");
+        chai.expect(select.get("input_value")).to.be.null;
+        chai.expect(select.get("display_value")).to.eq("-- Choose payment method --");
+      });
+    });
+
+
+    context("when 'hide_null_option_display_value' is set to true", function() {
+      beforeEach(function() {
+        select.set("hide_null_option_display_value", true);
+      });
+
+      it("accepts a null value and assings null to input_value and display_value", function() {
+        select.setValueByInputValue("null");
+        chai.expect(select.get("input_value")).to.be.null;
+        chai.expect(select.get("display_value")).to.be.null;
+      });
+    });
   });
 
   describe("processing keydown events", function() {

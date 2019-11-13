@@ -1,5 +1,5 @@
 import { extend_as } from '../lib/utils/mixin.js'
-import { Attributable, UndefinedAttributeError } from '../lib/modules/attributable.js'
+import { Attributable, UndefinedAttributeError, NestedAttributeError } from '../lib/modules/attributable.js'
 
 class Dummy extends extend_as("Dummy").mixins(Attributable) {
   constructor() {
@@ -25,6 +25,7 @@ describe('Attributable', function() {
 
   beforeEach(function() {
     dummy = new Dummy();
+    dummy.dummy2 = new Dummy();
   });
 
   it('returns an attribute value when a getter is called', function() {
@@ -111,6 +112,13 @@ describe('Attributable', function() {
   it("allows to redefine setters", function() {
     dummy.set("custom_getter_setter_attr", "hello");
     chai.expect(dummy.get("custom_getter_setter_attr")).to.equal("hello (set)!");
+  });
+
+  it("updates attributes of a component in the associated property if the value for one of the keys is itself an object", function() {
+    dummy.updateAttributes({ caption: "new caption", dummy2: { caption: "dummy2 new caption"}});
+    chai.expect(dummy.get("caption")).to.equal("new caption");
+    chai.expect(dummy.dummy2.get("caption")).to.equal("dummy2 new caption");
+    chai.expect(function() { dummy.updateAttributes( { dummy3: { caption: "dummy3 new caption "}} )}).to.throw(NestedAttributeError);
   });
 
 });

@@ -107,15 +107,16 @@ describe("EditableSelectComponent", function() {
       chai.expect(select.get("input_value")).not.to.eq("custom value");
     });
 
-    it("sets input_value to null on external click when display_value is empty", function() {
+    it("doesn't change input_value on external click if display_value changed", function() {
       select.set("input_value", "ab");
-      display_input.value = "";
+      const new_value = select.get("display_value") + "1";
+      select.set("display_value", new_value);
 
       root.dom_element.click();
-      chai.expect(select.get("display_value")).to.be.null;
-      chai.expect(select.get("input_value")).to.eq(null);
-      chai.expect(select.findPart("input").value).to.eq("");
-      chai.expect(select.findPart("display_input").value).to.eq("");
+      chai.expect(select.get("input_value")).to.eq("ab");
+      chai.expect(select.findPart("input").value).to.eq("ab");
+      chai.expect(select.get("display_value")).to.eq(new_value);
+      chai.expect(select.findPart("display_input").value).to.eq(new_value);
     });
 
     it("doesn't change value on external click when event trigger has data-ignore-external-click-for value that matches ignore_external_click_id attr", function() {

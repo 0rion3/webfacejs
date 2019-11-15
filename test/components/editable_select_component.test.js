@@ -28,14 +28,57 @@ describe("EditableSelectComponent", function() {
     chai.expect(select.options.keys).to.be.empty;
   });
 
-  it("re-creates event listeners for options when they're loaded or filtered", function() {
-    select.findPart("display_input").value = "ABC option";
-    select.filterOptions();
-    select.opened = true;
-    select.findAllParts("option")[0].click();
-    chai.expect(select.get("input_value")).to.eq("abc");
+  it("sets value to null when disabled and restores previous value when enabled", function() {
+    select.set("allow_custom_value", true);
+    var display_input = select.findPart("display_input");
+    var input         = select.findPart("input");
+    display_input.value = "custom value";
+    var e = new KeyboardEvent('keyup', { keyCode: 13 });
+    select.findPart("display_input").dispatchEvent(e);
+    select.set("disabled", true);
+    chai.expect(select.get("input_value")).to.be.null;
+    chai.expect(select.get("display_value")).to.be.null;
+    chai.expect(input.value).to.be.empty;
+    chai.expect(display_input.value).to.be.empty;
+    select.set("disabled", false);
+    chai.expect(select.get("input_value")).to.eq("custom value");
+    chai.expect(select.get("display_value")).to.eq("custom value");
+    chai.expect(input.value).to.eq("custom value");
+    chai.expect(display_input.value).to.eq("custom value");
   });
 
+  describe("filtering options", function() {
+
+    it("re-creates event listeners for options when they're loaded or filtered", function() {
+      select.findPart("display_input").value = "ABC option";
+      select.filterOptions();
+      select.opened = true;
+      select.findAllParts("option")[0].click();
+      chai.expect(select.get("input_value")).to.eq("abc");
+    });
+
+    it("filters options as text is being typed", function() {
+      select.findPart("display_input").value = "ABC option";
+      select.filterOptions();
+      chai.expect(select.options.keys).to.include("abc", "abcd", "abcde");
+      chai.expect(select.options.keys).to.not.include("a", "ab");
+    });
+
+    it("resets options filter when arrow is clicked", function() {
+      select.findPart("display_input").value = "ABC option";
+      select.filterOptions();
+      select.findPart("arrow").click();
+      chai.expect(select.options.keys).to.include("a", "ab", "abc", "abcd", "abcde");
+
+    });
+
+    it("re-creates option click event listeners when resetting filters", function() {
+      select.resetOptionsFilter();
+      select.dom_element.querySelector('[data-option-value="abcd"').click();
+      chai.expect(select.get("input_value")).to.equal("abcd");
+    });
+
+  });
 
   describe("setting value from the existing options list", function() {
 

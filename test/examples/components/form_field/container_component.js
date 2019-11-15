@@ -13,15 +13,15 @@ export class ContainerComponent extends extend_as("ContainerComponent").mix(Comp
     }});
 
     this.event_handlers.add({ event: "click", role: "reset", handler: (self, child) => {
-      this.children[0].reset();
+      self.form_field.reset();
     }});
 
     this.event_handlers.add({ event: "click", role: "print_current_value", handler: (self, child) => {
-      console.log(this.form_field.get("value"));
+      console.log(self.form_field.get("value"));
     }});
 
     this.event_handlers.add({ event: "click", role: "set_value_to_something", handler: (self, child) => {
-      console.log(this.form_field.set("value", "something"));
+      self.form_field.set("value", "something");
     }});
 
   }

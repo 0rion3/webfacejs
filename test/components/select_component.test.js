@@ -122,6 +122,20 @@ describe("SelectComponent", function() {
       chai.expect(select.dom_element.attributes["disabled"]).to.be.undefined;
     });
 
+    it("sets value to null when disabled and restores previous value when enabled", function() {
+      var input = select.dom_element.querySelector('[data-component-attr="input_value"');
+      select.set("input_value", "ab")
+      select.set("disabled", true);
+      chai.expect(select.get("input_value")).to.be.null;
+      chai.expect(select.get("display_value")).to.be.null;
+      chai.expect(input.value).to.be.empty;
+      select.set("disabled", false);
+      chai.expect(select.get("input_value")).to.eq("ab");
+      chai.expect(select.get("display_value")).to.eq("ab");
+      chai.expect(input.value).to.eq("ab");
+    });
+
+
   });
 
   describe("fetching remote options with ajax request", function() {

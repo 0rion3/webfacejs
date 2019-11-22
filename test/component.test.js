@@ -13,6 +13,7 @@ class DummyComponent extends extend_as("DummyComponent").mix(Component).with() {
   constructor(attrs=null) {
     super(attrs);
     this.attribute_names = ["caption", "attr1", "attr2"];
+    this.display_states = { attr1: ["value1", "some_entity"] }
   }
 }
 
@@ -323,6 +324,32 @@ describe("Component", function() {
     it("uses RootComponent as a default parent to assign to", function() {
       var dummy = DummyComponent.create();
       chai.expect(RootComponent.instance.children).to.include(dummy);
+    });
+
+  });
+
+  describe("changing display state with DisplayStateManager", function() {
+
+    var spy;
+
+    beforeEach(function() {
+      component.afterInitialize();
+      spy = chai.spy.on(component.display_state_manager, "applyAction");
+    });
+
+    it("calls DisplayStateManager.applyChanges() whenever an attribute changes", function() {
+      component.set("attr1", "value1");
+      chai.expect(spy).to.have.been.called.once;
+    });
+
+    it("calls DisplayStateManager.applyChanges() only once when attributes are called with updateAttributes()", function() {
+      component.updateAttributes({ attr1: "value1", attr2: "value2" });
+      chai.expect(spy).to.have.been.called.once;
+    });
+
+    it("doesn't call DisplayStateManager.applyChanges() upon updateAttributes() call if callback option is set to false", function() {
+      component.updateAttributes({ attr1: "value1", attr2: "value2" }, { callback: false });
+      chai.expect(spy).to.not.have.been.called.once;
     });
 
   });

@@ -13,7 +13,7 @@ class DummyComponent extends extend_as("DummyComponent").mix(Component).with() {
   constructor(attrs=null) {
     super(attrs);
     this.attribute_names = ["caption", "attr1", "attr2"];
-    this.display_states = { attr1: ["value1", "some_entity"] }
+    this.display_states = { attr1: [["value1", "some_entity"]] }
   }
 }
 
@@ -337,19 +337,19 @@ describe("Component", function() {
       spy = chai.spy.on(component.display_state_manager, "applyAction");
     });
 
-    it("calls DisplayStateManager.applyChanges() whenever an attribute changes", function() {
+    it("calls DisplayStateManager.applyAction() whenever an attribute changes", function() {
       component.set("attr1", "value1");
-      chai.expect(spy).to.have.been.called.once;
+      chai.expect(spy).to.have.been.called.twice;
     });
 
-    it("calls DisplayStateManager.applyChanges() only once when attributes are called with updateAttributes()", function() {
-      component.updateAttributes({ attr1: "value1", attr2: "value2" });
-      chai.expect(spy).to.have.been.called.once;
+    it("calls DisplayStateManager.applyAction() only twice (to hide and show entities) when attributes are called with updateAttributes()", function() {
+      component.updateAttributes({ caption: "value", attr1: "value1", attr2: "value2" });
+      chai.expect(spy).to.have.been.called.twice;
     });
 
-    it("doesn't call DisplayStateManager.applyChanges() upon updateAttributes() call if callback option is set to false", function() {
+    it("doesn't call DisplayStateManager.applyAction() upon updateAttributes() call if callback option is set to false", function() {
       component.updateAttributes({ attr1: "value1", attr2: "value2" }, { callback: false });
-      chai.expect(spy).to.not.have.been.called.once;
+      chai.expect(spy).to.not.have.been.called.twice;
     });
 
   });

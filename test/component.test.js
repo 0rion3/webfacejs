@@ -13,7 +13,7 @@ class DummyComponent extends extend_as("DummyComponent").mix(Component).with() {
   constructor(attrs=null) {
     super(attrs);
     this.attribute_names = ["caption", "attr1", "attr2"];
-    this.display_states = { attr1: [["value1", "some_entity"]] }
+    this.display_states =  [[ { attr1: "value1" }, "some_entity" ]];
   }
 }
 

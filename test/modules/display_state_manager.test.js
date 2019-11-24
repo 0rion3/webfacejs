@@ -2,43 +2,32 @@ import { extend_as }           from '../lib/utils/mixin.js'
 import { I18n }                from '../lib/i18n.js'
 import { Attributable }        from '../lib/modules/attributable.js'
 import { DisplayStateManager } from '../lib/modules/display_state_manager.js'
+import { any, is_null, not_null, is_in, not_in } from '../lib/utils/standart_assertions.js';
 
 class DummyComponent extends extend_as("DummyComponent").mixins(Attributable) {
 
   constructor() {
     super();
-    this.attribute_names = ["attr1", "attr2", "attr3", "attr4"];
+    this.attribute_names = ["attr1", "attr2", "attr3", "attr4", "attr5", "attr6"];
     this.children = [chai.spy.interface("childComponentMock", ["behave"])];
 
     this.display_state_manager_settings = { default_state_action: "show", multiple_attr_conditons_exclusivity: true }
-    this.display_states = {
-      attr1: [
-        // First array item is attr1 value, which triggers the state.
-        // Second array item are a list of entities to be shown (while all others become are hidden):
-        //    * Items that start with # are role names for child components
-        //    * Items that start with . are component part names
-        //    * All other items are treated as both role names and part names
-        ["value0", ["role_or_part_name1", "#role_name1", ".part_name1"]],
-        // Simpler notation where the second array item is not an array, but a String, which
-        // will be automatically parsed into an array by DisplayStateManager.
-        ["value1", "role_or_part_name1, #role_name1, .part_name1"],
-        ["value2", "role_or_part_name2, #role_name2, .part_name2"],
-        // A more complex conditon where two different values of attr1 may trigger the same display state
-        [["value3", "value4"], "role_or_part_name3, #role_name3, .part_name3"],
-        // An even more complex condition where a state is triggered by when attr1 changes value from "value4" to "value5"
-        [{ from: "value5", to: "value6" }, "role_or_part_name6, #role_name6, .part_name6"],
-        // Or combine multiple to and from values:
-        [{ from: "value4,value5", to: "value6,value7" }, "role_or_part_name7, #role_name7, .part_name7"],
-      ],
-      // You can specify two or more attributes to hold particular values in order for a display state
-      // to be triggered:
-      _custom_name_for_multiple_attr_condition: [
-        [{ attr1: "value1", attr2: "value1" },                                ["M_role_or_part_name1", "#M_role_name1", ".M_part_name1"]],
-        [{ attr1: "value2", attr2: "value1,value2" },                         ["M_role_or_part_name2", "#M_role_name2", ".M_part_name2"]],
-        [{ attr1: { from: "value2", to: "value3" }, attr2: "value2,value3" }, ["M_role_or_part_name3", "#M_role_name3", ".M_part_name3"]],
-        [{ attr1: "value1", attr4: "value4" },                                ["M_role_or_part_name4", "#M_role_name4", ".M_part_name4"]],
-      ]
-    }
+    this.display_states = [
+      [{ attr1: "value0" }, ["role_or_part_name1", "#role_name1", ".part_name1"]],
+      [{ attr1: "value1" }, "role_or_part_name1, #role_name1, .part_name1"],
+      [{ attr1: "value2" }, "role_or_part_name2, #role_name2, .part_name2"],
+      [{ attr1: ["value3", "value4"]}, "role_or_part_name3, #role_name3, .part_name3"],
+      [{ old_attr1: "value5", attr1: "value6" }, "role_or_part_name6, #role_name6, .part_name6"],
+      [{ old_attr1: "value4,value5", attr1: "value6,value7" }, "role_or_part_name7, #role_name7, .part_name7"],
+      [{ attr1: "value1", attr2: "value1" },                             ["M_role_or_part_name1", "#M_role_name1", ".M_part_name1"]],
+      [{ attr1: "value2", attr2: "value1,value2" },                      ["M_role_or_part_name2", "#M_role_name2", ".M_part_name2"]],
+      [{ old_attr1: "value2", attr1: "value3", attr2: "value2,value3" }, ["M_role_or_part_name3", "#M_role_name3", ".M_part_name3"]],
+      [{ attr1: "value1", attr4: "value4" },                             ["M_role_or_part_name4", "#M_role_name4", ".M_part_name4"]],
+
+      [{ attr5: { is_in: "hello,world" }, attr6: { not_in: "hello,world" }}, ["hello", "world"]],
+      [{ attr5: not_null, attr6: is_null                                  }, ["hello2", "world2"]],
+      [{ attr5: "is_null()", attr6: "not_null()"                          }, ["hello3", "world3"]]
+    ]
 
     this.display_state_manager = new DisplayStateManager(this);
   }
@@ -80,6 +69,7 @@ describe('DisplayStateManager', function() {
       "M_role_or_part_name2", "#M_role_name2", ".M_part_name2",
       "M_role_or_part_name3", "#M_role_name3", ".M_part_name3",
       "M_role_or_part_name4", "#M_role_name4", ".M_part_name4",
+      "hello", "world", "hello2", "world2", "hello3", "world3"
     ]);
   });
 
@@ -127,7 +117,7 @@ describe('DisplayStateManager', function() {
       ]);
     });
 
-    it("includes entities for states where attribute value old value is checked", function() {
+    it("includes entities for states where attribute's old value is checked", function() {
       c.set("attr1", "value5");
       c.set("attr1", "value6");
       chai.expect(ds.pickEntitiesForState()).to.deep.eq([
@@ -140,6 +130,35 @@ describe('DisplayStateManager', function() {
       c.set("attr1", "value3");
       c.set("attr2", "value3");
       chai.expect(ds.pickEntitiesForState()).to.deep.eq(["M_role_or_part_name3", "#M_role_name3", ".M_part_name3"]);
+    });
+
+
+    describe("using type checks", function() {
+
+      it("includes entities for which the attribute value is present/not present within an array of acceptable values", function() {
+        c.set("attr5", "hello");
+        c.set("attr6", "buy");
+        chai.expect(ds.pickEntitiesForState()).to.deep.eq(["hello", "world"]);
+        c.set("attr6", "hello");
+        chai.expect(ds.pickEntitiesForState()).to.be.empty;
+      });
+
+      it("includes entities for which the attribute is null/not null", function() {
+        c.set("attr5", "some value");
+        c.set("attr6", null);
+        chai.expect(ds.pickEntitiesForState()).to.deep.eq(["hello2", "world2"]);
+        c.set("attr6", "hello");
+        chai.expect(ds.pickEntitiesForState()).to.be.empty;
+      });
+
+      it("allows to specify type checking functions as strings", function() {
+        c.set("attr5", null);
+        c.set("attr6", "some value");
+        chai.expect(ds.pickEntitiesForState()).to.deep.eq(["hello3", "world3"]);
+        c.set("attr5", "some value");
+        chai.expect(ds.pickEntitiesForState()).to.be.empty;
+      });
+
     });
 
   });

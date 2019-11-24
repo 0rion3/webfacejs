@@ -171,12 +171,11 @@ describe('DisplayStateManager', function() {
     });
 
     it("applies hide action to all entities except the ones that are to be shown with the correct animation speed setting", function() {
-      chai.expect(c.behave).to.not.have.been.called.with("hidePart", "part_name1", 500);
-      //chai.expect(c.behave).to.have.been.called.exactly(19);
+      chai.expect(c.behave).to.not.have.been.called.with("hidePart", ["part_name1", 500]);
     });
 
     it("applies show action to all entities with the correct animation speed settings", function() {
-      chai.expect(c.behave).to.have.been.called.with("showPart", "part_name1", 500);
+      chai.expect(c.behave).to.have.been.called.with("showPart", ["part_name1", 500]);
     });
 
   });

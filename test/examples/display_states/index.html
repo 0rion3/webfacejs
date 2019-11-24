@@ -1,0 +1,37 @@
+<head>
+  <script src="/lib/webface_init.js"></script>
+  <script src="/examples/display_states/some_component.js" type="module"></script>
+  <script src="/examples/webface_app.js" type="module"></script>
+  <style>
+    button { font-size: 2em; padding: 0.4em 2em; height: 2em; }
+    .blocks div { border: solid 1px #777; display: none; width: 50%; height: 3em; }
+    .blocks div.discount { background-color: #b8ffcb; }
+    .blocks div.goodNight { background-color: #000; color: #fff; }
+  </style>
+</head>
+<body>
+
+  <div data-component-class="SomeComponent">
+
+    <div class="blocks">
+      <div class="welcome" data-component-part="welcome">Welcome back!</div>
+      <div class="welcomeNewUser" data-component-part="welcome_new_user">Welcome new user!</div>
+      <div class="goodMorning" data-component-part="good_morning">Good morning new user!</div>
+      <div class="goodNight" data-component-part="good_night">Good night new user!</div>
+      <div class="timeOfDayGreeting" data-component-part="time_of_day_greeting">What a wonderful <span data-component-attr="time_of_day"></span></div>
+      <div class="discount" data-component-part="discount">Spring discounts are avaialable!</div>
+    </div>
+
+    <div class="controls">
+      <button data-component-class="ButtonComponent" data-component-roles="status_to_new" data-lockable="false">Set new user</button>
+      <button data-component-class="ButtonComponent" data-component-roles="status_to_returning" data-lockable="false">Set returning user</button>
+      <button data-component-class="ButtonComponent" data-component-roles="time_of_day_to_morning" data-lockable="false">Set morning</button>
+      <button data-component-class="ButtonComponent" data-component-roles="time_of_day_to_night" data-lockable="false">Set night</button>
+      <button data-component-class="ButtonComponent" data-component-roles="time_of_year_to_spring" data-lockable="false">Set spring</button>
+      <button data-component-class="ButtonComponent" data-component-roles="time_of_year_to_summer" data-lockable="false">Set summer</button>
+    </div>
+
+
+  </div>
+
+</body>

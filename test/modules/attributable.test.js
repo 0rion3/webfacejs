@@ -47,9 +47,9 @@ describe('Attributable', function() {
   it('keeps previous value of the attribute', function() {
     dummy.set('title', 'Title 1');
     dummy.set('title', 'Title 2');
-    chai.expect(dummy.get('_old_title')).to.equal('Title 1');
+    chai.expect(dummy.get('title', 'old')).to.equal('Title 1');
     dummy.set('title', 'Title 3');
-    chai.expect(dummy.get('_old_title')).to.equal('Title 2');
+    chai.expect(dummy.get('title', 'old')).to.equal('Title 2');
   });
 
   it('tells if new value is different from the old one', function() {
@@ -59,6 +59,7 @@ describe('Attributable', function() {
     dummy.set('title', 'Title 2');
     chai.expect(dummy.hasAttributeChanged("title")).to.be.false;
   });
+
 
   it('updates attributes in bulk', function() {
     dummy.updateAttributes({"title" : "New Title", "caption": "New Caption"});

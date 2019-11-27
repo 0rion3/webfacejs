@@ -8,7 +8,8 @@ class ComponentDomClass extends extend_as("ComponentDomClass").mixins(ComponentD
     super();
     this.attribute_names = ["attr1", "attr2", "attr3", "writeable_attr1", "writeable_attr2", 
                             "writeable_attr3", "writeable_attr4", "attr_without_html_attribute",
-                            "reversable_attr", "defined_attr", "undefined_attr"];
+                            "reversable_attr", "defined_attr", "undefined_attr", "non_dom_attr"];
+    this.non_dom_attribute_names = ["non_dom_attr"];
     this.attribute_casting = this.constructor.attribute_casting;
   }
 }
@@ -241,6 +242,25 @@ describe('ComponentDom', function() {
   it("clones template and assigns it to #dom_element attr", function() {
     component_dom.initDomElementFromTemplate();
     chai.expect(component_dom.dom_element.textContent).to.equal("ComponentDomClass template");
+  });
+
+  describe("handling non-DOM attrubutes", function() {
+
+    it("it doesn't attempt to read values from DOM with updateAttrsFromNodes()", function() {
+      component_dom.set("non_dom_attr", "some value");
+      component_dom.dom_element.setAttribute("data-non-dom-attr", "hello");
+      component_dom.updateAttrsFromNodes(["non_dom_attr"]);
+      chai.expect(component_dom.get("non_dom_attr")).to.equal("some value");
+    });
+
+    it("throws an error when attempting to read value from DOM with _readAttrFromNode()", function() {
+      chai.expect(() => component_dom._readAttrFromNode("non_dom_attr")).to.throw;
+    });
+
+    it("throws an error when attempting to write value to DOM with _writeAttrFromNode()", function() {
+      chai.expect(() => component_dom._writeAttrToNode("non_dom_attr", "some value")).to.throw;
+    });
+
   });
 
 });

@@ -12,7 +12,7 @@ class DummyComponent extends extend_as("DummyComponent").mix(Component).with() {
   static get behaviors() { return [DummyBehaviors]; }
   constructor(attrs=null) {
     super(attrs);
-    this.attribute_names = ["caption", "attr1", "attr2"];
+    this.attribute_names = ["caption", "attr1", "attr2", "*non_dom_attr"];
     this.display_states =  [[ { attr1: "value1" }, "some_entity" ]];
   }
 }
@@ -77,7 +77,7 @@ describe("Component", function() {
       chai.expect(component.t("l1.l2.l4")).to.equal("l4");
       chai.expect(window.webface.logmaster_print_spy).to.be.called.with("translation missing for \"l1.l2.l4\" in \"DummyComponent\" translator(s).", "WARN");
     });
-    
+
   });
 
   describe("attribute callbacks", function() {
@@ -86,11 +86,17 @@ describe("Component", function() {
       component.set("caption", "new value");
       chai.expect(component.dom_element.querySelector('[data-component-attr="caption"]').textContent).to.equal("new value");
     });
-    
+
+    it("for attributes that are marked as non-DOM it doesn't write values to DOM with default callback", function() {
+      component.afterInitialize(); // calls _prepareNonDomAttrs() which adds all attribute names marked with * to non_dom_attribute_names
+      component.set("non_dom_attr", "some value");
+      chai.expect(component.dom_element.attributes["data-non-dom-attr"]).to.be.undefined;
+    });
+
   });
 
   describe("removing a component", function() {
-    
+
     var child;
 
     beforeEach(function() {

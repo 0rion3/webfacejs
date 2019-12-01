@@ -1,5 +1,5 @@
 export async function fetch_dom(path, params = {}) {
-  const url = new URL('http://localhost:8080/' + path);
+  const url = new URL(`${window.location.protocol}//${window.location.hostname}:8080/${path}`);
   Object.keys(params).forEach(key => url.searchParams.append(key, params[key]));
 
   var response = await fetch(url);

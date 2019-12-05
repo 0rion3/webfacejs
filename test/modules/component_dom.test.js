@@ -98,7 +98,7 @@ describe('ComponentDom', function() {
     chai.expect(component_dom._castAttrFromDom("attr1", "false")).to.be.false
     chai.expect(component_dom._castAttrFromDom("attr1", "1")).to.eq(1)
     chai.expect(component_dom._castAttrFromDom("attr1", "1.23")).to.eq(1.23)
-    chai.expect(component_dom._castAttrFromDom("attr1", "")).to.eq(undefined)
+    chai.expect(component_dom._castAttrFromDom("attr1", "")).to.eq(null)
     chai.expect(component_dom._castAttrFromDom("attr1", "  ")).to.eq(null)
   });
 

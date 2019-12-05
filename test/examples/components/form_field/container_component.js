@@ -17,7 +17,7 @@ export class ContainerComponent extends extend_as("ContainerComponent").mix(Comp
     }});
 
     this.event_handlers.add({ event: "click", role: "print_current_value", handler: (self, child) => {
-      console.log(self.form_field.get("value"));
+      console.log(self.form_field.get("value"), (typeof self.form_field.get("value")));
     }});
 
     this.event_handlers.add({ event: "click", role: "set_value_to_something", handler: (self, child) => {

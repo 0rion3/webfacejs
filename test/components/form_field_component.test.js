@@ -72,6 +72,20 @@ describe("FormFieldComponent", function() {
     chai.expect(form_field.dom_element.querySelector("#errors").style.display).to.equal("none");
   });
 
+  it("leaves string values 'null', 'true', and 'false' uncasted as string", function() {
+    form_field.value_holder_element.value = "null";
+    form_field.value_holder_element.dispatchEvent(new Event("change"));
+    chai.expect(form_field.get("value")).to.equal("null");
+
+    form_field.value_holder_element.value = "true";
+    form_field.value_holder_element.dispatchEvent(new Event("change"));
+    chai.expect(form_field.get("value")).to.equal("true");
+
+    form_field.value_holder_element.value = "false";
+    form_field.value_holder_element.dispatchEvent(new Event("change"));
+    chai.expect(form_field.get("value")).to.equal("false");
+  });
+
   describe("disabling", function() {
 
     it("adds disabled='disabled' attribute to the dom element", function() {

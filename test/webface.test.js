@@ -15,6 +15,7 @@ import "./utils/type_checker.test.js";
 import "./utils/mixin.test.js";
 import "./utils/cookies.test.js";
 import "./utils/linked_hash_map.test.js";
+import "./utils/timer.test.js";
 import "./i18n.test.js";
 import "./logmaster.test.js";
 import "./ajax_request.test.js";

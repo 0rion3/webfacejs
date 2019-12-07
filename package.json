@@ -25,7 +25,8 @@
     "express": "",
     "mocha": "^5.2.0",
     "mocha-headless-chrome": "^2.0.3",
-    "pug": ""
+    "pug": "",
+    "sinon": ""
   },
   "runtimeArgs": [
     "--experimental-modules"

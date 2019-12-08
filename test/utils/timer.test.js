@@ -27,7 +27,7 @@ describe("Timer", function() {
       it("pauses, saving current pause time, so it can update the finish_at time on resume", function() {
         timer.start();
         timer.pause();
-        chai.expect(timer.paused_at).to.be.within(Timer.time_now_in_ms, Timer.time_now_in_ms + 100);
+        chai.expect(timer.paused_at).to.be.within(Timer.time_now_in_ms-50, Timer.time_now_in_ms + 50);
       });
 
       it("resumes counting steps, updating the finish_at time - increasing it to the duration of the stop", function(done) {
@@ -61,12 +61,13 @@ describe("Timer", function() {
         var day    = hour*24;
         var week   = day*7;
         Timer._current_time = timer.start_at;
+        timer.step_time = 1;
         timer.finish_at = timer.start_at + ms + second + minute + hour + day + week;
-        chai.expect(timer.currentTimeHuman({ largest_unit: "seconds" })).to.include({ ms: 1, seconds: (second+minute+hour+day+week)/second });
-        chai.expect(timer.currentTimeHuman({ largest_unit: "minutes" })).to.include({ ms: 1, seconds: 1, minutes: (minute+hour+day+week)/minute });
-        chai.expect(timer.currentTimeHuman({ largest_unit: "hours" })).to.include({ ms: 1, seconds: 1, minutes: 1, hours: (hour+day+week)/hour });
-        chai.expect(timer.currentTimeHuman({ largest_unit: "days" })).to.include({ ms: 1, seconds: 1, minutes: 1, hours: 1, days: (day+week)/day });
-        chai.expect(timer.currentTimeHuman({ largest_unit: "weeks" })).to.include({ ms: 1, seconds: 1, minutes: 1, hours: 1, days: 1, weeks: 1 });
+        chai.expect(timer.humanTime({ largest_unit: "seconds" })).to.include({ ms: "001", seconds: ((second+minute+hour+day+week)/second).toString() });
+        chai.expect(timer.humanTime({ largest_unit: "minutes" })).to.include({ ms: "001", seconds: "01", minutes: ((minute+hour+day+week)/minute).toString() });
+        chai.expect(timer.humanTime({ largest_unit: "hours" })).to.include({ ms: "001", seconds: "01", minutes: "01", hours: ((hour+day+week)/hour).toString() });
+        chai.expect(timer.humanTime({ largest_unit: "days" })).to.include({ ms: "001", seconds: "01", minutes: "01", hours: "01", days: ((day+week)/day).toString() });
+        chai.expect(timer.humanTime({ largest_unit: "weeks" })).to.include({ ms: "001", seconds: "01", minutes: "01", hours: "01", days: "1", weeks: "1" });
         Timer._current_time = null;
       });
 
@@ -131,6 +132,7 @@ describe("Timer", function() {
 
       // 1450 actually means run on step one, since we have a CountdownTimer and its duration 1500ms.
       timer.callbacks.time_points = [[1450, time_point_spy], [1000, time_point_spy]];
+      timer.prepareTimePointCallbacks();
 
       timer.start();
       setTimeout(() => {

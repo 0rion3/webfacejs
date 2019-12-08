@@ -1,0 +1,64 @@
+<head>
+  <script src="/lib/webface_init.js"></script>
+  <script src="/examples/utils/timer/timer_component.js" type="module"></script>
+  <script src="/examples/webface_app.js" type="module"></script>
+
+  <style>
+    .timersContainer { display: flex; }
+    .timer { border: solid 1px #aaa; padding: 3em; width: 400px; margin: 3em; }
+    .timerDisplay { font-size: 150%; margin-top: 1em; margin-bottom: 1em; }
+    p { font-weight: bold; }
+    p span { color: green; }
+  </style>
+</head>
+
+<body>
+
+  <div class="timersContainer">
+
+    <!-- Timer 1 -->
+    <div class="timer" data-component-class="TimerComponent">
+
+      <p>Name: <span data-component-attr="name">timer 1</span></p>
+      <p>Direction: <span data-component-attr="direction">down</span></p>
+      <p>Duration <span data-component-attr="duration">10</span></p>
+      <p>Milestones</br>time points at which callbacks will print info into the console): <span data-component-attr="milestones">7,5,3</span></p>
+      <p>Time unit: <span data-component-attr="time_unit">second</span></p>
+      <p>Step time: <span data-component-attr="step_time">1</span></p>
+
+      <button data-component-class="ButtonComponent" data-component-roles="start">Start</button>
+      <button data-component-class="ButtonComponent" data-component-roles="pause">Pause</button>
+      <button data-component-class="ButtonComponent" data-component-roles="resume">Resume</button>
+      <button data-component-class="ButtonComponent" data-component-roles="finish">Finish</button>
+
+      <div class="timerDisplay" data-component-attr="timer_display"></div>
+
+      <p>Current timer status<br/><span data-component-attr="status"></span></p>
+
+    </div>
+
+
+    <!-- Timer 2 -->
+    <div class="timer" data-component-class="TimerComponent">
+
+      <p>Name: <span data-component-attr="name">timer 2</span></p>
+      <p>Direction: <span data-component-attr="direction">up</span></p>
+      <p>Duration <span data-component-attr="duration">10000</span></p>
+      <p>Milestones</br>time points at which callbacks will print info into the console): <span data-component-attr="milestones">4000,6000,8000</span></p>
+      <p>Time unit: <span data-component-attr="time_unit">ms</span></p>
+      <p>Step time: <span data-component-attr="step_time">10</span></p>
+
+      <button data-component-class="ButtonComponent" data-component-roles="start">Start</button>
+      <button data-component-class="ButtonComponent" data-component-roles="pause">Pause</button>
+      <button data-component-class="ButtonComponent" data-component-roles="resume">Resume</button>
+      <button data-component-class="ButtonComponent" data-component-roles="finish">Finish</button>
+
+      <div class="timerDisplay" data-component-attr="timer_display"></div>
+
+      <p>Current timer status<br/><span data-component-attr="status"></span></p>
+
+    </div>
+
+  </div>
+
+</body>

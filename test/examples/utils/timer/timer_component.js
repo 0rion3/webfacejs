@@ -15,9 +15,10 @@ export class TimerComponent extends extend_as("TimerComponent").mix(Component).w
         self.timer = new self.timer_class(self.timer_params);
         self.timer.start();
       },
-      pause: (self, child)  => self.timer.pause(),
-      resume: (self, child) => self.timer.resume(),
-      finish: (self, child) => self.timer.finish()
+      pause: (self, child)  => self._runIfTimerExists(() => self.timer.pause()),
+      resume: (self, child) => self._runIfTimerExists(() => self.timer.resume()),
+      finish: (self, child) => self._runIfTimerExists(() => self.timer.finish()),
+      current_time: (self, child) => self._runIfTimerExists(() => console.log(`Timer "${this.get("name")}" current time is ${JSON.stringify(self.timer.humanTime())}`))
     });
 
   }
@@ -64,6 +65,13 @@ export class TimerComponent extends extend_as("TimerComponent").mix(Component).w
       callbacks: callbacks
     }
 
+  }
+
+  _runIfTimerExists(f) {
+    if(this.timer)
+      return f.call();
+    else
+      console.log("Timer has not been launched yet!");
   }
 
 }

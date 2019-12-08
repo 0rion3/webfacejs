@@ -1,6 +1,6 @@
 import '../webface_init.js'
-import { PositionManager } from './lib/position_manager.js'
-import { fetch_dom       } from '../test_utils.js'
+import { PositionManager } from '../lib/utils/position_manager.js'
+import { fetch_dom       } from '../../test_utils.js'
 
 describe("PositionManager", function() {
 

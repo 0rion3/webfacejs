@@ -16,10 +16,10 @@ import "./utils/mixin.test.js";
 import "./utils/cookies.test.js";
 import "./utils/linked_hash_map.test.js";
 import "./utils/timer.test.js";
-import "./i18n.test.js";
-import "./logmaster.test.js";
-import "./ajax_request.test.js";
-import "./position_manager.test.js";
+import "./utils/i18n.test.js";
+import "./utils/logmaster.test.js";
+import "./utils/ajax_request.test.js";
+import "./utils/position_manager.test.js";
 import "./component.test.js";
 
 // Components

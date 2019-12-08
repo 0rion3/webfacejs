@@ -1,5 +1,5 @@
 import '../webface_init.js'
-import { I18n } from './lib/i18n.js'
+import { I18n } from '../lib/utils/i18n.js'
 
 describe('I18n', function() {
 

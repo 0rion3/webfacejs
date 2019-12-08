@@ -1,4 +1,4 @@
-import { Animator } from '../../lib/animator.js'
+import { Animator } from '../../lib/utils/animator.js'
 
 var obj = document.querySelector("#object");
 

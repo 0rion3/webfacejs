@@ -1,5 +1,5 @@
 import { extend_as }           from '../lib/utils/mixin.js'
-import { I18n }                from '../lib/i18n.js'
+import { I18n }                from '../lib/utils/i18n.js'
 import { Attributable }        from '../lib/modules/attributable.js'
 import { DisplayStateManager } from '../lib/modules/display_state_manager.js'
 import { any, is_null, not_null, is_in, not_in } from '../lib/utils/standart_assertions.js';

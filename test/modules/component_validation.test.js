@@ -1,5 +1,5 @@
 import { extend_as }           from '../lib/utils/mixin.js'
-import { I18n }                from '../lib/i18n.js'
+import { I18n }                from '../lib/utils/i18n.js'
 import { Attributable }        from '../lib/modules/attributable.js'
 import { Heritable }           from '../lib/modules/heritable.js'
 import { Validatable }         from '../lib/modules/validatable.js'

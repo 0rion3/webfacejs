@@ -43,10 +43,10 @@ export class TimerComponent extends extend_as("TimerComponent").mix(Component).w
       step: (t) => {
         let ht = t.humanTime();
         let ms = t.time_unit_multiplier == 1 ? `:${ht.ms}` : "";
-        let w  = ht.weeks   ? `${ht.weeks} w, ` : "";
-        let d  = ht.days    ? `${ht.days} d, `  : "";
-        let h  = ht.hours   ? `${ht.hours}`     : "00:";
-        let m  = ht.minutes ? `${ht.minutes}`   : "00:";
+        let w  = ht.weeks   ? `${ht.weeks}w, ` : "";
+        let d  = ht.days    ? `${ht.days}d, `  : "";
+        let h  = ht.hours   ? `${ht.hours}:`    : "00:";
+        let m  = ht.minutes ? `${ht.minutes}:`  : "00:";
         let formatted_time_string = `${w}${d}${h}${m}${ht.seconds}${ms}`;
         this.set("timer_display", formatted_time_string);
       }

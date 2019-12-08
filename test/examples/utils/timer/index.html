@@ -61,6 +61,27 @@
 
     </div>
 
+    <!-- Timer 3 -->
+    <div class="timer" data-component-class="TimerComponent">
+
+      <p>Name: <span data-component-attr="name">timer 3</span></p>
+      <p>Direction: <span data-component-attr="direction">down</span></p>
+      <p>Duration <span data-component-attr="duration">60000000</span></p>
+      <p>Time unit: <span data-component-attr="time_unit">second</span></p>
+      <p>Step time: <span data-component-attr="step_time">1</span></p>
+
+      <button data-component-class="ButtonComponent" data-component-roles="start" data-lockable="false">Start</button>
+      <button data-component-class="ButtonComponent" data-component-roles="pause" data-lockable="false">Pause</button>
+      <button data-component-class="ButtonComponent" data-component-roles="resume" data-lockable="false">Resume</button>
+      <button data-component-class="ButtonComponent" data-component-roles="finish" data-lockable="false">Finish</button>
+      <button data-component-class="ButtonComponent" data-component-roles="current_time" data-lockable="false">Print current time to console</button>
+
+      <div class="timerDisplay" data-component-attr="timer_display"></div>
+
+      <p>Current timer status<br/><span data-component-attr="status"></span></p>
+
+    </div>
+
   </div>
 
 </body>

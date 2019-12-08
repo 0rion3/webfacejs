@@ -32,14 +32,15 @@ describe("Timer", function() {
 
       it("resumes counting steps, updating the finish_at time - increasing it to the duration of the stop", function(done) {
         var old_finish_at = timer.finish_at;
-        timer._countStep = chai.spy();
+        var old_start_at  = timer.start_at;
+        timer._countStep  = chai.spy();
         timer.start();
         timer.start();
         timer.pause();
         setTimeout(() => {
           timer.resume();
           chai.expect(timer.paused_at).to.be.null;
-          chai.expect(timer._countStep).to.have.been.called.twice;
+          chai.expect(timer.start_at).to.be.within(old_start_at + 1, old_start_at + 299);
           chai.expect(timer.finish_at).to.be.within(old_finish_at + 1, old_finish_at + 299);
           timer.finish();
           done();
@@ -60,7 +61,7 @@ describe("Timer", function() {
         var hour   = minute*60;
         var day    = hour*24;
         var week   = day*7;
-        Timer._current_time = timer.start_at;
+        timer.step_started_at = timer.start_at;
         timer.step_time = 1;
         timer.finish_at = timer.start_at + ms + second + minute + hour + day + week;
         chai.expect(timer.humanTime({ largest_unit: "seconds" })).to.include({ ms: "001", seconds: ((second+minute+hour+day+week)/second).toString() });
@@ -124,6 +125,7 @@ describe("Timer", function() {
     });
 
     it("returns time left until finish in seconds", function() {
+      timer.start();
       chai.expect(timer.current_time).to.be.within(1300, 1500);
     });
 
@@ -152,6 +154,7 @@ describe("Timer", function() {
 
     it("returns time passed since the start in seconds", function() {
       timer.start_at = Timer.time_now_in_ms - 1500;
+      timer.start();
       chai.expect(timer.current_time).to.be.within(1500, 1700);
     });
 

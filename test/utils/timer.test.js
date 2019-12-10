@@ -24,6 +24,15 @@ describe("Timer", function() {
         chai.expect(timer._countStep).to.have.been.called.once;
       });
 
+      it("finishes immediately after start if current time is greater than finish_at time", function() {
+        timer.finish_at = Timer.time_now_in_ms - 1000;
+        timer._countStep = chai.spy();
+        timer.finish = chai.spy();
+        timer.start();
+        chai.expect(timer._countStep).to.not.have.been.called.once;
+        chai.expect(timer.finish).to.have.been.called.once;
+      });
+
       it("pauses, saving current pause time, so it can update the finish_at time on resume", function() {
         timer.start();
         timer.pause();

@@ -54,22 +54,35 @@ describe("Timer", function() {
         chai.expect(timer.isOnCurrentStep(timer.start_at+250)).to.be.false;
       });
 
-      it("converts current_time from time_unit (ms or seconds) into an object with human readable keys", function() {
-        var ms = 1;
-        var second = ms*1000;
-        var minute = second*60;
-        var hour   = minute*60;
-        var day    = hour*24;
-        var week   = day*7;
+    });
+
+    describe("showing human readable time", function() {
+
+      var ms     = 1;
+      var second = ms*1000;
+      var minute = second*60;
+      var hour   = minute*60;
+      var day    = hour*24;
+      var week   = day*7;
+
+      beforeEach(function() {
         timer.step_started_at = timer.start_at;
         timer.step_time = 1;
         timer.finish_at = timer.start_at + ms + second + minute + hour + day + week;
+      });
+
+      it("converts current_time from time_unit (ms or seconds) into an object with human readable keys", function() {
         chai.expect(timer.humanTime({ largest_unit: "seconds" })).to.include({ ms: "001", seconds: ((second+minute+hour+day+week)/second).toString() });
         chai.expect(timer.humanTime({ largest_unit: "minutes" })).to.include({ ms: "001", seconds: "01", minutes: ((minute+hour+day+week)/minute).toString() });
         chai.expect(timer.humanTime({ largest_unit: "hours" })).to.include({ ms: "001", seconds: "01", minutes: "01", hours: ((hour+day+week)/hour).toString() });
         chai.expect(timer.humanTime({ largest_unit: "days" })).to.include({ ms: "001", seconds: "01", minutes: "01", hours: "01", days: ((day+week)/day).toString() });
         chai.expect(timer.humanTime({ largest_unit: "weeks" })).to.include({ ms: "001", seconds: "01", minutes: "01", hours: "01", days: "1", weeks: "1" });
         Timer._current_time = null;
+      });
+
+      it("prepares a string with time suffixes ready to be shown to the user", function() {
+        chai.expect(timer.humanTimeAsString()).to.equal("1w 1d 01:01:01:001");
+        chai.expect(timer.humanTimeAsString({ smallest_unit: "seconds" })).to.equal("1w 1d 01:01:01");
       });
 
     });

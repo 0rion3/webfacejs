@@ -7,7 +7,7 @@ export class TimerComponent extends extend_as("TimerComponent").mix(Component).w
   constructor() {
     super();
 
-    this.attribute_names          = ["name", "direction", "duration", "milestones", "step_time", "time_unit", "timer_display", "status"];
+    this.attribute_names          = ["name", "direction", "duration", "milestones", "step_time", "time_unit", "timer_display", "status", "largest_unit"];
     this.default_attribute_values = { direction: "up", duration: "60", milestones: "", step_time: 1, time_unit: "second" };
 
     this.event_handlers.addForEvent("click", {
@@ -37,19 +37,9 @@ export class TimerComponent extends extend_as("TimerComponent").mix(Component).w
     var callbacks = {
       default: (t,event) => {
         var event = event.slice(-1) == "e" ? event + "d" : event + "ed";
-        console.log(`Timer "${self.get("name")}" ${event}.`);
         this.set("status", `started: ${self.timer.started}, paused: ${t.paused_at != null}, finished: ${t.finished}`);
       },
-      step: (t) => {
-        let ht = t.humanTime();
-        let ms = t.time_unit_multiplier == 1 ? `:${ht.ms}` : "";
-        let w  = ht.weeks   ? `${ht.weeks}w, ` : "";
-        let d  = ht.days    ? `${ht.days}d, `  : "";
-        let h  = ht.hours   ? `${ht.hours}:`    : "00:";
-        let m  = ht.minutes ? `${ht.minutes}:`  : "00:";
-        let formatted_time_string = `${w}${d}${h}${m}${ht.seconds}${ms}`;
-        this.set("timer_display", formatted_time_string);
-      }
+      step: (t) => this.set("timer_display", t.humanTimeAsString({ largest_unit: self.get("largest_unit") }))
     }
 
     if(this.get("milestones")) {

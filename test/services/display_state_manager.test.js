@@ -1,14 +1,14 @@
 import { extend_as }           from '../lib/utils/mixin.js'
 import { I18n }                from '../lib/utils/i18n.js'
 import { Attributable }        from '../lib/modules/attributable.js'
-import { DisplayStateManager } from '../lib/modules/display_state_manager.js'
+import { DisplayStateManager } from '../lib/services/display_state_manager.js'
 import { any, is_null, not_null, is_in, not_in } from '../lib/utils/standart_assertions.js';
 
 class DummyComponent extends extend_as("DummyComponent").mixins(Attributable) {
 
   constructor() {
     super();
-    this.attribute_names = ["attr1", "attr2", "attr3", "attr4", "attr5", "attr6"];
+    this.attribute_names = ["attr1", "attr2", "attr3", "attr4", "attr5", "attr6", "attr7", "attr8", "attr9"];
     this.children = [chai.spy.interface("childComponentMock", ["behave"])];
 
     this.display_state_manager_settings = { default_state_action: "show", multiple_attr_conditons_exclusivity: true }
@@ -26,7 +26,7 @@ class DummyComponent extends extend_as("DummyComponent").mixins(Attributable) {
 
       [{ attr5: { is_in: "hello,world" }, attr6: { not_in: "hello,world" }}, ["hello", "world"]],
       [{ attr5: not_null, attr6: is_null                                  }, ["hello2", "world2"]],
-      [{ attr5: "is_null()", attr6: "not_null()"                          }, ["hello3", "world3"]]
+      [{ attr5: "is_null()", attr6: "not_null()"                          }, ["hello3", "world3"]],
     ]
 
     this.display_state_manager = new DisplayStateManager(this);
@@ -69,7 +69,7 @@ describe('DisplayStateManager', function() {
       "M_role_or_part_name2", "#M_role_name2", ".M_part_name2",
       "M_role_or_part_name3", "#M_role_name3", ".M_part_name3",
       "M_role_or_part_name4", "#M_role_name4", ".M_part_name4",
-      "hello", "world", "hello2", "world2", "hello3", "world3"
+      "hello", "world", "hello2", "world2", "hello3", "world3",
     ]);
   });
 
@@ -77,8 +77,21 @@ describe('DisplayStateManager', function() {
     chai.expect(ds._expandSingleAttributeCondition("attr1", "value1,value2")).to.deep.equal({ attr1: "value1,value2" });
   });
 
-  it("expands value part of the condition into a to-from object", function() {
-    chai.expect(ds._expandToValueIntoFromTo("value1,value2")).to.deep.eq({ to: "value1,value2" });
+  it("expands folded states into a flat structure", function() {
+    // notice different styles of entity declaration - both strings separated by commas and arrays work.
+    var folded_states = [
+      [{ attr7: true }, ".part_name_folding_l1_a,.part_name_folding_l1_b", [
+        [{ attr8: true }, [".part_name_folding_l2_a", ".part_name_folding_l2_b"], [
+          // Checking that .part_name_folding_l1_a will be removed as duplicate
+          [{ attr9: true}, ".part_name_folding_l3_a,.part_name_folding_l3_b,.part_name_folding_l1_a"] 
+        ]]
+      ]]
+    ];
+    chai.expect(ds._expandFoldedStates(folded_states)).to.deep.eq([
+      [{ attr7: true }, [".part_name_folding_l1_a", ".part_name_folding_l1_b"]],
+      [{ attr7: true, attr8: true }, [".part_name_folding_l1_a", ".part_name_folding_l1_b", ".part_name_folding_l2_a", ".part_name_folding_l2_b"]],
+      [{ attr7: true, attr8: true, attr9: true }, [".part_name_folding_l1_a", ".part_name_folding_l1_b", ".part_name_folding_l2_a", ".part_name_folding_l2_b", ".part_name_folding_l3_a", ".part_name_folding_l3_b"]]
+    ]);
   });
 
   it("calls correct method on Component to find entity of the appropriate type", function() {
@@ -157,6 +170,10 @@ describe('DisplayStateManager', function() {
         chai.expect(ds.pickEntitiesForState()).to.deep.eq(["hello3", "world3"]);
         c.set("attr5", "some value");
         chai.expect(ds.pickEntitiesForState()).to.be.empty;
+      });
+
+      it("handles non-string values correctly", function() {
+         // TODO
       });
 
     });

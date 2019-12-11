@@ -9,7 +9,6 @@ import "./modules/component_validation.test.js";
 import "./modules/component_dom.test.js";
 import "./modules/component_heritage.test.js";
 import "./modules/auto_show_hide.test.js";
-import "./modules/display_state_manager.test.js";
 import "./utils/map_utils.test.js";
 import "./utils/type_checker.test.js";
 import "./utils/mixin.test.js";
@@ -20,6 +19,7 @@ import "./utils/i18n.test.js";
 import "./utils/logmaster.test.js";
 import "./utils/ajax_request.test.js";
 import "./utils/position_manager.test.js";
+import "./services/display_state_manager.test.js";
 import "./component.test.js";
 
 // Components

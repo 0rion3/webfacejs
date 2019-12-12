@@ -6,7 +6,7 @@ import { ComponentDom } from '../lib/modules/component_dom.js'
 class ComponentDomClass extends extend_as("ComponentDomClass").mixins(ComponentDom,Attributable) {
   constructor() {
     super();
-    this.attribute_names = ["attr1", "attr2", "attr3", "writeable_attr1", "writeable_attr2", 
+    this.attribute_names = ["attr1", "attr2", "attr3", "writeable_attr1", "writeable_attr2",
                             "writeable_attr3", "writeable_attr4", "attr_without_html_attribute",
                             "reversable_attr", "defined_attr", "undefined_attr", "non_dom_attr"];
     this.non_dom_attribute_names = ["non_dom_attr"];
@@ -205,7 +205,7 @@ describe('ComponentDom', function() {
     component_dom.set("writeable_attr3", "new value");
     component_dom.updateAttrsFromNodes({ attrs: ["writeable_attr3"]});
     chai.expect(spy).to.not.have.been.called;
-    component_dom.updateAttrsFromNodes({ attrs: ["writeable_attr3"], invoke_callbacks: true });
+    component_dom.updateAttrsFromNodes({ attrs: ["writeable_attr3"], run_callback: true });
     chai.expect(spy).to.have.been.called.with("writeable_attr3", component_dom);
   });
 

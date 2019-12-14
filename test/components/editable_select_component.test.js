@@ -150,7 +150,8 @@ describe("EditableSelectComponent", function() {
       chai.expect(select.get("input_value")).not.to.eq("custom value");
     });
 
-    it("doesn't change input_value on external click if display_value changed", function() {
+    it("doesn't change input_value on external click if display_value changed and set_custom_value_on_extrnal_click is false", function() {
+      select.set("set_custom_value_on_extrnal_click", false);
       select.set("input_value", "ab");
       const new_value = select.get("display_value") + "1";
       select.set("display_value", new_value);
@@ -166,6 +167,19 @@ describe("EditableSelectComponent", function() {
       select.set("input_value", "ab");
       root.dom_element.querySelector("button#reset_payment_method_select").click();
       chai.expect(select.get("input_value")).to.eq("ab");
+    });
+
+    it("only publishes the change event if value actually chaged", function() {
+      select.set("input_value", "ab");
+
+      var publish_event_spy = chai.spy.on(select, "publishEvent");
+      display_input.value = "custom value1";
+      select.setValueFromManualInput();
+      select.setValueFromManualInput();
+
+      // Should have been called only once, since the second time
+      // value doesn't change
+      chai.expect(publish_event_spy).to.have.been.called.once;
     });
 
   });

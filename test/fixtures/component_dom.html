@@ -5,12 +5,13 @@
     <div data-component-attr="writeable_attr1"></div>
     <div data-component-attr-map="writeable_attr2:data-writeable-attr2" data-writeable-attr2="null"></div>
     <div data-component-attr="writeable_attr3">writeable_attr3 value</div>
-    
+
     <!-- a number of DOM elements which all correspond to the same attr and, thus, get updated -->
     <div id="writable_attr4_el1" data-component-attr="writeable_attr4"></div>
     <div id="writable_attr4_el2" data-component-attr="writeable_attr4"></div>
     <div id="writable_attr4_el3" data-component-attr-map="writeable_attr4:data-attr4" data-attr4=""></div>
     <div id="writable_attr4_el4" data-component-attr-map="writeable_attr4:data-attr4" data-attr4=""></div>
+    <div id="writable_value" data-component-attr-map="writable_value:value"></div>
     <div data-component-attr-map="undefined_attr:data-undefined-attr"></div>
     <div data-component-attr-map="defined_attr:defined-attr" data-defined-attr="defined value"></div>
 
@@ -32,7 +33,7 @@
       <div data-component-part="part2"></div>
     </div>
     <div data-component-part="part2"></div>
-    
+
     <div data-component-part="part3"></div>
     <div data-component-class="MyComponent">
       <div data-component-part="part3"></div> <!-- ignored by findAllParts() because it's inside another component -->

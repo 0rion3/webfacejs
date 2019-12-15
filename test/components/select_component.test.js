@@ -239,6 +239,9 @@ describe("SelectComponent", function() {
       select.attributes.input_value = 0;
       select.setDisplayValueFromCurrentInputValue();
       chai.expect(select.get("display_value")).to.equal("Zero");
+      select.options.addHead(0, 0);
+      select.setDisplayValueFromCurrentInputValue();
+      chai.expect(select.get("display_value")).to.equal(0);
     });
 
     it("automatically updates display_value when input_value changes", function() {

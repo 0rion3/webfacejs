@@ -7,8 +7,9 @@ class ComponentDomClass extends extend_as("ComponentDomClass").mixins(ComponentD
   constructor() {
     super();
     this.attribute_names = ["attr1", "attr2", "attr3", "writeable_attr1", "writeable_attr2",
-                            "writeable_attr3", "writeable_attr4", "attr_without_html_attribute",
-                            "reversable_attr", "defined_attr", "undefined_attr", "non_dom_attr"];
+                            "writeable_attr3", "writeable_attr4", "writable_value",
+                            "attr_without_html_attribute", "reversable_attr", "defined_attr",
+                            "undefined_attr", "non_dom_attr"];
     this.non_dom_attribute_names = ["non_dom_attr"];
     this.attribute_casting = this.constructor.attribute_casting;
   }
@@ -162,6 +163,14 @@ describe('ComponentDom', function() {
     component_dom.set("attr_without_html_attribute", "hello world");
     component_dom._writeAttrToNode("attr_without_html_attribute");
     chai.expect(component_dom.dom_element.getAttribute("data-attr-without-html-attribute")).to.equal("hello world");
+  });
+
+  it("writes attribute value to the corresponding element mapped property", function() {
+    var attr_el = component_dom.firstDomDescendantOrSelfWithAttr(dom, { attr_name: "data-component-attr-map", attr_value: "writable_value:value" });
+
+    component_dom.set("writable_value", 0);
+    component_dom._writeAttrToNode("writable_value");
+    chai.expect(attr_el.value).to.equal("0");
   });
 
   it("doesn't read or write attributes if source value is undefined", function() {

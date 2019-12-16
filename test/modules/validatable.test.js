@@ -11,7 +11,7 @@ class Dummy extends extend_as("Dummy").mixins(Attributable,Validatable) {
   constructor() {
     super();
 
-    this.attribute_names = ['num1', 'num2', 'num3', 'enum1', 'enum2', 'null1', 'str1', 'str2', 'str3', 'str4', 'not_null1', 'not_empty1', 'custom_message1', 'custom_function_attr', "custom_function_attr2"];
+    this.attribute_names = ['num1', 'num2', 'num3', 'enum1', 'enum2', 'null1', 'str1', 'str2', 'str3', 'str4', 'not_null1', 'not_empty1', 'custom_message1', 'custom_function_attr', "custom_function_attr2", "eq_attr"];
 
     this.validations = {
       'num1'  : { 'isNumeric'  : true, "allow_null": true },
@@ -169,6 +169,16 @@ describe('Validatable', function() {
     dummy.set("custom_message1", "");
     dummy.validate();
     chai.expect(dummy.validation_errors['custom_message1'][0]).to.equal('CUSTOM MESSAGE');
+  });
+
+  it('validates equality', function() {
+    dummy.validations.eq_attr = { equals: "hello" };
+    dummy.set("eq_attr", "hello1");
+    dummy.validate();
+    chai.expect(dummy.validation_errors['eq_attr'][0]).to.eq("should equal 'hello'")
+    dummy.set("eq_attr", "hello");
+    dummy.validate();
+    chai.expect(dummy.validation_errors['eq_attr']).to.be.empty;
   });
 
   /* CUSTOM FUNCTION VALIDATIONS */

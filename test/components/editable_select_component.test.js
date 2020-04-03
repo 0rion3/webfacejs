@@ -151,7 +151,7 @@ describe("EditableSelectComponent", function() {
     });
 
     it("doesn't change input_value on external click if display_value changed and set_custom_value_on_extrnal_click is false", function() {
-      select.set("set_custom_value_on_extrnal_click", false);
+      select.set("set_custom_value_on_external_click", false);
       select.set("input_value", "ab");
       const new_value = select.get("display_value") + "1";
       select.set("display_value", new_value);

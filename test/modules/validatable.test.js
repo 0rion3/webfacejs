@@ -175,10 +175,17 @@ describe('Validatable', function() {
     dummy.validations.eq_attr = { equals: "hello" };
     dummy.set("eq_attr", "hello1");
     dummy.validate();
-    chai.expect(dummy.validation_errors['eq_attr'][0]).to.eq("should equal 'hello'")
+    chai.expect(dummy.validation_errors['eq_attr'][0]).to.eq("should equal 'hello'");
     dummy.set("eq_attr", "hello");
     dummy.validate();
     chai.expect(dummy.validation_errors['eq_attr']).to.be.empty;
+  });
+
+  it("allows functions for validation condition values, so that we can evaluate at the time a validation is being called", function() {
+    dummy.validations.eq_attr = { equals: () => "hello" };
+    dummy.set("eq_attr", "hello1");
+    dummy.validate();
+    chai.expect(dummy.validation_errors['eq_attr'][0]).to.eq("should equal 'hello'");
   });
 
   /* CUSTOM FUNCTION VALIDATIONS */

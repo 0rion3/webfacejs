@@ -30,9 +30,10 @@
       </div>
     </div>
 
-    <button data-component-class="ButtonComponent" data-component-roles="modal_window_content" id="modal_window_content">
-      Component to display within the modal window
-    </button>
+    <div style="display: none;">
+      <button data-component-template="ButtonComponent" data-component-attr="caption">
+      </button>
+    </div>
 
     <button data-component-class="ButtonComponent" data-component-roles="show_modal_with_text" data-component-attr-map="lockable:lockable" lockable="false">Show modal with text</button>
     <button data-component-class="ButtonComponent" data-component-roles="show_modal_with_html" data-component-attr-map="lockable:lockable" lockable="false">Show modal with html</button>

@@ -1,5 +1,6 @@
 import { extend_as } from '../../../lib/utils/mixin.js'
 import { Component } from '../../../lib/component.js'
+import { ButtonComponent } from '../../../lib/components/button_component.js'
 import { ModalWindowComponent } from '../../../lib/components/modal_window_component.js'
 
 export class ContainerComponent extends extend_as("ContainerComponent").mix(Component).with() {
@@ -18,9 +19,9 @@ export class ContainerComponent extends extend_as("ContainerComponent").mix(Comp
     }});
 
     this.event_handlers.add({ event: "click", role: "show_modal_with_component", handler: (self, child) => {
-      var c = self.findDescendantsByRole("modal_window_content")[0];
-      c.behave("show");
-      new ModalWindowComponent(c);
+      var b = new ButtonComponent();
+      b.set("caption", "ButtonComponent for the modal window");
+      new ModalWindowComponent(b);
     }});
 
   }

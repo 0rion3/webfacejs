@@ -3,6 +3,7 @@ import { extend_as       } from '../lib/utils/mixin.js'
 import { fetch_dom       } from '../test_utils.js'
 import { RootComponent } from '../lib/components/root_component.js'
 import { ModalWindowComponent } from '../lib/components/modal_window_component.js'
+import { FormFieldComponent }   from '../lib/components/form_field_component.js'
 
 describe("ModalWindowComponent", function() {
 
@@ -41,10 +42,9 @@ describe("ModalWindowComponent", function() {
     });
 
     it("appends child component's dom_element to content_el", function() {
-      var content_component = root.findDescendantsByRole("modal_window_content")[0];
-      mw = new ModalWindowComponent(content_component);
-      chai.expect(mw.content_el.children[0]).to.eq(content_component.dom_element);
-      chai.expect(mw.children[0]).to.eq(content_component);
+      mw = new ModalWindowComponent(new FormFieldComponent());
+      chai.expect(mw.content_el.children[0].innerText).to.eq("Component to display within the modal window");
+      chai.expect(mw.children[0].constructor.name).to.eq("FormFieldComponent");
     });
 
     it("is added as a child of RootComponent", function() {

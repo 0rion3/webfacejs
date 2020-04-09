@@ -19,6 +19,7 @@ import "./utils/i18n.test.js";
 import "./utils/logmaster.test.js";
 import "./utils/ajax_request.test.js";
 import "./utils/position_manager.test.js";
+import "./utils/public_promise.test.js";
 import "./services/display_state_manager.test.js";
 import "./component.test.js";
 

@@ -56,7 +56,7 @@ describe("ModalWindowComponent", function() {
     
   });
 
-  describe("hiding", function() {
+  describe("closing", function() {
 
     describe("when close_button is clicked", function() {
 
@@ -78,6 +78,18 @@ describe("ModalWindowComponent", function() {
         chai.expect(RootComponent.instance.dom_element.children).to.include(mw.dom_element);
         await mw.hide();
         chai.expect(root.children).not.to.include(mw);
+      });
+
+      it("sets the return value of the promise to true or false", function() {
+        // Closing with truthy promise, meaning externally calling close().
+        mw = new ModalWindowComponent("hello world", { show_close_button: true });
+        mw.close();
+        mw.promise.then((v) => chai.expect(v).to.be.true);
+
+        // Closing with falsy promise, meaning with the close button
+        mw = new ModalWindowComponent("hello world", { show_close_button: true });
+        mw.findPart("close").dispatchEvent(new MouseEvent("click"));
+        mw.promise.then((v) => chai.expect(v).to.be.false);
       });
 
     });

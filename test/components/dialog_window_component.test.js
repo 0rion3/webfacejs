@@ -1,8 +1,8 @@
-import '../webface_init.js'
-import { extend_as       } from '../lib/utils/mixin.js'
-import { fetch_dom       } from '../test_utils.js'
-import { RootComponent } from '../lib/components/root_component.js'
-import { DialogWindowComponent } from '../lib/components/dialog_window_component.js'
+import '../webface_init.js';
+import { extend_as       } from '../lib/utils/mixin.js';
+import { fetch_dom       } from '../test_utils.js';
+import { RootComponent } from '../lib/components/root_component.js';
+import { DialogWindowComponent } from '../lib/components/dialog_window_component.js';
 
 describe("DialogWindowComponent", function() {
 
@@ -46,10 +46,6 @@ describe("DialogWindowComponent", function() {
       chai.expect(b.getAttribute("data-component-class")).to.eq("ButtonComponent");
       chai.expect(["Yes", "No"]).to.include(b.innerText);
     });
-  });
-
-  it("returns a combined Promise from the #promise attr", function() {
-    chai.expect(dw.promise.constructor.name).to.eq("Promise");
   });
 
   it("creates an event handler for option button", function() {

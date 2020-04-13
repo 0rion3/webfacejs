@@ -47,4 +47,15 @@ describe("ButtonComponent", function() {
     chai.expect(button.event_locks).not.to.include("touchend");
   });
 
+  describe("custom casting for disabled attribute", function() {
+
+    it("converts disabled to either true or false when reading from DOM", function() {
+       button.dom_element.setAttribute("disabled", "true");
+    });
+
+    it("converts disabled to either null or 'disabled' when writing to DOM", function() {
+      
+    });
+  });
+
 });

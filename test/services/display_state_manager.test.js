@@ -237,9 +237,10 @@ describe('DisplayStateManager', function() {
 
   describe("calling actions on entities (to show or hide them)", function() {
 
-    beforeEach(function() {
+    beforeEach(async function() {
       c.set("attr1", "value1");
       ds.applyChanges();
+      await ds.last_promise;
     });
 
     it("applies hide action to all entities except the ones that are to be shown with the correct animation speed setting", function() {

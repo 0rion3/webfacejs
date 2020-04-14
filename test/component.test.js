@@ -343,18 +343,21 @@ describe("Component", function() {
       spy = chai.spy.on(component.display_state_manager, "applyAction");
     });
 
-    it("calls DisplayStateManager.applyAction() whenever an attribute changes", function() {
+    it("calls DisplayStateManager.applyAction() whenever an attribute changes", async function() {
       component.set("attr1", "value1");
+      await component.display_state_manager.last_promise;
       chai.expect(spy).to.have.been.called.twice;
     });
 
-    it("calls DisplayStateManager.applyAction() only twice (to hide and show entities) when attributes are called with updateAttributes()", function() {
+    it("calls DisplayStateManager.applyAction() only twice (to hide and show entities) when attributes are called with updateAttributes()", async function() {
       component.updateAttributes({ caption: "value", attr1: "value1", attr2: "value2" });
+      await component.display_state_manager.last_promise;
       chai.expect(spy).to.have.been.called.twice;
     });
 
-    it("doesn't call DisplayStateManager.applyAction() upon updateAttributes() call if callback option is set to false", function() {
+    it("doesn't call DisplayStateManager.applyAction() upon updateAttributes() call if callback option is set to false", async function() {
       component.updateAttributes({ attr1: "value1", attr2: "value2" }, { callback: false });
+      await component.display_state_manager.last_promise;
       chai.expect(spy).to.not.have.been.called.twice;
     });
 

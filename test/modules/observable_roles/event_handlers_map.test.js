@@ -27,6 +27,15 @@ describe('observable_roles', function() {
       chai.expect(event_handlers.map["updated"]["role3"]).to.not.be.undefined;
     });
 
+    it('adds multiple handlers for multiple roles and events with the same method', function() {
+      event_handlers.add([
+        { role: 'role3', event: 'updated', handler: function() { print("role3#updated") }},
+        { role: 'role4', event: 'updated', handler: function() { print("role4#updated") }}
+      ]);
+      chai.expect(event_handlers.map["updated"]["role3"]).to.not.be.undefined;
+      chai.expect(event_handlers.map["updated"]["role4"]).to.not.be.undefined;
+    });
+
     it('removes a single handler for role and event', function() {
       event_handlers.remove({role: 'dummy', event: 'updated'});
       chai.expect(event_handlers.map["updated"]["dummy"]).to.be.undefined;

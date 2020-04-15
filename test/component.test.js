@@ -363,6 +363,44 @@ describe("Component", function() {
 
   });
 
+  describe("publishing the 'change' event when attributes change", function() {
+
+    var spy;
+
+    beforeEach(function() {
+      component.publish_changes_for = ["attr1", "attr2"];
+      component.roles = ["role1"];
+      component.change_event_called = 0;
+      component.event_handlers.add({ event: "change", role: "role1", handler: (self) => {
+        self.change_event_called += 1;
+      }});
+      component.addObservingSubscriber(component);
+      spy = chai.spy.on(component, "captureEvent");
+    });
+
+    it("publishes the 'change' event when an individual attribute is changed", function() {
+      component.set("attr1", "new value");
+      chai.expect(component.change_event_called).to.equal(1);
+    });
+
+    it("publishes the 'change' event once when attributes are changed through updateAttributes()", function() {
+      component.updateAttributes({ attr1: "new value", attr2: "new value"});
+      chai.expect(component.change_event_called).to.equal(1);
+    });
+
+    it("doesn't publish the 'change' event if the changed attribute is not in the publish_changes_for array", function() {
+      component.set("caption", "new value");
+      chai.expect(component.change_event_called).to.equal(0);
+    });
+
+    it("publishes changes whenever any attribute changes if publish_changes_for is set to '#all'", function() {
+      component.publish_changes_for = "#all";
+      component.updateAttributes({ caption: "new value" });
+      chai.expect(component.change_event_called).to.equal(1);
+    });
+
+  });
+
   it("gets root component", function() {
     var child = new DummyComponent();
     var root  = new RootComponent();

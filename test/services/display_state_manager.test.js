@@ -1,14 +1,16 @@
 import { extend_as }           from '../lib/utils/mixin.js'
 import { I18n }                from '../lib/utils/i18n.js'
 import { Attributable }        from '../lib/modules/attributable.js'
+import { Publisher }           from '../lib/modules/observable_roles/publisher.js'
 import { DisplayStateManager } from '../lib/services/display_state_manager.js'
 import { any, is_null, not_null, is_in, not_in } from '../lib/utils/standart_assertions.js';
 
-class DummyChildComponent extends extend_as("ChildDummyComponent").mixins(Attributable) {
+class DummyChildComponent extends extend_as("ChildDummyComponent").mixins(Attributable,Publisher) {
   constructor() {
     super();
-    this.roles = "role1";
-    this.attribute_names = ["attr1"];
+    this.roles               = "role1";
+    this.attribute_names     = ["attr1"];
+    this.publish_changes_for = ["change"];
   }
   behave() {}
 }
@@ -18,7 +20,7 @@ class DummyComponent extends extend_as("DummyComponent").mixins(Attributable) {
   constructor() {
     super();
     this.attribute_names = ["attr1", "attr2", "attr3", "attr4", "attr5", "attr6", "attr7", "attr8", "attr9"];
-    this.children = [chai.spy.interface(Object, ["behave"]), new DummyChildComponent()];
+    this.children = [chai.spy.interface("childComponentMock", ["behave"]), new DummyChildComponent()];
 
     this.display_state_manager_settings = { default_state_action: "show", multiple_attr_conditons_exclusivity: true }
     this.display_states = [
@@ -41,6 +43,7 @@ class DummyComponent extends extend_as("DummyComponent").mixins(Attributable) {
       [{ "role1.attr1": true,        attr1: "see child" }, "child_attr1_true_part" ]
     ]
 
+    this.event_handlers = chai.spy.interface('eventHandlerMapMock', ["add"]);
     this.display_state_manager = new DisplayStateManager(this);
   }
 
@@ -273,6 +276,14 @@ describe('DisplayStateManager', function() {
       chai.expect(ds.pickEntitiesForState()).to.deep.eq(["child_attr1_false_part"]);
       c.findFirstChildByRole("role1").set("attr1", true);
       chai.expect(ds.pickEntitiesForState()).to.deep.eq(["child_attr1_true_part"]);
+    });
+
+    it("extracts child component roles", function() {
+      chai.expect(ds._extractChildComponentRoles()).to.deep.eq(["role1"]);
+    });
+
+    it("subscribes component to relevant child component 'change' events", function() {
+      chai.expect(c.event_handlers.add).to.have.been.called.once;
     });
 
   });

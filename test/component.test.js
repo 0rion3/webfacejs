@@ -336,9 +336,14 @@ describe("Component", function() {
 
   describe("changing display state with DisplayStateManager", function() {
 
-    var spy;
+    var spy, child;
 
     beforeEach(function() {
+      component.display_states.push([{ "child1.attr1": true }, "child1_attr1_true_part"]);
+      chai.spy.on(component, "behave");
+      child = new DummyComponent();
+      child.roles = ["child1"];
+      component.children.push(child);
       component.afterInitialize();
       spy = chai.spy.on(component.display_state_manager, "applyAction");
     });
@@ -359,6 +364,15 @@ describe("Component", function() {
       component.updateAttributes({ attr1: "value1", attr2: "value2" }, { callback: false });
       await component.display_state_manager.last_promise;
       chai.expect(spy).to.not.have.been.called.twice;
+    });
+
+    it("calls applyAction() when a child publishes the 'change' event", async function() {
+      component.display_state_manager.findEntity = (name) => name;
+      child.publish_changes_for = ["attr1"];
+      child.addObservingSubscriber(component);
+      child.set("attr1", true);
+      await component.display_state_manager.last_promise;
+      chai.expect(component.behave).to.have.been.called.with("showPart");
     });
 
   });

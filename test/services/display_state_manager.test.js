@@ -4,10 +4,13 @@ import { Attributable }        from '../lib/modules/attributable.js'
 import { DisplayStateManager } from '../lib/services/display_state_manager.js'
 import { any, is_null, not_null, is_in, not_in } from '../lib/utils/standart_assertions.js';
 
-class DummyChildComponent extends extend_as("DummyChildComponent").mixins(Attributable) {
+class DummyChildComponent extends extend_as("ChildDummyComponent").mixins(Attributable) {
   constructor() {
+    super();
+    this.roles = "role1";
     this.attribute_names = ["attr1"];
   }
+  behave() {}
 }
 
 class DummyComponent extends extend_as("DummyComponent").mixins(Attributable) {
@@ -15,7 +18,7 @@ class DummyComponent extends extend_as("DummyComponent").mixins(Attributable) {
   constructor() {
     super();
     this.attribute_names = ["attr1", "attr2", "attr3", "attr4", "attr5", "attr6", "attr7", "attr8", "attr9"];
-    this.children = [chai.spy.interface("childComponentMock", ["behave"])];
+    this.children = [chai.spy.interface(Object, ["behave"]), new DummyChildComponent()];
 
     this.display_state_manager_settings = { default_state_action: "show", multiple_attr_conditons_exclusivity: true }
     this.display_states = [
@@ -34,6 +37,8 @@ class DummyComponent extends extend_as("DummyComponent").mixins(Attributable) {
       [{ attr5: not_null, attr6: is_null                                  }, ["hello2", "world2"]],
       [{ attr5: "is_null()", attr6: "not_null()"                          }, ["hello3", "world3"]],
       [{ attr5: true, attr6: 1                                            }, ["bool_part", "integer_part"]],
+      [{ "role1.attr1": "is_null()", attr1: "see child" }, "child_attr1_false_part"],
+      [{ "role1.attr1": true,        attr1: "see child" }, "child_attr1_true_part" ]
     ]
 
     this.display_state_manager = new DisplayStateManager(this);
@@ -48,11 +53,12 @@ class DummyComponent extends extend_as("DummyComponent").mixins(Attributable) {
     if(r.includes("role")) return this.children;
     else                   return [];
   }
+  findFirstChildByRole(r) {
+    return this.findChildrenByRole(r)[1]; // Always return the second one, that's the one we care about
+  }
   behave(b) {}
 
 }
-
-var component;
 
 describe('DisplayStateManager', function() {
 
@@ -79,7 +85,7 @@ describe('DisplayStateManager', function() {
         "M_role_or_part_name3", "#M_role_name3", ".M_part_name3",
         "M_role_or_part_name4", "#M_role_name4", ".M_part_name4",
         "hello", "world", "hello2", "world2", "hello3", "world3",
-        "bool_part", "integer_part"
+        "bool_part", "integer_part", "child_attr1_false_part", "child_attr1_true_part"
       ]);
     });
 
@@ -255,6 +261,18 @@ describe('DisplayStateManager', function() {
 
     it("applies show action to all entities with the correct animation speed settings", function() {
       chai.expect(c.behave).to.have.been.called.with("showPart", ["part_name1", 500]);
+    });
+
+  });
+
+  describe("checking attribtues on children", function() {
+
+    it("checks the value on the attribute on the first child with a particular role that was found", function() {
+      c.set("attr1", "see child")
+      c.findFirstChildByRole("role1").set("attr1", null);
+      chai.expect(ds.pickEntitiesForState()).to.deep.eq(["child_attr1_false_part"]);
+      c.findFirstChildByRole("role1").set("attr1", true);
+      chai.expect(ds.pickEntitiesForState()).to.deep.eq(["child_attr1_true_part"]);
     });
 
   });

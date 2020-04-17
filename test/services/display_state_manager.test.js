@@ -279,7 +279,7 @@ describe('DisplayStateManager', function() {
     });
 
     it("extracts child component roles", function() {
-      chai.expect(ds._extractChildComponentRoles()).to.deep.eq(["role1"]);
+      chai.expect(ds._extractChildComponentRolesAndAttrs()).to.deep.eq({role1: ["attr1"]});
     });
 
     it("subscribes component to relevant child component 'change' events", function() {

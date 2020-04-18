@@ -88,7 +88,7 @@ describe('DisplayStateManager', function() {
         "M_role_or_part_name3", "#M_role_name3", ".M_part_name3",
         "M_role_or_part_name4", "#M_role_name4", ".M_part_name4",
         "hello", "world", "hello2", "world2", "hello3", "world3",
-        "bool_part", "integer_part", "child_attr1_false_part", "child_attr1_true_part"
+        "bool_part", "integer_part", "child_attr1_false_part", "child_attr1_true_part",
       ]);
     });
 
@@ -164,6 +164,23 @@ describe('DisplayStateManager', function() {
         [{ attr10: 1, attr11: 1 }, [".part_name_folding_l1_a", ".part_name_folding_l1_b"]],
         [{ attr10: 1, attr11: 1, attr8: true }, [".part_name_folding_l1_a", ".part_name_folding_l1_b", ".part_name_folding_l2_a", ".part_name_folding_l2_b"]],
         [{ attr10: 1, attr11: 1, attr8: true, attr9: true }, [".part_name_folding_l1_a", ".part_name_folding_l1_b", ".part_name_folding_l2_a", ".part_name_folding_l2_b", ".part_name_folding_l3_a", ".part_name_folding_l3_b"]]
+      ]);
+    });
+
+    it("expands state names into a set of attrs+values listed in component.component_states", function() {
+      c.component_states = {
+        "State name 1": { attr1: "value2" },
+        "State name 2": { attr2: ["value3", "value4"] }
+      }
+      c.display_states = [
+        ["State name 1", "state_name_1_part1,state_name_1_part2", [
+          ["State name 2", "state_name_2_part1,state_name_2_part2"]
+        ]]
+      ];
+      ds = new DisplayStateManager(c);
+      chai.expect(ds.display_states).to.deep.eq([
+        [{ attr1: "value2" }, ["state_name_1_part1", "state_name_1_part2"]],
+        [{ attr1: "value2", attr2: ["value3", "value4"] }, ["state_name_1_part1", "state_name_1_part2", "state_name_2_part1","state_name_2_part2"]]
       ]);
     });
 

@@ -20,7 +20,11 @@ import "./utils/logmaster.test.js";
 import "./utils/ajax_request.test.js";
 import "./utils/position_manager.test.js";
 import "./utils/public_promise.test.js";
-import "./services/display_state_manager.test.js";
+import "./services/state/state_alias_manager.test.js";
+import "./services/state/state_manager.test.js";
+import "./services/state/state_action_manager.test.js";
+import "./services/state/display_state_manager.test.js";
+import "./services/state/state_dispatcher.test.js";
 import "./component.test.js";
 
 // Components

@@ -44,22 +44,22 @@ describe('StateActionManager', function() {
 
   it("runs function as a transition into a state", async function() {
     c.updateAttributes({ attr1: "value1", attr2: "value2" });
-    await sa.applyTransition();
+    await sa.applyTransitions();
     chai.expect(c.transitionIntoState1).to.have.been.called.once;
   });
 
   it("runs multiple transitions into a state", async function() {
     c.updateAttributes({ attr1: "value2", attr2: "value3" });
-    await sa.applyTransition();
+    await sa.applyTransitions();
     chai.expect(c.transitionIntoState2a).to.have.been.called.once;
     chai.expect(c.transitionIntoState2b).to.have.been.called.once;
   });
 
   it("runs a both in/out transitions when on Object with in/out keys is provided", async function() {
     c.updateAttributes({ attr1: "in_out_state_value" });
-    await sa.applyTransition();
+    await sa.applyTransitions();
     c.updateAttributes({ attr1: "value1" });
-    await sa.applyTransition();
+    await sa.applyTransitions();
     chai.expect(c.transitionIntoState3).to.have.been.called.once;
     chai.expect(c.transitionOutOfState3a).to.have.been.called.once;
     chai.expect(c.transitionOutOfState3b).to.have.been.called.once;

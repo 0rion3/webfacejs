@@ -46,12 +46,6 @@ describe("StateManager", function() {
       sm = new StateManager({ component: c });
     });
 
-    it("extracts child component roles", function() {
-      chai.expect(sm._extractChildComponentRolesAndAttrs([
-        [{ "role1.attr1": "hello" }, "transition"]
-      ])).to.deep.eq({role1: ["attr1"]});
-    });
-
     it("expands folded states into a flat structure with multiple display state declarations", function() {
       // notice different styles of transition declaration - both strings separated by commas and arrays work.
       var folded_states = [
@@ -138,13 +132,6 @@ describe("StateManager", function() {
       ]);
     });
 
-    it("subscribes component to relevant child component 'change' events when attr name contains a dot(.)", function() {
-      sm.children_roles_and_attrs = { role1: ["attr1", "attr2"], role2: ["attr3", "attr4"] }
-      sm._subscribeComponentToChildrenChanges();
-      chai.expect(c.findFirstChildByRole("role12").publish_changes_for).to.deep.eq(["attr1", "attr2", "attr3", "attr4"]);
-      chai.expect(c.event_handlers.add).to.have.been.called.twice;
-    });
-
   });
 
   describe("picking transitions for various states", function() {
@@ -167,59 +154,65 @@ describe("StateManager", function() {
         [{ attr5: true, attr6: 1                                            }, "transition14"],
         [{ "role1.attr1": "is_null()", attr1: "see child" },                   "transition15"],
         [{ "role1.attr1": true,        attr1: "see child" },                   "transition16"],
-        [{ attr1: "in_out_transitions"}, { in: "in_transition", out: "out_transition" }]
+        [{ attr1: "in_out_transitions" },     { in: "in_transition", out: "out_transition", run_before: "display" }],
+        [{ attr2: "run_before_transitions" }, { in: "in_transition", run_before: "custom_state_manager"           }]
       ];
       sm = new StateManager({ component: c, states: states });
     });
 
     it("picks a transition based on 1 attribute value", function() {
       c.set("attr1", "value1");
-      chai.expect(sm.pickTransitionsForState()).to.deep.eq(["transition2"]);
+      chai.expect(sm.pickTransitionsForState().in).to.deep.eq(["transition2"]);
     });
 
     it("picks picks a transition based on a definition with multiple attribute values, not including transitions from 1 attribute state", function() {
       c.set("attr1", "value1");
       c.set("attr2", "value1");
-      chai.expect(sm.pickTransitionsForState()).to.deep.eq(["transition7"]);
+      chai.expect(sm.pickTransitionsForState().in).to.deep.eq(["transition7"]);
     });
 
     it("picks a transition for both 1 attribute state and multiple attribute state when multiple_definitions_exclusivity flag is false", function() {
       c.set("attr1", "value1");
       c.set("attr2", "value1");
       sm.settings.multiple_definitions_exclusivity = false;
-      chai.expect(sm.pickTransitionsForState()).to.deep.equal(["transition2", "transition7"]);
+      chai.expect(sm.pickTransitionsForState().in).to.deep.equal(["transition2", "transition7"]);
     });
 
     it("picks transitions from various states if their attribute list is different", function() {
       c.updateAttributes({ attr1: "value1", attr2: "value1", attr4: "value4" });
-      chai.expect(sm.pickTransitionsForState()).to.deep.equal(["transition7", "transition10"]);
+      chai.expect(sm.pickTransitionsForState().in).to.deep.equal(["transition7", "transition10"]);
     });
 
     it("picks transitions for states where attribute's old value is checked", function() {
       c.set("attr1", "value5");
       c.set("attr1", "value6");
-      chai.expect(sm.pickTransitionsForState()).to.deep.eq(["transition5", "transition6"]);
+      chai.expect(sm.pickTransitionsForState().in).to.deep.eq(["transition5", "transition6"]);
       c.set("attr1", "value4");
       c.set("attr1", "value7");
-      chai.expect(sm.pickTransitionsForState()).to.deep.eq(["transition6"]);
+      chai.expect(sm.pickTransitionsForState().in).to.deep.eq(["transition6"]);
       c.set("attr1", "value2");
       c.set("attr1", "value3");
       c.set("attr2", "value3");
-      chai.expect(sm.pickTransitionsForState()).to.deep.eq(["transition9"]);
+      chai.expect(sm.pickTransitionsForState().in).to.deep.eq(["transition9"]);
     });
 
     it("picks transition for the value of the attribute on the first child with a particular role that was found", function() {
       c.set("attr1", "see child")
       c.findFirstChildByRole("role1").set("attr1", null);
-      chai.expect(sm.pickTransitionsForState()).to.deep.eq(["transition15"]);
+      chai.expect(sm.pickTransitionsForState().in).to.deep.eq(["transition15"]);
       c.findFirstChildByRole("role1").set("attr1", true);
-      chai.expect(sm.pickTransitionsForState()).to.deep.eq(["transition16"]);
+      chai.expect(sm.pickTransitionsForState().in).to.deep.eq(["transition16"]);
     });
 
     it("picks in/out transitions and stores the 'out' transitions for later", function() {
       c.set("attr1", "in_out_transitions");
-      chai.expect(sm.pickTransitionsForState()).to.deep.eq(["in_transition"]);
+      chai.expect(sm.pickTransitionsForState().in).to.deep.eq(["in_transition"]);
       chai.expect(sm.out_transitions_for_current_state).to.deep.eq(["out_transition"]);
+    });
+
+    it("pick before or after which state managers it should run", function() {
+      c.updateAttributes({ attr1: "in_out_transitions", attr2: "run_before_transitions" });
+      chai.expect(sm.pickTransitionsForState().run_before).to.deep.eq(["display", "custom_state_manager"]);
     });
 
     describe("using type checks", function() {
@@ -227,31 +220,31 @@ describe("StateManager", function() {
       it("includes transitions for which the attribute value is present/not present within an array of acceptable values", function() {
         c.set("attr5", "hello");
         c.set("attr6", "bye");
-        chai.expect(sm.pickTransitionsForState()).to.deep.eq(["transition11"]);
+        chai.expect(sm.pickTransitionsForState().in).to.deep.eq(["transition11"]);
         c.set("attr6", "hello");
-        chai.expect(sm.pickTransitionsForState()).to.be.empty;
+        chai.expect(sm.pickTransitionsForState().in).to.be.empty;
       });
 
       it("includes transitions for which the attribute is null/not null", function() {
         c.set("attr5", "some value");
         c.set("attr6", null);
-        chai.expect(sm.pickTransitionsForState()).to.deep.eq(["transition12"]);
+        chai.expect(sm.pickTransitionsForState().in).to.deep.eq(["transition12"]);
         c.set("attr6", "hello");
-        chai.expect(sm.pickTransitionsForState()).to.be.empty;
+        chai.expect(sm.pickTransitionsForState().in).to.be.empty;
       });
 
       it("allows to specify type checking functions as strings", function() {
         c.set("attr5", null);
         c.set("attr6", "some value");
-        chai.expect(sm.pickTransitionsForState()).to.deep.eq(["transition13"]);
+        chai.expect(sm.pickTransitionsForState().in).to.deep.eq(["transition13"]);
         c.set("attr5", "some value");
-        chai.expect(sm.pickTransitionsForState()).to.be.empty;
+        chai.expect(sm.pickTransitionsForState().in).to.be.empty;
       });
 
       it("handles non-string values correctly", function() {
         c.set("attr5", true);
         c.set("attr6", 1);
-        chai.expect(sm.pickTransitionsForState()).to.deep.eq(["transition14"]);
+        chai.expect(sm.pickTransitionsForState().in).to.deep.eq(["transition14"]);
       });
 
     });

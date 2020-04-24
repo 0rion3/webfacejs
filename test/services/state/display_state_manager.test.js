@@ -116,7 +116,7 @@ describe('DisplayStateManager', function() {
 
         chai.spy.on(ds, "_applyBehaviorToEntities");
         c.set("attr1", "value1");
-        var promise = ds.applyTransition();
+        var promise = ds.applyTransitions();
         returned_promises.forEach((promise) => promise.resolve());
         await promise;
         chai.expect(ds._applyBehaviorToEntities).to.have.been.called.with("hide",
@@ -139,7 +139,7 @@ describe('DisplayStateManager', function() {
       it("resolves transition promise when all behaviors for the transition complete", async function() {
         returned_promises.forEach((promise) => promise.resolve());
         c.set("attr1", "value1");
-        var promise = ds.applyTransition();
+        var promise = ds.applyTransitions();
         returned_promises[0].resolve();
         returned_promises[1].resolve();
         await promise;
@@ -148,11 +148,11 @@ describe('DisplayStateManager', function() {
 
       it("rejects transition promise when a transition is discarded from the queue", async function() {
         c.set("attr1", "value1");
-        var promise1 = ds.applyTransition();
+        var promise1 = ds.applyTransitions();
         c.set("attr1", "value2");
-        var promise2 = ds.applyTransition();
+        var promise2 = ds.applyTransitions();
         c.set("attr1", "value3");
-        var promise3 = ds.applyTransition();
+        var promise3 = ds.applyTransitions();
         returned_promises[0].resolve();
         returned_promises[1].resolve();
         await new Promise(resolve => setTimeout(resolve, 100));

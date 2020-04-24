@@ -334,45 +334,37 @@ describe("Component", function() {
 
   });
 
-  describe("changing display state with DisplayStateManager", function() {
+  describe("applying transitions for states", function() {
 
     var spy, child;
 
     beforeEach(function() {
-      component.display_states.push([{ "child1.attr1": true }, "child1_attr1_true_part"]);
+      component.states = [
+        "display",
+        [{ "child1.attr1": true }, "child1_attr1_true_part"]
+      ];
       chai.spy.on(component, "behave");
       child = new DummyComponent();
       child.roles = ["child1"];
       component.children.push(child);
       component.afterInitialize();
-      spy = chai.spy.on(component.display_state_manager, "applyAction");
+      spy = chai.spy.on(component.state_dispatcher, "applyTransitions");
     });
 
-    it("calls DisplayStateManager.applyAction() whenever an attribute changes", async function() {
+    it("calls state_dispatcher.applyTransitions() whenever an attribute changes", async function() {
       component.set("attr1", "value1");
-      await component.display_state_manager.last_promise;
-      chai.expect(spy).to.have.been.called.twice;
+      chai.expect(spy).to.have.been.called.once;
     });
 
-    it("calls DisplayStateManager.applyAction() only twice (to hide and show entities) when attributes are called with updateAttributes()", async function() {
-      component.updateAttributes({ caption: "value", attr1: "value1", attr2: "value2" });
-      await component.display_state_manager.last_promise;
-      chai.expect(spy).to.have.been.called.twice;
-    });
-
-    it("doesn't call DisplayStateManager.applyAction() upon updateAttributes() call if callback option is set to false", async function() {
+    it("doesn't call state_manager.applyTransitions() upon updateAttributes() call if callback option is set to false", async function() {
       component.updateAttributes({ attr1: "value1", attr2: "value2" }, { callback: false });
-      await component.display_state_manager.last_promise;
-      chai.expect(spy).to.not.have.been.called.twice;
+      chai.expect(spy).to.not.have.been.called;
     });
 
-    it("calls applyAction() when a child publishes the 'change' event", async function() {
-      component.display_state_manager.findEntity = (name) => name;
-      child.publish_changes_for = ["attr1"];
-      child.addObservingSubscriber(component);
+    it("calls state_manager.applyTransitions() when a child publishes the 'change' event", async function() {
+      component.state_dispatcher.state_managers.get("display").findEntity = (name) => name;
       child.set("attr1", true);
-      await component.display_state_manager.last_promise;
-      chai.expect(component.behave).to.have.been.called.with("showPart");
+      chai.expect(spy).to.have.been.called;
     });
 
   });

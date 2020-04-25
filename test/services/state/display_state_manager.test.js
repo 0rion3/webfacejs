@@ -148,20 +148,21 @@ describe('DisplayStateManager', function() {
 
       it("rejects transition promise when a transition is discarded from the queue", async function() {
         c.set("attr1", "value1");
-        var promise1 = ds.applyTransitions();
+        ds.applyTransitions();
         c.set("attr1", "value2");
-        var promise2 = ds.applyTransitions();
+        ds.applyTransitions();
         c.set("attr1", "value3");
-        var promise3 = ds.applyTransitions();
+        ds.applyTransitions();
+        var display_state_promises = ds.queue.map(item => item.transition_promise);
         returned_promises[0].resolve();
         returned_promises[1].resolve();
         await new Promise(resolve => setTimeout(resolve, 100));
         returned_promises[2].resolve();
         returned_promises[3].resolve();
         await new Promise(resolve => setTimeout(resolve, 100));
-        chai.expect(promise1.resolved).to.be.true;
-        chai.expect(promise2.rejected).to.be.true;
-        chai.expect(promise3.resolved).to.be.true;
+        chai.expect(display_state_promises[0].resolved).to.be.true;
+        chai.expect(display_state_promises[1].rejected).to.be.true;
+        chai.expect(display_state_promises[2].resolved).to.be.true;
       });
 
     });

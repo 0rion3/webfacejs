@@ -31,7 +31,7 @@ class DummyComponent extends extend_as("DummyComponent").mixins(Attributable) {
         "Alias 2": { "role1.attr1": "value1", "role2.attr2": "value2" }
       },
 
-      "actions", {},
+      "action", {},
         ["Alias 1", { in: "transition_action_for_alias_1", run_before: "display" }],
 
       "display", { hide_animation_speed: null, show_anitmation_speed: null },

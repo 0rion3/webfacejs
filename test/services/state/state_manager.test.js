@@ -321,15 +321,6 @@ describe("StateManager", function() {
       spy = chai.spy.on(sm, "applyTransitionsNow");
     });
 
-    it("waits for external promise to resolve before applying transitions", async function() {
-      var external_promise = new PublicPromise();
-      var promise = sm.applyTransitions({ transitions: { in: ["in_transition1"] }, external_promise: external_promise });
-      chai.expect(sm.applyTransitionsNow).to.not.have.been.called;
-      external_promise.resolve();
-      await promise;
-      chai.expect(applied_transitions).to.deep.eq([["in_transition1"]]);
-    });
-
     it("applies in transitions to states we're entering, but not the ones we're already in", async function() {
       c.set("attr1", "value1");
       await sm.applyTransitions();
@@ -352,6 +343,7 @@ describe("StateManager", function() {
       var result = "";
       sm.applyTransitionsNow = (transitions) => {
         result += transitions + ";";
+        return new Promise(resolve => resolve());
       }
 
       c.set("attr1", "value1");

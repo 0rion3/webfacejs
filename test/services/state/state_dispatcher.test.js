@@ -99,16 +99,12 @@ describe("StateDispatcher", function() {
     var result = "";
     var sa = sd.state_managers.get("action");
     var ds = sd.state_managers.get("display");
-    sa.applyTransitions = ({ transitions=sa.pickTransitionsForState(), external_promise=null}={}) => {
-      external_promise.then(() => {
-        result += "1.action;";
-      });
+    sa.applyTransitions = ({ transitions=sa.pickTransitionsForState() }) => {
+      result += "1.action;";
       return new Promise(resolve => resolve());
     }
-    ds.applyTransitions = ({ transitions=ds.pickTransitionsForState(), external_promise=null}={}) => {
-      external_promise.then(() => {
+    ds.applyTransitions = ({ transitions=ds.pickTransitionsForState()}={}) => {
         result += "2.display;";
-      });
       return new Promise(resolve => resolve());
     }
     await sd.applyTransitions();

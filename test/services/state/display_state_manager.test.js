@@ -88,15 +88,6 @@ describe('DisplayStateManager', function() {
 
   describe("applying transitions to entities", function() {
 
-    var behavior_promises, returned_promises;
-
-    beforeEach(function() {
-      behavior_promises = [];
-      returned_promises = [];
-      for(let i=0; i < 6; i += 1)
-        behavior_promises.push(new PublicPromise());
-
-    });
 
     describe("hiding/showing entities", function() {
 
@@ -108,16 +99,12 @@ describe('DisplayStateManager', function() {
       });
 
       it("passes hide and show behaviors the correct list of entities to hide and show", async function() {
-
         ds._applyBehaviorToEntities = () => {
-          returned_promises.push(behavior_promises.pop());
-          return returned_promises[returned_promises.length-1];
+          return new Promise(resolve => resolve());
         }
-
         chai.spy.on(ds, "_applyBehaviorToEntities");
         c.set("attr1", "value1");
         var promise = ds.applyTransitions();
-        returned_promises.forEach((promise) => promise.resolve());
         await promise;
         chai.expect(ds._applyBehaviorToEntities).to.have.been.called.with("hide",
           ["role_or_part_name2", "#role_name2", ".part_name2", "role_or_part_name3"]);
@@ -129,7 +116,14 @@ describe('DisplayStateManager', function() {
 
     describe("transition promise", function() {
 
+      var behavior_promises, returned_promises;
+
       beforeEach(function() {
+        behavior_promises = [];
+        returned_promises = [];
+        for(let i=0; i < 6; i += 1)
+          behavior_promises.push(new PublicPromise());
+
         ds._applyBehaviorToEntities = () => {
           returned_promises.push(behavior_promises.pop());
           return returned_promises[returned_promises.length-1];

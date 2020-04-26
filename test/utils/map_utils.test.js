@@ -47,5 +47,16 @@ describe("map_utils", function() {
     chai.expect(compare_maps(map1, map2)).to.be.true;
 
   });
+
+  it("compares two objects with arrays", function() {
+    var arr1 = { "key1": ["a", "b"]      };
+    var arr2 = { "key1": ["a", "b"]      };
+    var arr3 = { "key1": ["a", "c"]      };
+    var arr4 = { "key1": ["a", "b", "c"] };
+
+    chai.expect(compare_maps(arr1, arr2)).to.be.true;
+    chai.expect(compare_maps(arr1, arr3)).to.be.false;
+    chai.expect(compare_maps(arr1, arr4)).to.be.false;
+  });
   
 });

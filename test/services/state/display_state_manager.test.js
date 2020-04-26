@@ -137,9 +137,9 @@ describe('DisplayStateManager', function() {
       });
 
       it("resolves transition promise when all behaviors for the transition complete", async function() {
-        returned_promises.forEach((promise) => promise.resolve());
         c.set("attr1", "value1");
-        var promise = ds.applyTransitions();
+        var transitions = ds.pickTransitionsForState();
+        var promise = ds.applyTransitionsNow(transitions.in);
         returned_promises[0].resolve();
         returned_promises[1].resolve();
         await promise;
@@ -147,19 +147,23 @@ describe('DisplayStateManager', function() {
       });
 
       it("rejects transition promise when a transition is discarded from the queue", async function() {
+        var promise, transitions;
         c.set("attr1", "value1");
-        ds.applyTransitions();
+        transitions = ds.pickTransitionsForState();
+        promise = ds.applyTransitionsNow(transitions.in);
         c.set("attr1", "value2");
-        ds.applyTransitions();
+        transitions = ds.pickTransitionsForState();
+        promise = ds.applyTransitionsNow(transitions.in);
         c.set("attr1", "value3");
-        ds.applyTransitions();
+        transitions = ds.pickTransitionsForState();
+        promise = ds.applyTransitionsNow(transitions.in);
         var display_state_promises = ds.queue.map(item => item.transition_promise);
         returned_promises[0].resolve();
         returned_promises[1].resolve();
-        await new Promise(resolve => setTimeout(resolve, 100));
+        for(let p of returned_promises.slice(0,2)) await p;
         returned_promises[2].resolve();
         returned_promises[3].resolve();
-        await new Promise(resolve => setTimeout(resolve, 100));
+        for(let p of returned_promises.slice(2,4)) await p;
         chai.expect(display_state_promises[0].resolved).to.be.true;
         chai.expect(display_state_promises[1].rejected).to.be.true;
         chai.expect(display_state_promises[2].resolved).to.be.true;

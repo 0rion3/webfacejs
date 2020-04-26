@@ -1,3 +1,4 @@
+import PublicPromise         from '../../lib/utils/public_promise.js';
 import { any, is_null, not_null, is_in, not_in } from '../../lib/utils/standart_assertions.js';
 import { extend_as         } from '../../lib/utils/mixin.js'
 import { Attributable      } from '../../lib/modules/attributable.js'
@@ -142,7 +143,7 @@ describe("StateManager", function() {
         [{ attr1: "value1" },                                                  "transition2"],
         [{ attr1: "value2" },                                                  "transition3"],
         [{ attr1: ["value3", "value4"]},                                       "transition4"],
-        [{ old_attr1: "value5", attr1: "value6" },                             "transition5"],
+        [{ old_attr1: "value5", attr1: "value6" },                             { in: "transition5", out: "out_transition5"}],
         [{ old_attr1: "value4,value5", attr1: "value6,value7" },               "transition6"],
         [{ attr1: "value1", attr2: "value1" },                                 "transition7"],
         [{ attr1: "value2", attr2: "value1,value2" },                          "transition8"],
@@ -154,10 +155,46 @@ describe("StateManager", function() {
         [{ attr5: true, attr6: 1                                            }, "transition14"],
         [{ "role1.attr1": "is_null()", attr1: "see child" },                   "transition15"],
         [{ "role1.attr1": true,        attr1: "see child" },                   "transition16"],
-        [{ attr1: "in_out_transitions" },     { in: "in_transition", out: "out_transition", run_before: "display" }],
-        [{ attr2: "run_before_transitions" }, { in: "in_transition", run_before: "custom_state_manager"           }]
+        [{ attr1: "in_out_transitions" },     { in: "in_transition",  out: "out_transition",  run_before: "display" }],
+        [{ attr1: "in_out_transitions2" },    { in: "in_transition2",                         run_before: "display" }],
+        [{ attr2: "run_before_transitions" }, { in: "in_transition",                          run_before: "custom_state_manager" }]
       ];
       sm = new StateManager({ component: c, states: states });
+    });
+
+    describe("concatenating and subtracting states", function() {
+
+      var states1, states2;
+
+      beforeEach(function() {
+        states1 = [
+          [{ attr1: "value1", attr2: ["value2", "value3"]},  "transition1"]
+        ];
+        states2 = [
+          [{ attr2: ["value2", "value3"], attr1: "value1"},  "transition1"], // <-- This one shall not be included
+          [{ attr1: "value1", attr3: "value3"},              "transition2"],
+          [{ attr1: "value1", attr2: ["value2", "value4"]},  "transition3"]
+        ];
+      });
+
+      it("concatenates states removing duplicates", function() {
+        var resulting_states = [
+          [{ attr1: "value1", attr3: "value3"},              "transition2"],
+          [{ attr1: "value1", attr2: ["value2", "value4"]},  "transition3"],
+          [{ attr1: "value1", attr2: ["value2", "value3"]},  "transition1"]
+        ];
+        chai.expect(sm._concatStates(states1, states2)).to.deep.eq(resulting_states);
+      });
+
+      it("subtracts states", function() {
+        var result_of_states2_minus_states1 = [
+          [{ attr1: "value1", attr3: "value3"},              "transition2"],
+          [{ attr1: "value1", attr2: ["value2", "value4"]},  "transition3"]
+        ];
+        chai.expect(sm._subtractStates(states2, states1)).to.deep.eq(result_of_states2_minus_states1);
+        chai.expect(sm._subtractStates(states1, states2)).to.be.empty;
+      });
+
     });
 
     it("picks a transition based on 1 attribute value", function() {
@@ -165,17 +202,19 @@ describe("StateManager", function() {
       chai.expect(sm.pickTransitionsForState().in).to.deep.eq(["transition2"]);
     });
 
-    it("picks picks a transition based on a definition with multiple attribute values, not including transitions from 1 attribute state", function() {
+    // Default, pick_states_with_longest_definition_only is set to true
+    it("picks a transition for both 1 attribute state and multiple attribute state when pick_states_with_longest_definition_only flag is true", function() {
       c.set("attr1", "value1");
       c.set("attr2", "value1");
-      chai.expect(sm.pickTransitionsForState().in).to.deep.eq(["transition7"]);
+      chai.expect(sm.pickTransitionsForState().in).to.deep.equal(["transition7"]);
     });
 
-    it("picks a transition for both 1 attribute state and multiple attribute state when multiple_definitions_exclusivity flag is false", function() {
+    // Non-standard behavior, pick_states_with_longest_definition_only is set to false
+    it("picks picks a transition based on a definition with multiple attribute values, not including transitions from 1 attribute state, when pick_states_with_longest_definition_only flag is false", function() {
       c.set("attr1", "value1");
       c.set("attr2", "value1");
-      sm.settings.multiple_definitions_exclusivity = false;
-      chai.expect(sm.pickTransitionsForState().in).to.deep.equal(["transition2", "transition7"]);
+      sm.settings.pick_states_with_longest_definition_only = false;
+      chai.expect(sm.pickTransitionsForState().in).to.deep.eq(["transition2", "transition7"]);
     });
 
     it("picks transitions from various states if their attribute list is different", function() {
@@ -187,9 +226,12 @@ describe("StateManager", function() {
       c.set("attr1", "value5");
       c.set("attr1", "value6");
       chai.expect(sm.pickTransitionsForState().in).to.deep.eq(["transition5", "transition6"]);
+      sm._updateCurrentStates();
       c.set("attr1", "value4");
       c.set("attr1", "value7");
-      chai.expect(sm.pickTransitionsForState().in).to.deep.eq(["transition6"]);
+      chai.expect(sm.pickTransitionsForState().in).to.deep.eq([]);
+      chai.expect(sm.pickTransitionsForState().out).to.deep.eq(["out_transition5"]);
+      sm._updateCurrentStates();
       c.set("attr1", "value2");
       c.set("attr1", "value3");
       c.set("attr2", "value3");
@@ -204,10 +246,18 @@ describe("StateManager", function() {
       chai.expect(sm.pickTransitionsForState().in).to.deep.eq(["transition16"]);
     });
 
-    it("picks in/out transitions and stores the 'out' transitions for later", function() {
+    it("picks in/out transitions and moves out transitions for the previous state under 'previous_out' key in the returned object", function() {
+      var transitions;
       c.set("attr1", "in_out_transitions");
-      chai.expect(sm.pickTransitionsForState().in).to.deep.eq(["in_transition"]);
-      chai.expect(sm.out_transitions_for_current_state).to.deep.eq(["out_transition"]);
+      transitions = sm.pickTransitionsForState();
+      chai.expect(transitions.in).to.deep.eq(["in_transition"]);
+      chai.expect(transitions.out).to.deep.eq([]);
+      sm._updateCurrentStates();
+
+      c.set("attr1", "in_out_transitions2");
+      transitions = sm.pickTransitionsForState();
+      chai.expect(transitions.in).to.deep.eq(["in_transition2"]);
+      chai.expect(transitions.out).to.deep.eq(["out_transition"]);
     });
 
     it("pick before or after which state managers it should run", function() {
@@ -247,6 +297,68 @@ describe("StateManager", function() {
         chai.expect(sm.pickTransitionsForState().in).to.deep.eq(["transition14"]);
       });
 
+    });
+
+  });
+
+  describe("applying transitions", function() {
+
+    var spy, applied_transitions;
+
+    var states = [
+      [{ attr1: "value1"}, { in: "in_transition1", out: "out_transition1"}],
+      [{ attr1: "value2"}, { in: "in_transition2" }],
+      [{ attr2: "value3"}, { in: "in_transition3" }]
+    ];
+
+    beforeEach(function() {
+      sm = new StateManager({ component: c, states: states });
+      applied_transitions = [];
+      sm.applyTransitionsNow = (transitions) => {
+        applied_transitions.push(transitions);
+        return new Promise(resolve => resolve());
+      }
+      spy = chai.spy.on(sm, "applyTransitionsNow");
+    });
+
+    it("waits for external promise to resolve before applying transitions", async function() {
+      var external_promise = new PublicPromise();
+      var promise = sm.applyTransitions({ transitions: { in: ["in_transition1"] }, external_promise: external_promise });
+      chai.expect(sm.applyTransitionsNow).to.not.have.been.called;
+      external_promise.resolve();
+      await promise;
+      chai.expect(applied_transitions).to.deep.eq([["in_transition1"]]);
+    });
+
+    it("applies in transitions to states we're entering, but not the ones we're already in", async function() {
+      c.set("attr1", "value1");
+      await sm.applyTransitions();
+      await sm.applyTransitions();
+      chai.expect(applied_transitions).to.deep.eq([["in_transition1"]]);
+    });
+
+    it("applies out transitions to states we're exiting, but not the ones we've already exited", async function() {
+      c.set("attr1", "value1");
+      await sm.applyTransitions();
+      c.set("attr1", "value2");
+      await sm.applyTransitions();
+      c.set("attr1", "value2");
+      await sm.applyTransitions();
+      c.set("attr2", "value3");
+      chai.expect(applied_transitions).to.deep.eq([["in_transition1"], ["out_transition1"], ["in_transition2"]]);
+    });
+
+    it("applies 'out' transitions first, only when they finish, applies 'in' transitions", async function() {
+      var result = "";
+      sm.applyTransitionsNow = (transitions) => {
+        result += transitions + ";";
+      }
+
+      c.set("attr1", "value1");
+      await sm.applyTransitions();
+      c.set("attr1", "value2");
+      await sm.applyTransitions();
+      chai.expect(result).to.equal("in_transition1;out_transition1;in_transition2;");
     });
 
   });

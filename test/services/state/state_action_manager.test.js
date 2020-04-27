@@ -30,7 +30,8 @@ describe('StateActionManager', function() {
     states = [
       [{ attr1: "value1", attr2: "value2" }, "transitionIntoState1" ],
       [{ attr1: "value2", attr2: "value3" }, ["transitionIntoState2a", "transitionIntoState2b" ]],
-      [{ attr1: "in_out_state_value"      }, { in: "transitionIntoState3", out: ["transitionOutOfState3a", "transitionOutOfState3b"] }]
+      [{ attr1: "in_out_state_value"      }, { in: "transitionIntoState3", out: ["transitionOutOfState3a", "transitionOutOfState3b"] }],
+      [{ attr1: "in_out_toggle"           }, "*toggleTransition" ]
     ];
 
      sa = new StateActionManager({ component: c, states: states });
@@ -63,6 +64,21 @@ describe('StateActionManager', function() {
     chai.expect(c.transitionIntoState3).to.have.been.called.once;
     chai.expect(c.transitionOutOfState3a).to.have.been.called.once;
     chai.expect(c.transitionOutOfState3b).to.have.been.called.once;
+  });
+
+  it("recognizes toggle functions for in/out transitions", async function() {
+    var toggle_transitions_spy = {
+      in:  chai.spy(),
+      out: chai.spy()
+    };
+    c.toggleTransition = () => toggle_transitions_spy;
+    c.set("attr1", "in_out_toggle");
+    await sa.applyTransitions();
+    chai.expect(toggle_transitions_spy.in).to.have.been.called.once;
+    chai.expect(toggle_transitions_spy.out).to.not.have.been.called;
+    c.set("attr1", "value1");
+    await sa.applyTransitions();
+    chai.expect(toggle_transitions_spy.out).to.have.been.called.once;
   });
 
 });

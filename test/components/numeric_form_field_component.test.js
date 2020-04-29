@@ -1,7 +1,7 @@
 import '../webface_init.js'
-import { extend_as       } from '../lib/utils/mixin.js'
-import { fetch_dom       } from '../test_utils.js'
-import { NumericFormFieldComponent } from '../lib/components/numeric_form_field_component.js'
+import { fetch_dom             } from '../test_utils.js'
+import extend_as                 from '../lib/utils/mixin.js'
+import NumericFormFieldComponent from '../lib/components/numeric_form_field_component.js'
 
 describe("NumericFormFieldComponent", function() {
 

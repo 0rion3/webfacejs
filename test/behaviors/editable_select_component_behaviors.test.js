@@ -1,6 +1,6 @@
 import '../webface_init.js'
-import { fetch_dom     } from '../test_utils.js'
-import { EditableSelectComponentBehaviors } from '../lib/behaviors/editable_select_component_behaviors.js'
+import { fetch_dom                    } from '../test_utils.js'
+import EditableSelectComponentBehaviors from '../lib/behaviors/editable_select_component_behaviors.js'
 
 describe("EditableSelectComponentBehaviors", function() {
 

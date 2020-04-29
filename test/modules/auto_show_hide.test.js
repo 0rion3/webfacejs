@@ -1,8 +1,8 @@
 import '../webface_init.js'
-import { extend_as }    from '../lib/utils/mixin.js'
-import { AutoShowHide } from '../lib/modules/auto_show_hide.js'
-import { Component }    from '../lib/component.js'
-import { ComponentBehaviors }    from '../lib/behaviors/component_behaviors.js'
+import extend_as          from '../lib/utils/mixin.js'
+import AutoShowHide       from '../lib/modules/auto_show_hide.js'
+import Component          from '../lib/component.js'
+import ComponentBehaviors from '../lib/behaviors/component_behaviors.js'
 
 export class MyComponent extends extend_as("MyComponent").mix(Component).with(AutoShowHide) {
 

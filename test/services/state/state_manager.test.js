@@ -1,9 +1,9 @@
-import PublicPromise         from '../../lib/utils/public_promise.js';
-import { any, is_null, not_null, is_in, not_in } from '../../lib/utils/standart_assertions.js';
-import { extend_as         } from '../../lib/utils/mixin.js'
-import { Attributable      } from '../../lib/modules/attributable.js'
-import { StateManager      } from '../../lib/services/state/state_manager.js';
-import { StateAliasManager } from '../../lib/services/state/state_alias_manager.js';
+import extend_as         from '../../lib/utils/mixin.js'
+import Attributable      from '../../lib/modules/attributable.js'
+import StateManager      from '../../lib/services/state/state_manager.js'
+import StateAliasManager from '../../lib/services/state/state_alias_manager.js'
+import assert            from '../../lib/utils/standart_assertions.js'
+import PublicPromise     from '../../lib/utils/public_promise.js'
 
 class DummyChildComponent extends extend_as("ChildDummyComponent").mixins(Attributable) {
   constructor() {
@@ -150,7 +150,7 @@ describe("StateManager", function() {
         [{ old_attr1: "value2", attr1: "value3", attr2: "value2,value3" },     "transition9"],
         [{ attr1: "value1", attr4: "value4" },                                 "transition10"],
         [{ attr5: { is_in: "hello,world" }, attr6: { not_in: "hello,world" }}, "transition11"],
-        [{ attr5: not_null, attr6: is_null                                  }, "transition12"],
+        [{ attr5: assert.not_null, attr6: assert.is_null                    }, "transition12"],
         [{ attr5: "is_null()", attr6: "not_null()"                          }, "transition13"],
         [{ attr5: true, attr6: 1                                            }, "transition14"],
         [{ "role1.attr1": "is_null()", attr1: "see child" },                   "transition15"],

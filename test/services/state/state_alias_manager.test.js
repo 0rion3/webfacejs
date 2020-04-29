@@ -1,4 +1,4 @@
-import { StateAliasManager } from '../../lib/services/state/state_alias_manager.js';
+import StateAliasManager from '../../lib/services/state/state_alias_manager.js';
 
 describe("StateAliasManager", function() {
 

@@ -1,5 +1,5 @@
 import '../../webface_init.js'
-import { AjaxRequest } from '../lib/utils/ajax_request.js'
+import AjaxRequest from '../lib/services/ajax_request.js'
 
 describe("AjaxRequest", async function() {
 

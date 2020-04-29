@@ -1,7 +1,7 @@
 import '../webface_init.js'
-import { extend_as       } from '../lib/utils/mixin.js'
-import { fetch_dom       } from '../test_utils.js'
-import { ButtonComponent } from '../lib/components/button_component.js'
+import { fetch_dom   } from '../test_utils.js'
+import extend_as       from '../lib/utils/mixin.js'
+import ButtonComponent from '../lib/components/button_component.js'
 
 describe("ButtonComponent", function() {
 

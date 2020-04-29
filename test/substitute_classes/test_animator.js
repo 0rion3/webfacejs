@@ -1,7 +1,8 @@
 // This class exists to not apply animations when in unit tests, since we can't really
 // wait for animation Promises to resovle. Instead, we use this custom TestAnimator
 // to show/hide elements and resolve Promises immediately.
-export var TestAnimator = {
+export { TestAnimator as default }
+var TestAnimator = {
 
   // IMPORTANT: we have to use a manual Promise creation inside animation methods here
   // because browsers don't yet support Animation.finished. See https://developer.mozilla.org/en-US/docs/Web/API/Animation/finished 

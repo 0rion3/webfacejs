@@ -1,7 +1,7 @@
-import { extend_as }           from '../../lib/utils/mixin.js'
-import { Attributable }        from '../../lib/modules/attributable.js'
-import { StateActionManager }  from '../../lib/services/state/state_action_manager.js'
-import PublicPromise           from '../../lib/utils/public_promise.js';
+import extend_as           from '../../lib/utils/mixin.js'
+import Attributable        from '../../lib/modules/attributable.js'
+import StateActionManager  from '../../lib/services/state/state_action_manager.js'
+import PublicPromise       from '../../lib/utils/public_promise.js';
 
 class DummyComponent extends extend_as("DummyComponent").mixins(Attributable) {
 

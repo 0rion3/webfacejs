@@ -1,5 +1,5 @@
-import { Logmaster } from '../lib/utils/logmaster.js'
-import { TestAnimator  } from '../substitute_classes/test_animator.js'
+import TestAnimator from '../substitute_classes/test_animator.js'
+import Logmaster    from '../lib/services/logmaster.js'
 
 window.webface = {
   "component_classes" : {},

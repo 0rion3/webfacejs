@@ -1,5 +1,5 @@
 import '../webface_init.js'
-import { Timer, CountdownTimer, StopwatchTimer } from '../lib/utils/timer.js'
+import { Timer, CountdownTimer, StopwatchTimer } from '../lib/services/timer.js'
 
 describe("Timer", function() {
 

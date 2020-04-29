@@ -1,7 +1,7 @@
 import '../webface_init.js'
-import { extend_as     } from '../lib/utils/mixin.js'
-import { fetch_dom     } from '../test_utils.js'
-import { SimpleNotificationComponentBehaviors } from '../lib/behaviors/simple_notification_component_behaviors.js'
+import { fetch_dom                        } from '../test_utils.js'
+import extend_as                            from '../lib/utils/mixin.js'
+import SimpleNotificationComponentBehaviors from '../lib/behaviors/simple_notification_component_behaviors.js'
 
 describe("SimpleNotificationComponentBehaviors", function() {
 

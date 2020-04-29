@@ -1,5 +1,5 @@
-import { extend_as }       from '../../lib/utils/mixin.js'
-import { PositionManager } from '../../lib/utils/position_manager.js'
+import extend_as       from '../../lib/utils/mixin.js'
+import PositionManager from '../../lib/services/position_manager.js'
 
 var fn = function() {
   ["placeByCenter", "placeByTopLeft", "placeByTopRight", "placeByBottomLeft", "placeByBottomRight", "placeAboveTopLeft", "placeBelowBottomLeft", "placeAboveTopRight", "placeBelowBottomRight", "placeAboveTopRightCorner", "placeAboveTopLeftCorner", "placeBelowBottomLeftCorner", "placeBelowBottomRightCorner"].forEach((method) => {

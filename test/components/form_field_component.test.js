@@ -1,7 +1,7 @@
 import '../webface_init.js'
-import { extend_as       } from '../lib/utils/mixin.js'
-import { fetch_dom       } from '../test_utils.js'
-import { FormFieldComponent } from '../lib/components/form_field_component.js'
+import { fetch_dom      } from '../test_utils.js'
+import extend_as          from '../lib/utils/mixin.js'
+import FormFieldComponent from '../lib/components/form_field_component.js'
 
 class MyFormFieldComponent extends FormFieldComponent {
   constructor() {

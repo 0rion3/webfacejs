@@ -1,5 +1,5 @@
-import { extend_as } from '../lib/utils/mixin.js'
-import { TypeChecker } from '../lib/utils/type_checker.js'
+import extend_as   from '../lib/utils/mixin.js'
+import TypeChecker from '../lib/utils/type_checker.js'
 
 const Mixin1 = (Mixin1) => class extends Mixin1 {}
 const Mixin2 = (Mixin2) => class extends extend_as("Mixin2").mixins(Mixin1) {}

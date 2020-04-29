@@ -1,6 +1,6 @@
-import { extend_as    } from '../lib/utils/mixin.js'
-import { Validatable  } from '../lib/modules/validatable.js'
-import { Attributable } from '../lib/modules/attributable.js'
+import extend_as    from '../lib/utils/mixin.js'
+import Validatable  from '../lib/modules/validatable.js'
+import Attributable from '../lib/modules/attributable.js'
 
 class MyValidator {
   _validateCustomStuff2(v) { return false; }

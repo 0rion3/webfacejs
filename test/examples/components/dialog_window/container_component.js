@@ -1,6 +1,6 @@
-import { extend_as } from '../../../lib/utils/mixin.js'
-import { Component } from '../../../lib/component.js'
-import { DialogWindowComponent } from '../../../lib/components/dialog_window_component.js'
+import extend_as             from '../../../lib/utils/mixin.js'
+import Component             from '../../../lib/component.js'
+import DialogWindowComponent from '../../../lib/components/dialog_window_component.js'
 
 export class ContainerComponent extends extend_as("ContainerComponent").mix(Component).with() {
   constructor() {

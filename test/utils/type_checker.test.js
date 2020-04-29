@@ -1,5 +1,5 @@
-import { TypeChecker } from '../lib/utils/type_checker.js'
-import { extend_as }   from '../lib/utils/mixin.js'
+import extend_as   from '../lib/utils/mixin.js'
+import TypeChecker from '../lib/utils/type_checker.js'
 
 const Mixin1a = (Mixin1a) => class extends Mixin1a {}
 const Mixin1b = (Mixin1b) => class extends Mixin1b {}
@@ -14,7 +14,7 @@ class TC_MyClass3 {}
 class TC_MyClass4 extends TC_MyClass {}
 
 describe("TypeChecker", function() {
-  
+
   it("identifies a simple object, discarding arrays, functions and instances of other classes", function() {
     chai.expect(TypeChecker.isSimpleObject({"hello" : "world"})).to.be.true
     chai.expect(TypeChecker.isSimpleObject(["hello", "world"])).to.be.false

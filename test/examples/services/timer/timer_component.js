@@ -1,6 +1,6 @@
-import { extend_as } from '../../../lib/utils/mixin.js'
-import { Component } from '../../../lib/component.js'
-import { CountdownTimer, StopwatchTimer } from '../../../lib/utils/timer.js';
+import extend_as                          from "../../../lib/utils/mixin.js";
+import Component                          from "../../../lib/component.js";
+import { CountdownTimer, StopwatchTimer } from "../../../lib/services/timer.js";
 
 export class TimerComponent extends extend_as("TimerComponent").mix(Component).with() {
 

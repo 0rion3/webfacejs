@@ -1,8 +1,8 @@
 import '../webface_init.js'
-import { extend_as          } from '../lib/utils/mixin.js'
-import { fetch_dom          } from '../test_utils.js'
-import { Component          } from './lib/component.js'
-import { ComponentBehaviors } from './lib/behaviors/component_behaviors.js'
+import { fetch_dom      } from '../test_utils.js'
+import extend_as          from '../lib/utils/mixin.js'
+import Component          from './lib/component.js'
+import ComponentBehaviors from './lib/behaviors/component_behaviors.js'
 
 class DummyBehaviors extends ComponentBehaviors {
   hello() { return "hello"; }

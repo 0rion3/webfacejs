@@ -1,10 +1,10 @@
-import { extend_as }           from '../lib/utils/mixin.js'
-import { I18n }                from '../lib/utils/i18n.js'
-import { Attributable }        from '../lib/modules/attributable.js'
-import { Heritable }           from '../lib/modules/heritable.js'
-import { Validatable }         from '../lib/modules/validatable.js'
-import { Publisher   }         from '../lib/modules/observable_roles/publisher.js'
 import { ComponentValidation, NoChildForValidations } from '../lib/modules/component_validation.js'
+import extend_as    from '../lib/utils/mixin.js'
+import Attributable from '../lib/modules/attributable.js'
+import Heritable    from '../lib/modules/heritable.js'
+import Validatable  from '../lib/modules/validatable.js'
+import Publisher    from '../lib/modules/observable_roles/publisher.js'
+import I18n         from '../lib/services/i18n.js'
 
 class DummyComponent extends extend_as("ComponentDomClass").mixins(Validatable, Heritable, ComponentValidation, Publisher, Attributable) {
 

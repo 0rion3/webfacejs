@@ -1,5 +1,5 @@
-import { extend_as } from '../lib/utils/mixin.js'
-import { Heritable } from '../lib/modules/heritable.js'
+import extend_as from '../lib/utils/mixin.js'
+import Heritable from '../lib/modules/heritable.js'
 
 class HeritableClass extends extend_as("HeritableClass").mixins(Heritable) {}
 

@@ -1,7 +1,7 @@
 import '../webface_init.js'
-import { fetch_dom     } from '../test_utils.js'
-import { LinkedHashMap } from '../lib/utils/linked_hash_map.js'
-import { SelectComponentBehaviors } from '../lib/behaviors/select_component_behaviors.js'
+import { fetch_dom            } from '../test_utils.js'
+import LinkedHashMap            from '../lib/utils/linked_hash_map.js'
+import SelectComponentBehaviors from '../lib/behaviors/select_component_behaviors.js'
 
 describe("SelectComponentBehaviors", function() {
 

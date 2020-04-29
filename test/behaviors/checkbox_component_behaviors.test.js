@@ -1,7 +1,6 @@
 import '../webface_init.js'
-import { extend_as     } from '../lib/utils/mixin.js'
-import { fetch_dom     } from '../test_utils.js'
-import { CheckboxComponentBehaviors } from '../lib/behaviors/checkbox_component_behaviors.js'
+import { fetch_dom              } from '../test_utils.js'
+import CheckboxComponentBehaviors from '../lib/behaviors/checkbox_component_behaviors.js'
 
 describe("CheckboxComponentBehaviors", function() {
 

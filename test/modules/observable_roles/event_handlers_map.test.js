@@ -1,4 +1,4 @@
-import { EventHandlersMap } from '../../lib/modules/observable_roles/event_handlers_map.js'
+import EventHandlersMap from '../../lib/modules/observable_roles/event_handlers_map.js'
 
 describe('observable_roles', function() {
 

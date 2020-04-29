@@ -1,5 +1,5 @@
 import '../webface_init.js'
-import { LinkedHashMap } from '../lib/utils/linked_hash_map.js'
+import LinkedHashMap from '../lib/utils/linked_hash_map.js'
 
 describe("LinkedHashMap", function() {
 

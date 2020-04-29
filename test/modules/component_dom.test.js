@@ -1,7 +1,7 @@
-import { extend_as    } from '../lib/utils/mixin.js'
-import { fetch_dom    } from '../test_utils.js'
-import { Attributable } from '../lib/modules/attributable.js'
-import { ComponentDom } from '../lib/modules/component_dom.js'
+import { fetch_dom } from '../test_utils.js'
+import extend_as     from '../lib/utils/mixin.js'
+import Attributable  from '../lib/modules/attributable.js'
+import ComponentDom  from '../lib/modules/component_dom.js'
 
 class ComponentDomClass extends extend_as("ComponentDomClass").mixins(ComponentDom,Attributable) {
   constructor() {

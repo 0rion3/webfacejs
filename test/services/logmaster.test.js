@@ -1,4 +1,4 @@
-import { Logmaster } from '../lib/utils/logmaster.js'
+import Logmaster from "../lib/services/logmaster.js";
 
 describe("Logmaster", function() {
 

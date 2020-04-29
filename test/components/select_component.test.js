@@ -1,8 +1,8 @@
 import '../webface_init.js'
-import { extend_as       } from '../lib/utils/mixin.js'
-import { fetch_dom       } from '../test_utils.js'
-import { RootComponent } from '../lib/components/root_component.js'
-import { SelectComponent } from '../lib/components/select_component.js'
+import { fetch_dom   } from '../test_utils.js'
+import extend_as       from '../lib/utils/mixin.js'
+import RootComponent   from '../lib/components/root_component.js'
+import SelectComponent from '../lib/components/select_component.js'
 
 describe("SelectComponent", function() {
 

@@ -1,5 +1,5 @@
-import { extend_as } from '../../lib/utils/mixin.js'
-import { Component } from '../../lib/component.js'
+import extend_as from '../../lib/utils/mixin.js'
+import Component from '../../lib/component.js'
 
 export class SomeComponent extends extend_as("SomeComponent").mix(Component).with() {
   constructor() {

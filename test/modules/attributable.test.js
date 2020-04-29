@@ -1,4 +1,4 @@
-import { extend_as } from '../lib/utils/mixin.js'
+import extend_as from '../lib/utils/mixin.js'
 import { Attributable, UndefinedAttributeError, NestedAttributeError } from '../lib/modules/attributable.js'
 
 class Dummy extends extend_as("Dummy").mixins(Attributable) {

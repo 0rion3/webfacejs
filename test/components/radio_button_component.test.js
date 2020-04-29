@@ -1,7 +1,7 @@
 import '../webface_init.js'
-import { extend_as       } from '../lib/utils/mixin.js'
-import { fetch_dom       } from '../test_utils.js'
+import { fetch_dom                                   } from '../test_utils.js'
 import { RadioButtonComponent, NoOptionWithSuchValue } from '../lib/components/radio_button_component.js'
+import extend_as                                       from '../lib/utils/mixin.js'
 
 describe("RadioButtonComponent", function() {
 

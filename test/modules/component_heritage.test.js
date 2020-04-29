@@ -1,10 +1,10 @@
 import '../webface_init.js'
-import { extend_as    } from '../lib/utils/mixin.js'
-import { fetch_dom    } from '../test_utils.js'
-import { Attributable } from '../lib/modules/attributable.js'
-import { ComponentDom } from '../lib/modules/component_dom.js'
-import { Heritable    } from '../lib/modules/heritable.js'
-import { ComponentHeritage } from '../lib/modules/component_heritage.js'
+import { fetch_dom     } from '../test_utils.js'
+import extend_as         from '../lib/utils/mixin.js'
+import Attributable      from '../lib/modules/attributable.js'
+import ComponentDom      from '../lib/modules/component_dom.js'
+import Heritable         from '../lib/modules/heritable.js'
+import ComponentHeritage from '../lib/modules/component_heritage.js'
 
 class DummyComponent extends extend_as("DummyComponent").mixins(Attributable,ComponentDom,Heritable,ComponentHeritage) {
   afterInitialize()         {}

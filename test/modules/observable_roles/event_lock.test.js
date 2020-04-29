@@ -1,5 +1,5 @@
-import { extend_as } from '../../lib/utils/mixin.js'
-import { EventLock } from '../../lib/modules/observable_roles/event_lock.js'
+import extend_as from '../../lib/utils/mixin.js'
+import EventLock from '../../lib/modules/observable_roles/event_lock.js'
 
 class EventLockDummy extends extend_as("EventLockDummy").mixins(EventLock) {}
 

@@ -1,5 +1,5 @@
 import '../webface_init.js'
-import { Cookies } from '../lib/utils/cookies.js'
+import Cookies from '../lib/utils/cookies.js'
 
 describe("cookies", function() {
 

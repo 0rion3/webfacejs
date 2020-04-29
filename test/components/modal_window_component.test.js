@@ -1,9 +1,9 @@
 import '../webface_init.js'
-import { extend_as       } from '../lib/utils/mixin.js'
-import { fetch_dom       } from '../test_utils.js'
-import { RootComponent } from '../lib/components/root_component.js'
-import { ModalWindowComponent } from '../lib/components/modal_window_component.js'
-import { FormFieldComponent }   from '../lib/components/form_field_component.js'
+import { fetch_dom        } from '../test_utils.js'
+import extend_as            from '../lib/utils/mixin.js'
+import RootComponent        from '../lib/components/root_component.js'
+import ModalWindowComponent from '../lib/components/modal_window_component.js'
+import FormFieldComponent   from '../lib/components/form_field_component.js'
 
 describe("ModalWindowComponent", function() {
 

@@ -226,12 +226,11 @@ describe("StateManager", function() {
       c.set("attr1", "value5");
       c.set("attr1", "value6");
       chai.expect(sm.pickTransitionsForState().in).to.deep.eq(["transition5", "transition6"]);
-      sm._updateCurrentStates();
       c.set("attr1", "value4");
       c.set("attr1", "value7");
-      chai.expect(sm.pickTransitionsForState().in).to.deep.eq([]);
-      chai.expect(sm.pickTransitionsForState().out).to.deep.eq(["out_transition5"]);
-      sm._updateCurrentStates();
+      var transitions = sm.pickTransitionsForState();
+      chai.expect(transitions.in).to.deep.eq([]);
+      chai.expect(transitions.out).to.deep.eq(["out_transition5"]);
       c.set("attr1", "value2");
       c.set("attr1", "value3");
       c.set("attr2", "value3");

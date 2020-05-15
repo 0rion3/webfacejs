@@ -131,12 +131,9 @@ describe('ComponentDom', function() {
   });
 
   it("reads attr values from nodes and updates the corresponding attributes in the component", function() {
-    component_dom._readAttrFromNode("attr1");
-    component_dom._readAttrFromNode("attr2");
-    component_dom._readAttrFromNode("attr3");
-    chai.expect(component_dom.get("attr1")).to.equal("value for attr 1 - a");
-    chai.expect(component_dom.get("attr2")).to.equal(1);
-    chai.expect(component_dom.get("attr3")).to.equal(1.23);
+    chai.expect(component_dom._readAttrFromNode("attr1")).to.equal("value for attr 1 - a");
+    chai.expect(component_dom._readAttrFromNode("attr2")).to.equal(1);
+    chai.expect(component_dom._readAttrFromNode("attr3")).to.equal(1.23);
   });
 
   it("writes attribute value to the corresponding attr element textContent in the DOM", function() {

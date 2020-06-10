@@ -34,13 +34,20 @@ describe("LinkedHashMap", function() {
   });
 
   it("adds items from an object passed to it", function() {
-    var hash = LinkedHashMap.from({ key1: 1, key2: 2, key3: 3 });
+    var hash = LinkedHashMap.fromObject({ key1: 1, key2: 2, key3: 3 });
+    chai.expect(hash.keys).to.eql(["key1", "key2", "key3"]);
+    chai.expect(hash.values).to.eql([1, 2, 3]);
+  });
+
+  it("adds items from LinkedHashMap passed to it", function() {
+    var source = LinkedHashMap.fromObject({ key1: 1, key2: 2, key3: 3 });
+    var hash = LinkedHashMap.fromLinkedHashMap(source);
     chai.expect(hash.keys).to.eql(["key1", "key2", "key3"]);
     chai.expect(hash.values).to.eql([1, 2, 3]);
   });
 
   it("sorts a LinkedHashMap returning a new one", function() {
-    var hash = LinkedHashMap.from({ key1: "b", key2: "c", key3: "a" });
+    var hash = LinkedHashMap.fromObject({ key1: "b", key2: "c", key3: "a" });
     hash.sort();
     chai.expect(hash.values).to.eql(["a", "b", "c"]);
   });

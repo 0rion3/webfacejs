@@ -28,7 +28,7 @@ export class StatesExampleComponent extends extend_as("StatesExampleComponent").
       [{ attr1: () => this.get("attr2") }, { in: () => console.log("attr1 == attr2, their value is: ", this.get("attr1")) }],
 
       "display", { debug: { log: true, exit_states: true, enter_states: true, transitions: true }},
-      [{ country: "United States", age: { more_than: 20 }}, "can_buy_alcohol"]
+      [{ country: "United States" }, "can_buy_alcohol"]
     ];
 
   }

@@ -11,7 +11,6 @@ class DummyChildComponent extends extend_as("ChildDummyComponent").mixins(Attrib
     this.roles                  = "role1";
     this.attribute_names        = ["attr1"];
     this.publish_changes_for    = ["change"];
-    this.state_manager_settings = {};
   }
   behave() {}
 }
@@ -55,7 +54,8 @@ describe('DisplayStateManager', function() {
     default_state_action: "show",
     multiple_attr_conditons_exclusivity: true,
     hide_animation_speed: null,
-    show_anitmation_speed: null
+    show_anitmation_speed: null,
+    apply_clear_state_on_init: false
   };
 
   beforeEach(function() {

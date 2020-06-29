@@ -16,6 +16,7 @@ class DummyChildComponent extends extend_as("ChildDummyComponent").mixins(Attrib
     this.attribute_names     = ["attr1"];
     this.publish_changes_for = [];
   }
+  behave(b) {}
 }
 
 class DummyComponent extends extend_as("DummyComponent").mixins(Attributable) {
@@ -56,6 +57,11 @@ class DummyComponent extends extend_as("DummyComponent").mixins(Attributable) {
   findFirstChildByRole(r) {
     return this.findChildrenByRole(r)[1]; // Always return the second one, that's the one we care about
   }
+  findPart(p) {
+    if(p.includes("part")) return document.createElement('div');
+    else return null;
+  }
+  behave(b) {}
 
 }
 

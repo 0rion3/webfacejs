@@ -1,0 +1,50 @@
+<head>
+  <script src="/lib/webface_init.js"></script>
+  <script src="/examples/services/states/states_example.js" type="module"></script>
+  <script src="/examples/webface_app.js" type="module"></script>
+
+  <style>
+  </style>
+</head>
+
+<body>
+
+  <div data-component-class="StatesExampleComponent" style="width: 400px; margin: 0 auto;">
+
+    <div data-component-part="can_buy_alcohol">You can buy alcohol in our store!</div>
+
+    <h1>Example of component states</h1>
+    <p>Change attribute values in the fields, save changes and see things happen!</p>
+
+    <div>
+      <label>attr1:</label> <input type="text" data-component-attr="attr1"></input>
+    </div>
+    <br/>
+
+    <div>
+      <label>attr2:</label> <input type="text" data-component-attr="attr2"></input>
+    </div>
+    <br/>
+
+    <div>
+      <label>attr3:</label> <input type="text" data-component-attr="attr3"></input>
+    </div>
+    <br/>
+
+    <div>
+      <label>age:</label> <input type="text" data-component-attr="age"></input>
+    </div>
+    <br/>
+
+    <div>
+      <label>country:</label> <input type="text" data-component-attr="country"></input>
+    </div>
+
+    <br/>
+    <br/>
+    <button data-component-part="save_changes">Save changes</button>
+
+  </div>
+
+
+</body>

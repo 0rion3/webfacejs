@@ -81,13 +81,15 @@ describe("StateDispatcher", function() {
       "Alias 2": { "role1.attr1": "value1", "role2.attr2": "value2" }
     });
     chai.expect(sd.sorted_states[1][0]).to.eq(StateActionManager);
-    chai.expect(sd.sorted_states[1][1]).to.deep.eq([["Alias 1", { in: "transition_action_for_alias_1", run_before: "display" }]]);
+    chai.expect(sd.sorted_states[1][1]).to.deep.eq([[
+      { attr2: "value2", attr3: "value3" }, { in: "transition_action_for_alias_1", run_before: "display" }
+    ]]);
     chai.expect(sd.sorted_states[2][0]).to.equal(DisplayStateManager);
     chai.expect(sd.sorted_states[2][1]).deep.eq([
       [{ attr1: "value1" }, ["role_or_part_name1", "#role_name1", ".part_name1"]],
       [{ attr1: "value2" }, "role_or_part_name2, #role_name2, .part_name2"],
       [{ attr1: "value3" }, "role_or_part_name3"],
-      ["Alias 1", "role_or_part_name4"]
+      [{ attr2: "value2", attr3: "value3" }, "role_or_part_name4"]
     ]);
   });
 

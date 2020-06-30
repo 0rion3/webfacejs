@@ -16,9 +16,9 @@ export class StatesExampleComponent extends extend_as("StatesExampleComponent").
 
       "aliases", {
         can_drink: [
-          { country: "United States",                     age: { more_than: 20 }},
-          { country: { not_in: ["United States", null] }, age: { more_than: 17 }}
-        ],
+          { country: "United States",          age: { more_than: 20 }},
+          { country: { not: "United States" }, age: { more_than: 17 }},
+        ]
       },
 
       "action", {},
@@ -28,7 +28,7 @@ export class StatesExampleComponent extends extend_as("StatesExampleComponent").
       [{ attr1: () => this.get("attr2") }, { in: () => console.log("attr1 == attr2, their value is: ", this.get("attr1")) }],
 
       "display", { debug: { log: true, exit_states: true, enter_states: true, transitions: true }},
-      [{ country: "United States" }, "can_buy_alcohol"]
+      ["can_drink", "can_buy_alcohol"]
     ];
 
   }

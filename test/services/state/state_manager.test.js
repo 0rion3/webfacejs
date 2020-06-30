@@ -110,26 +110,24 @@ describe("StateManager", function() {
     });
 
 
-    it("replaces state aliases with a set of attrs+values when expanding folded states", function() {
+    it("replaces state aliases with a set of attrs+values", function() {
 
       var state_aliases = {
         "State alias 1": { attr1: "value2" },
-        "State alias 2": [{ attr2: ["value3", "value4"]}, {
-          "Sub state alias A": { attr3: "value3" }
-        }]
+        "State alias 2": { attr2: ["value3", "value4"]},
+        "State alias 3": { attr3: "value3" }
       };
       sm.alias_manager = new StateAliasManager({ states: state_aliases });
 
       var states = [
         ["State alias 1", "state_1_part1,state_1_part2"],
-        ["State alias 2", "state_2_part1,state_2_part2", [
-          ["Sub state alias A", "substate_2_part"]
-        ]]
+        ["State alias 2", "state_2_part1,state_2_part2"],
+        ["State alias 2 + State alias 3", "state_2_part1,state_2_part2"],
       ];
       chai.expect(sm._expandFoldedStates(states)).to.deep.eq([
         [{ attr1: "value2" }, ["state_1_part1", "state_1_part2"]],
         [{ attr2: ["value3", "value4"] }, ["state_2_part1", "state_2_part2"]],
-        [{ attr2: ["value3", "value4"], attr3: "value3" }, ["state_2_part1","state_2_part2", "substate_2_part"]]
+        [{ attr2: ["value3", "value4"], attr3: "value3" }, ["state_2_part1","state_2_part2"]]
       ]);
     });
 

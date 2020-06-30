@@ -1,22 +1,47 @@
-import StateAliasManager from '../../lib/services/state/state_alias_manager.js';
+import StateAliasManager from '../../lib/services/state/state_alias_manager.js'
 
 describe("StateAliasManager", function() {
 
-  it("expands state aliases hierarchy into a flat structure", function() {
-    var state_aliases = {
-      "State alias 1": { attr1: "value2" },
-      "State alias 2": [{ attr2: ["value3", "value4"]}, {
-        "Sub state alias A": { attr3: "value3" }
-      }]
-    };
+  var states = {
+    "Alias 1": { attr1: "value1", attr2: "value2" },
+    "Alias 2": { attr1: "value2" },
+    "Alias 3": [{ attr3: ["value2", "value3"]}, { attr4: "value4" }],
+    "Alias 4": [{ attr5: ["value5", "value6"]}, { attr6: "value7" }]
+  }
+  var alias_manager;
 
-    var state_aliases_manager = new StateAliasManager({ states: state_aliases });
+  beforeEach(function() {
+    alias_manager = new StateAliasManager({ states: states });
+  });
 
-    chai.expect(state_aliases_manager.states).to.deep.eq({
-      "State alias 1": { attr1: "value2" },
-      "State alias 2": { attr2: ["value3", "value4"] },
-      "State alias 2/Sub state alias A": { attr2: ["value3", "value4"], attr3: "value3" }
-    });
+  it("returns state definition for a given alias", function() {
+    chai.expect(alias_manager.get("Alias 1")).to.deep.eq(
+      { attr1: "value1", attr2: "value2" }
+    );
+    chai.expect(alias_manager.get("Alias 2")).to.deep.eq(
+      { attr1: "value2" }
+    );
+    chai.expect(alias_manager.get("Alias 3")).to.deep.eq(
+      [{ attr3: ["value2", "value3"]}, { attr4: "value4" }]
+    );
+  });
+
+  it("combines state definitions of two aliases", function() {
+    chai.expect(alias_manager.get("Alias 1 + Alias 2")).to.deep.eq(
+      { attr1: "value2", attr2: "value2" }
+    );
+
+    chai.expect(alias_manager.get("Alias 2 + Alias 3")).to.deep.eq([
+      { attr1: "value2", attr3: ["value2", "value3"]},
+      { attr1: "value2", attr4: "value4" }
+    ]);
+
+    chai.expect(alias_manager.get("Alias 2 + Alias 3 + Alias 4")).to.deep.eq([
+      { attr1: "value2", attr3: ["value2", "value3"], attr5: ["value5", "value6"]},
+      { attr1: "value2", attr3: ["value2", "value3"], attr6: "value7" },
+      { attr1: "value2", attr4: "value4", attr5: ["value5", "value6"]},
+      { attr1: "value2", attr4: "value4", attr6: "value7"}
+    ]);
   });
 
 });

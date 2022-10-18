@@ -1,6 +1,8 @@
 Webface.js
 ----------
 
+Documentation/Reference: [https://webfacejs.net](webfacejs.net)
+
 Adding Webface.js to a new site:
 
     <script src="path/to/webface/lib/webface_init.js"></script>
